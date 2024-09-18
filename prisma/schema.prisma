@@ -1,0 +1,93 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POOLED_DATABASE_URL")
+  directUrl = env("DIRECT_DATABASE_URL")
+}
+
+enum Council {
+  ECOSOC
+  ODC
+  UNSC
+  ICJ
+  ASAM
+  JDC
+}
+
+model User {
+  id         String      @id @default(cuid())
+  firstName  String?
+  lastName   String?
+  council    Council?
+  admin      Boolean     @default(false)
+  username   String      @unique
+  password   String
+  interviews Interview[]
+}
+
+model Question {
+  id       String   @id @default(cuid())
+  number   Int
+  question String
+  council  Council
+  answers  Answer[]
+}
+
+enum DelegateStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
+model Delegate {
+  id          String         @id @default(cuid())
+  firstName   String
+  lastName    String
+  faculty     String
+  council     Council
+  phoneNumber String
+  email       String?
+  status      DelegateStatus
+  interview   Interview?     @relation
+  interviewId String?        @unique
+}
+
+enum InterviewStatus {
+  PENDING
+  STARTED
+  COMPLETED
+  MISSED
+  RESCHEDULED
+  CANCELLED
+}
+
+model Interview {
+  id         String          @id @default(cuid())
+  delegate   Delegate        @relation(fields: [delegateId], references: [id])
+  delegateId String          @unique
+  user       User?           @relation(fields: [userId], references: [id])
+  userId     String?
+  date       String
+  time       String
+  startTime  String
+  status     InterviewStatus
+  answers    Answer[]
+}
+
+model Answer {
+  id          String    @id @default(cuid())
+  question    Question  @relation(fields: [questionId], references: [id])
+  questionId  String
+  interview   Interview @relation(fields: [interviewId], references: [id])
+  interviewId String
+  answer      String
+}
