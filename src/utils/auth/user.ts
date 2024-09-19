@@ -8,7 +8,7 @@ export const getUser = cache(async () => {
 
   if (!session) return null;
 
-  return await prisma.user.findUnique({
+  return prisma.user.findUnique({
     where: {
       id: session.userId,
     },

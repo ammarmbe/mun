@@ -19,7 +19,7 @@ export default async function middleware(req: NextRequest) {
   if (req.nextUrl.pathname === "/login" && session?.userId) {
     console.log("Redirecting to home");
 
-    return NextResponse.redirect(new URL("/", req.nextUrl));
+    return NextResponse.redirect(new URL("/home", req.nextUrl));
   }
 
   return NextResponse.next();

@@ -19,9 +19,9 @@ enum Council {
 
 model User {
   id         String      @id @default(cuid())
-  firstName  String?
-  lastName   String?
-  council    Council?
+  firstName  String
+  lastName   String
+  council    Council
   admin      Boolean     @default(false)
   username   String      @unique
   password   String
@@ -72,8 +72,9 @@ model Interview {
   userId     String?
   date       String
   time       String
-  startTime  String
   status     InterviewStatus
+  grade      String?
+  notes      String?
   answers    Answer[]
 }
 

@@ -78,7 +78,7 @@
 import { twMerge } from "tailwind-merge";
 
 type Size = "sm" | "md" | "lg" | "xl" | "2xl";
-type Variant = "primary" | "secondary" | "tertiary" | "danger";
+type Variant = "primary" | "secondary" | "tertiary" | "danger" | "dropdown";
 
 const sizes: Record<Size, string> = {
   sm: "py-2 px-3 gap-1 text-sm rounded-md",
@@ -145,6 +145,10 @@ const variants: Record<Variant, string> = {
     text-white relative [&_*]:z-10 
     disabled:!text-disabled disabled:!bg-disabled disabled:!border-disabled_subtle 
     disabled:before:!bg-disabled disabled:after:!bg-disabled
+  `,
+  dropdown: `
+    bg-primary border-primary hover text-secondary
+    disabled:!text-disabled !rounded-none w-full !justify-start
   `,
 };
 

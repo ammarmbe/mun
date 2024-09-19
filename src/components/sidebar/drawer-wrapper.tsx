@@ -4,7 +4,7 @@ import { Menu } from "lucide-react";
 import Image from "next/image";
 import buttonStyles from "@/utils/styles/button";
 import { Drawer } from "vaul";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
 export default function DrawerWrapper({
@@ -21,7 +21,7 @@ export default function DrawerWrapper({
 
   return (
     <Drawer.Root direction="left" open={open} onOpenChange={setOpen}>
-      <header className="sticky top-0 flex items-center justify-between border-b px-4 py-3 md:hidden">
+      <header className="sticky top-0 z-20 flex items-center justify-between border-b bg-primary px-4 py-3 md:hidden">
         <Image
           src="/logo.png"
           height={32}
@@ -42,12 +42,12 @@ export default function DrawerWrapper({
         </Drawer.Trigger>
       </header>
       <Drawer.Portal>
-        <Drawer.Content className="fixed left-0 top-0 z-10 flex h-screen w-3/4 flex-col justify-between border-r bg-primary">
+        <Drawer.Content className="fixed left-0 top-0 z-40 flex h-screen w-3/4 flex-col justify-between border-r bg-primary">
           <Drawer.Title hidden>Main menu</Drawer.Title>
           <Drawer.Description hidden>Navigation links</Drawer.Description>
           {children}
         </Drawer.Content>
-        <Drawer.Overlay className="fixed inset-0 bg-black/40" />
+        <Drawer.Overlay className="fixed inset-0 z-30 bg-black/40" />
       </Drawer.Portal>
     </Drawer.Root>
   );
