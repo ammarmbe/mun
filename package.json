@@ -15,16 +15,20 @@
   },
   "dependencies": {
     "@prisma/client": "5.19.1",
-    "next": "14.2.11",
-    "react": "^18",
-    "react-dom": "^18"
+    "jose": "^5.9.2",
+    "next": "^15.0.0-rc.0",
+    "react": "^19.0.0-rc-5dcb0097-20240918",
+    "react-dom": "^19.0.0-rc-5dcb0097-20240918",
+    "server-only": "^0.0.1",
+    "tailwind-merge": "^2.5.2",
+    "valibot": "^0.42.0"
   },
   "devDependencies": {
-    "@types/node": "^20",
+    "@types/node": "^22.5.5",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",
-    "eslint-config-next": "14.2.11",
+    "eslint-config-next": "14.2.12",
     "eslint-config-prettier": "^9.1.0",
     "postcss": "^8",
     "prettier": "^3.3.3",
