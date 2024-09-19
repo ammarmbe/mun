@@ -6,15 +6,19 @@ export default async function middleware(req: NextRequest) {
   const cookie = cookies().get("session")?.value;
   const session = await decrypt(cookie);
 
-  if (req.nextUrl.pathname.startsWith("/_next")) {
+  if (req.nextUrl.pathname.includes(".")) {
     return NextResponse.next();
   }
 
   if (req.nextUrl.pathname !== "/login" && !session?.userId) {
+    console.log("Redirecting to login");
+
     return NextResponse.redirect(new URL("/login", req.nextUrl));
   }
 
   if (req.nextUrl.pathname === "/login" && session?.userId) {
+    console.log("Redirecting to home");
+
     return NextResponse.redirect(new URL("/", req.nextUrl));
   }
 

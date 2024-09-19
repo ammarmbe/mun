@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import TailwindIndicator from "@/components/tailwind-indicator";
+import Sidebar from "@/components/sidebar/sidebar";
+import SidebarWrapper from "@/components/sidebar/sidebar-wrapper";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,9 +20,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.className} bg-primary text-primary antialiased`}
+        className={`${inter.className} flex h-screen flex-col bg-primary text-primary antialiased md:flex-row`}
       >
         <TailwindIndicator />
+        <SidebarWrapper>
+          <Sidebar />
+        </SidebarWrapper>
         {children}
       </body>
     </html>
