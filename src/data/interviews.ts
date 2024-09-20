@@ -47,7 +47,7 @@ export async function getTomorrowsInterviews({
     where: {
       date: {
         gte: dayjs().add(1, "day").startOf("day").toDate(),
-        lte: dayjs().add(1, "day").endOf("day").oDate(),
+        lte: dayjs().add(1, "day").endOf("day").toDate(),
       },
       delegate: {
         council,
@@ -110,7 +110,7 @@ export async function getCompletedInterviews({
 }
 
 export async function getMissedInterviews({
-                                            counci,
+                                            council
                                           }: {
   council: $Enums.Council;
 }) {
@@ -118,8 +118,8 @@ export async function getMissedInterviews({
     where: {
       status: "MISSED",
       delegate: {
-        counci,
-      ,
+        council
+      },
     },
     select: {
       id: true,
@@ -130,28 +130,28 @@ export async function getMissedInterviews({
           council: true,
           firstName: true,
           lastName: true,
-          phoneNumber: tru,
-        ,
-      ,
+          phoneNumber: true
+        },
+      },
     },
-    orderBy: { date: "desc" ,
+    orderBy: { date: "desc" }
   });
 }
 
 export async function getUpcomingInterviews({
-                                              counci,
+                                              council
                                             }: {
   council: $Enums.Council;
 }) {
   return prisma.interview.findMany({
     where: {
       date: {
-        gte: dayjs().toDate(,
+        gte: dayjs().toDate()
       },
       status: "PENDING",
       delegate: {
-        counci,
-      ,
+        council
+      },
     },
     select: {
       id: true,
@@ -162,10 +162,10 @@ export async function getUpcomingInterviews({
           council: true,
           firstName: true,
           lastName: true,
-          phoneNumber: tru,
-        ,
-      ,
+          phoneNumber: true
+        },
+      },
     },
-    orderBy: { date: "asc" ,
+    orderBy: { date: "asc" }
   });
 }
