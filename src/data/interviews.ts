@@ -169,3 +169,31 @@ export async function getUpcomingInterviews({
     orderBy: { date: "asc" },
   });
 }
+
+export async function getAllInterviews({
+  council,
+}: {
+  council: $Enums.Council;
+}) {
+  return prisma.interview.findMany({
+    where: {
+      delegate: {
+        council,
+      },
+    },
+    select: {
+      id: true,
+      date: true,
+      status: true,
+      delegate: {
+        select: {
+          council: true,
+          firstName: true,
+          lastName: true,
+          phoneNumber: true,
+        },
+      },
+    },
+    orderBy: { date: "desc" },
+  });
+}

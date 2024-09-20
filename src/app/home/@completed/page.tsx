@@ -15,7 +15,7 @@ export default function Completed() {
   const { data: user } = useQuery({
     queryKey: queryKeys.user(),
     queryFn: queryFunctions.user,
-    throwOnError: tru,
+    throwOnError: true,
   });
 
   if (isLoading) return <Loading />;
