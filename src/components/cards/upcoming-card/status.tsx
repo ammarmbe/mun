@@ -11,9 +11,10 @@ import {
   useEffect,
   useState,
 } from "react";
-import serverAction from "@/components/upcoming-card/status-action";
+import serverAction from "@/components/cards/upcoming-card/status-action";
 import { toast } from "sonner";
 import Toast from "@/components/toast";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function Status({
   dropdown,
@@ -28,6 +29,8 @@ export default function Status({
   icon?: ReactNode;
   setOpen?: Dispatch<SetStateAction<boolean>>;
 }) {
+  const queryClient = useQueryClient();
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, action, pending] = useActionState(serverAction, undefined);
 
@@ -35,14 +38,20 @@ export default function Status({
 
   useEffect(() => {
     if (!pending && previousPending) {
-      toast.custom((t) => (
-        <Toast
-          title="Status updated successfully"
-          variant="success"
-          t={t}
-          message={`Status for interview with ${interview.delegate.firstName} has been updated successfully`}
-        />
-      ));
+      queryClient
+        .invalidateQueries({
+          predicate: () => true,
+        })
+        .then(() =>
+          toast.custom((t) => (
+            <Toast
+              title="Status updated successfully"
+              variant="success"
+              t={t}
+              message={`Status for interview with ${interview.delegate.firstName} has been updated successfully`}
+            />
+          )),
+        );
 
       setOpen?.(false);
     }

@@ -5,6 +5,7 @@ import {
   CalendarClock,
   CalendarOff,
   CalendarX,
+  CheckCircle2,
   EllipsisVertical,
   Play,
 } from "lucide-react";
@@ -12,14 +13,17 @@ import { getTodaysInterviews } from "@/data/interviews";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import Dropdown from "@/components/dropdown";
 import Link from "next/link";
-import Status from "@/components/upcoming-card/status";
+import Status from "@/components/cards/upcoming-card/status";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 
 export default function Options({
   interview,
 }: {
   interview: Awaited<ReturnType<typeof getTodaysInterviews>>[0];
 }) {
+  const pathname = usePathname();
+
   const [open, setOpen] = useState(false);
 
   return (
@@ -41,17 +45,19 @@ export default function Options({
         </button>
       }
     >
-      <DropdownMenu.Item asChild>
-        <Link
-          href={`/interview/${interview.id}`}
-          className={buttonStyles({
-            variant: "dropdown",
-            size: "sm",
-          })}
-        >
-          <Play size={16} className="text-tertiary" /> Start
-        </Link>
-      </DropdownMenu.Item>
+      {!pathname.includes(interview.id) ? (
+        <DropdownMenu.Item asChild>
+          <Link
+            href={`/interviews/${interview.id}`}
+            className={buttonStyles({
+              variant: "dropdown",
+              size: "sm",
+            })}
+          >
+            <Play size={16} className="text-tertiary" /> Start
+          </Link>
+        </DropdownMenu.Item>
+      ) : null}
       <Status
         interview={interview}
         dropdown
@@ -74,6 +80,19 @@ export default function Options({
             <CalendarClock size={16} className="text-tertiary" />
           ) : (
             <CalendarX size={16} className="text-tertiary" />
+          )
+        }
+        setOpen={setOpen}
+      />
+      <Status
+        interview={interview}
+        dropdown
+        status={interview.status === "COMPLETED" ? "PENDING" : "COMPLETED"}
+        icon={
+          interview.status === "COMPLETED" ? (
+            <CalendarClock size={16} className="text-tertiary" />
+          ) : (
+            <CheckCircle2 size={16} className="text-tertiary" />
           )
         }
         setOpen={setOpen}

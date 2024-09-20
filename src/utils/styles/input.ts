@@ -21,7 +21,7 @@ export function inputStyles(
   className?: string,
 ) {
   return twMerge(
-    "text-md rounded-md shadow-xs border placeholder:text-placeholder text-primary bg-primary enabled:focus:border-2 disabled:bg-disabled_subtle disabled:!border-disabled",
+    "text-md rounded-md resize-none shadow-xs border placeholder:text-placeholder text-primary bg-primary enabled:focus:border-2 disabled:bg-disabled_subtle disabled:!border-disabled",
     variants[variant],
     sizes[size],
     className,

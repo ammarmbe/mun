@@ -2,7 +2,6 @@
 
 import * as v from "valibot";
 import prisma from "@/utils/db";
-import { revalidatePath } from "next/cache";
 import { $Enums } from "@prisma/client";
 
 const schema = v.object({
@@ -39,6 +38,4 @@ export default async function action(
       status: data.output.status,
     },
   });
-
-  revalidatePath("/");
 }

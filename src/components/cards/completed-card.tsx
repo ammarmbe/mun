@@ -1,9 +1,11 @@
 "use client";
 
 import { getCompletedInterviews } from "@/data/interviews";
-import { Phone, User2 } from "lucide-react";
+import { Clock, Phone, User2 } from "lucide-react";
 import { getUser } from "@/utils/auth/user";
 import Link from "next/link";
+import dayjs from "dayjs";
+import { getGradeColor } from "@/utils";
 
 export default function CompletedCard({
   interview,
@@ -13,8 +15,8 @@ export default function CompletedCard({
   user: Awaited<ReturnType<typeof getUser>>;
 }) {
   return (
-    <Link href={`/interview/${interview.id}`} legacyBehavior>
-      <div className="rounded-lg border p-4 shadow-md">
+    <Link href={`/interviews/${interview.id}`} legacyBehavior>
+      <div className="h-fit cursor-pointer rounded-lg border p-4 shadow-md">
         <div key={interview.id} className="flex flex-col">
           <div className="flex flex-col gap-1">
             <h3 className="truncate text-lg font-semibold">
@@ -23,38 +25,7 @@ export default function CompletedCard({
             <p className="text-sm font-medium text-secondary">
               Grade:{" "}
               <span
-                className={
-                  ["10", "9", "a", "a-", "a+"].includes(
-                    interview.grade?.toLowerCase() || "",
-                  )
-                    ? "text-utility-success-800"
-                    : ["8", "7", "b", "b-", "b+"].includes(
-                          interview.grade?.toLowerCase() || "",
-                        )
-                      ? "text-utility-success-600"
-                      : ["6", "5", "c", "c-", "c+"].includes(
-                            interview.grade?.toLowerCase() || "",
-                          )
-                        ? "text-utility-warning-600"
-                        : [
-                              "4",
-                              "3",
-                              "2",
-                              "1",
-                              "0",
-                              "d",
-                              "d-",
-                              "d+",
-                              "e",
-                              "e+",
-                              "e-",
-                              "f",
-                              "f+",
-                              "f-",
-                            ].includes(interview.grade?.toLowerCase() || "")
-                          ? "text-utility-error-600"
-                          : "text-secondary"
-                }
+                className={getGradeColor(interview.grade, "text-secondary")}
               >
                 {interview.grade}
               </span>
@@ -66,6 +37,10 @@ export default function CompletedCard({
               {interview.user?.id === user?.id
                 ? "Me"
                 : `${interview.user?.firstName} ${interview.user?.lastName}`}
+            </p>
+            <p className="flex items-center gap-2 text-sm font-medium text-secondary">
+              <Clock size={20} className="text-tertiary" />
+              {dayjs(interview.date).format("dddd, MMMM D, hh:mm A")}
             </p>
             <a
               href={`tel:${interview.delegate.phoneNumber}`}

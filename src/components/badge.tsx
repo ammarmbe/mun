@@ -30,7 +30,7 @@ export default function Badge({
   return (
     <span
       className={twMerge(
-        "rounded-full border font-medium",
+        "w-fit rounded-full border font-medium",
         sizes[size],
         colors[color],
         className,

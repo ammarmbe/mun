@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import TailwindIndicator from "@/components/tailwind-indicator";
+import TailwindIndicator from "@/components/utility/tailwind-indicator";
 import Sidebar from "@/components/sidebar/sidebar";
 import SidebarWrapper from "@/components/sidebar/sidebar-wrapper";
 import React from "react";
 import { Toaster } from "sonner";
+import ReactQuery from "@/components/utility/react-query";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,7 +30,7 @@ export default function RootLayout({
         <SidebarWrapper>
           <Sidebar />
         </SidebarWrapper>
-        {children}
+        <ReactQuery>{children}</ReactQuery>
       </body>
     </html>
   );

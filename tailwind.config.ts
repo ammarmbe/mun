@@ -80,7 +80,6 @@ const config: Config = {
           950: "rgba(var(--success-950))",
         },
         "utility-gray": {
-          0: "rgba(var(--utility-gray-0))",
           50: "rgba(var(--utility-gray-50))",
           100: "rgba(var(--utility-gray-100))",
           200: "rgba(var(--utility-gray-200))",
@@ -93,7 +92,6 @@ const config: Config = {
           900: "rgba(var(--utility-gray-900))",
         },
         "utility-brand": {
-          0: "rgba(var(--utility-brand-0))",
           50: "rgba(var(--utility-brand-50))",
           100: "rgba(var(--utility-brand-100))",
           200: "rgba(var(--utility-brand-200))",
@@ -106,7 +104,6 @@ const config: Config = {
           900: "rgba(var(--utility-brand-900))",
         },
         "utility-error": {
-          0: "rgba(var(--utility-error-0))",
           50: "rgba(var(--utility-error-50))",
           100: "rgba(var(--utility-error-100))",
           200: "rgba(var(--utility-error-200))",
@@ -115,11 +112,8 @@ const config: Config = {
           500: "rgba(var(--utility-error-500))",
           600: "rgba(var(--utility-error-600))",
           700: "rgba(var(--utility-error-700))",
-          800: "rgba(var(--utility-error-800))",
-          900: "rgba(var(--utility-error-900))",
         },
         "utility-warning": {
-          0: "rgba(var(--utility-warning-0))",
           50: "rgba(var(--utility-warning-50))",
           100: "rgba(var(--utility-warning-100))",
           200: "rgba(var(--utility-warning-200))",
@@ -128,11 +122,8 @@ const config: Config = {
           500: "rgba(var(--utility-warning-500))",
           600: "rgba(var(--utility-warning-600))",
           700: "rgba(var(--utility-warning-700))",
-          800: "rgba(var(--utility-warning-800))",
-          900: "rgba(var(--utility-warning-900))",
         },
         "utility-success": {
-          0: "rgba(var(--utility-success-0))",
           50: "rgba(var(--utility-success-50))",
           100: "rgba(var(--utility-success-100))",
           200: "rgba(var(--utility-success-200))",
@@ -141,8 +132,6 @@ const config: Config = {
           500: "rgba(var(--utility-success-500))",
           600: "rgba(var(--utility-success-600))",
           700: "rgba(var(--utility-success-700))",
-          800: "rgba(var(--utility-success-800))",
-          900: "rgba(var(--utility-success-900))",
         },
       },
       textColor: {

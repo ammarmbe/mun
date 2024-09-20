@@ -1,19 +1,28 @@
-import { getTodaysInterviews } from "@/data/interviews";
-import { getUser } from "@/utils/auth/user";
+"use client";
+
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import UpcomingCard from "@/components/upcoming-card/upcoming-card";
+import UpcomingCard from "@/components/cards/upcoming-card/upcoming-card";
+import { useQuery } from "@tanstack/react-query";
+import { queryFunctions, queryKeys } from "@/utils/react-query";
+import Loading from "@/app/home/@today/loading";
 
 dayjs.extend(relativeTime);
 
-export default async function Today() {
-  const user = await getUser();
+export default function Today() {
+  const { data, isLoading } = useQuery({
+    queryKey: queryKeys.interviews.today({ upcoming: true }),
+    queryFn: queryFunctions.interviews.today({ upcoming: true }),
+    throwOnError: true,
+  });
 
-  if (!user) {
+  if (isLoading) return <Loading />;
+
+  if (data === null) {
     return (
       <div className="flex flex-col gap-5">
         <h2 className="text-xl font-semibold">Up next</h2>
-        <div className="flex flex-grow flex-col items-center justify-center">
+        <div className="flex min-h-72 flex-grow flex-col items-center justify-center">
           <h1 className="text-xl font-semibold">You are not logged in</h1>
           <p className="mt-1 text-sm font-medium text-secondary">
             Please log in to view your interviews
@@ -23,17 +32,14 @@ export default async function Today() {
     );
   }
 
-  const data = await getTodaysInterviews({
-    council: user.council,
-    upcoming: true,
-  });
-
-  if (!data.length) {
+  if (!data?.length) {
     return (
       <div className="flex flex-col gap-5">
         <h2 className="text-xl font-semibold">Up next</h2>
-        <div className="flex flex-grow flex-col items-center justify-center">
-          <h1 className="text-xl font-semibold">No more interviews today</h1>
+        <div className="flex min-h-72 flex-grow flex-col items-center justify-center">
+          <h1 className="text-center text-xl font-semibold">
+            No more interviews today
+          </h1>
           <p className="mt-1 text-center text-sm font-medium text-secondary">
             You don&apos;t have any more interviews scheduled for today (yet)
           </p>
@@ -56,7 +62,7 @@ export default async function Today() {
                 <UpcomingCard interview={interview} key={interview.id} />
               ))
           ) : (
-            <div className="flex flex-grow flex-col items-center justify-center">
+            <div className="flex min-h-72 flex-grow flex-col items-center justify-center">
               <p className="text-center text-sm font-medium text-secondary">
                 No more interviews today (yet)
               </p>

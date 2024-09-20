@@ -2,8 +2,8 @@ import { getTodaysInterviews } from "@/data/interviews";
 import dayjs from "dayjs";
 import { Clock, Phone } from "lucide-react";
 import buttonStyles from "@/utils/styles/button";
-import Options from "@/components/upcoming-card/options";
-import Status from "@/components/upcoming-card/status";
+import Options from "@/components/cards/upcoming-card/options";
+import Status from "@/components/cards/upcoming-card/status";
 import Badge from "@/components/badge";
 
 export default function UpcomingCard({
@@ -14,7 +14,7 @@ export default function UpcomingCard({
   upNext?: boolean;
 }) {
   return (
-    <div className="rounded-lg border p-4 shadow-md">
+    <div className="h-fit rounded-lg border p-4 shadow-md">
       <div key={interview.id} className="flex flex-col">
         <div className="flex justify-between">
           <div className="flex min-w-0 flex-col gap-1">
@@ -40,7 +40,7 @@ export default function UpcomingCard({
               ) : null}
             </h3>
             <p className="text-sm font-medium text-secondary">
-              {dayjs(`${interview.date} ${interview.time}`).fromNow()}
+              {dayjs(interview.date).fromNow()}
             </p>
           </div>
           {!upNext ? <Options interview={interview} /> : null}
@@ -48,7 +48,7 @@ export default function UpcomingCard({
         <div className="mt-4 flex flex-col gap-3">
           <p className="flex items-center gap-2 text-sm font-medium text-secondary">
             <Clock size={20} className="text-tertiary" />
-            {interview.time}
+            {dayjs(interview.date).format("hh:mm A")}
           </p>
           <a
             href={`tel:${interview.delegate.phoneNumber}`}
