@@ -26,6 +26,14 @@ model User {
   username   String      @unique
   password   String
   interviews Interview[]
+  sessions   Session[]
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  expiresAt DateTime
 }
 
 model Question {
@@ -42,34 +50,37 @@ enum DelegateStatus {
   REJECTED
 }
 
-model Delegate {
-  id          String         @id @default(cuid())
-  firstName   String
-  lastName    String
-  faculty     String
-  council     Council
-  phoneNumber String
-  email       String?
-  status      DelegateStatus
-  interview   Interview?     @relation
-  interviewId String?        @unique
+enum Faculty {
+  ALSUN
+  BUSINESS
+  PHARMACY
+  ENGINEERING
+  CS
+  ARCHITECTURE
+  DENTISTRY
+  MASS_COM
 }
 
-enum InterviewStatus {
-  PENDING
-  COMPLETED
-  MISSED
-  CANCELLED
+model Delegate {
+  id           String         @id @default(cuid())
+  firstName    String
+  lastName     String
+  faculty      Faculty
+  council      Council
+  phoneNumber  String
+  universityId String?
+  status       DelegateStatus
+  interview    Interview?     @relation
+  interviewId  String?        @unique
 }
 
 model Interview {
-  id         String          @id @default(cuid())
-  delegate   Delegate        @relation(fields: [delegateId], references: [id])
-  delegateId String          @unique
-  user       User?           @relation(fields: [userId], references: [id])
+  id         String   @id @default(cuid())
+  delegate   Delegate @relation(fields: [delegateId], references: [id], onDelete: Cascade)
+  delegateId String   @unique
+  user       User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
   userId     String?
   date       DateTime
-  status     InterviewStatus
   grade      String?
   notes      String?
   answers    Answer[]
@@ -77,11 +88,18 @@ model Interview {
 
 model Answer {
   id          String    @id @default(cuid())
-  question    Question  @relation(fields: [questionId], references: [id])
+  question    Question  @relation(fields: [questionId], references: [id], onDelete: Cascade)
   questionId  String
-  interview   Interview @relation(fields: [interviewId], references: [id])
+  interview   Interview @relation(fields: [interviewId], references: [id], onDelete: Cascade)
   interviewId String
   answer      String
 
   @@unique([questionId, interviewId])
+}
+
+model Settings {
+  id                                   Int     @id @default(1)
+  allowInterviewsFromDifferentCouncils Boolean @default(false)
+  allowChangeQuestions                 Boolean @default(false)
+  allowEditDelegateInfo                Boolean @default(false)
 }

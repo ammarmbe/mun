@@ -1,6 +1,6 @@
 "use client";
 
-import { Menu } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import Image from "next/image";
 import buttonStyles from "@/utils/styles/button";
 import { Drawer } from "vaul";
@@ -20,8 +20,8 @@ export default function DrawerWrapper({
   }, [pathname]);
 
   return (
-    <Drawer.Root direction="left" open={open} onOpenChange={setOpen}>
-      <header className="sticky top-0 z-20 flex items-center justify-between border-b bg-primary px-4 py-3 md:hidden">
+    <Drawer.Root direction="right" open={open} onOpenChange={setOpen}>
+      <header className="sticky top-0 z-20 flex items-center justify-between border-b bg-primary p-4 md:hidden">
         <Image
           src="/logo.png"
           height={32}
@@ -37,15 +37,29 @@ export default function DrawerWrapper({
               symmetrical: true,
             })}
           >
-            <Menu size={24} />
+            <Menu size={20} />
           </button>
         </Drawer.Trigger>
       </header>
       <Drawer.Portal>
-        <Drawer.Content className="fixed left-0 top-0 z-40 flex h-screen w-3/4 flex-col justify-between border-r bg-primary">
+        <Drawer.Content className="fixed right-0 top-0 z-40 flex h-[100dvh] w-3/4 flex-col justify-between border-l bg-primary">
           <Drawer.Title hidden>Main menu</Drawer.Title>
           <Drawer.Description hidden>Navigation links</Drawer.Description>
           {children}
+          <Drawer.Close asChild>
+            <button
+              className={buttonStyles(
+                {
+                  variant: "tertiary",
+                  size: "sm",
+                  symmetrical: true,
+                },
+                "absolute right-4 top-4",
+              )}
+            >
+              <X size={20} />
+            </button>
+          </Drawer.Close>
         </Drawer.Content>
         <Drawer.Overlay className="fixed inset-0 z-30 bg-black/40" />
       </Drawer.Portal>

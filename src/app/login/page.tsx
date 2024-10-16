@@ -8,6 +8,7 @@ import {
   inputStyles,
   labelStyles,
 } from "@/utils/styles/input";
+import Spinner from "@/components/spinner";
 
 export default function Page() {
   const [state, action, pending] = useActionState(serverAction, undefined);
@@ -67,6 +68,7 @@ export default function Page() {
         )}
         disabled={pending}
       >
+        {pending ? <Spinner size={20} /> : null}
         <span>Sign in</span>
       </button>
     </form>

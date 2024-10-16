@@ -10,7 +10,11 @@ export default function SidebarWrapper({
 }) {
   const pathname = usePathname();
 
-  if (pathname === "/login") {
+  if (
+    pathname === "/login" ||
+    pathname === "/form" ||
+    pathname === "/success"
+  ) {
     return null;
   }
 

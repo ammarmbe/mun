@@ -4,15 +4,17 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { queryFunctions, queryKeys } from "@/utils/react-query";
 import Loading from "@/app/interviews/[id]/@questions/loading";
 import { notFound, useSearchParams } from "next/navigation";
-import React, { useEffect } from "react";
+import React, { useEffect, use } from "react";
 import { inputStyles } from "@/utils/styles/input";
 import buttonStyles from "@/utils/styles/button";
 import { Check, Pencil } from "lucide-react";
 import { toast } from "sonner";
 import Toast from "@/components/toast";
 import { getGradeColor } from "@/utils";
+import Spinner from "@/components/spinner";
 
-export default function Page({ params }: { params: { id: string } }) {
+export default function Page(props: { params: Promise<{ id: string }> }) {
+  const params = use(props.params);
   const searchParams = useSearchParams();
   const queryClient = useQueryClient();
 
@@ -21,6 +23,7 @@ export default function Page({ params }: { params: { id: string } }) {
   );
   const [grade, setGrade] = React.useState("");
   const [notes, setNotes] = React.useState("");
+  const [universityId, setUniversityId] = React.useState("");
   const [data, setData] = React.useState<
     {
       id: string;
@@ -32,7 +35,6 @@ export default function Page({ params }: { params: { id: string } }) {
   const { data: questions, isLoading } = useQuery({
     queryKey: queryKeys.interview.questions({ id: params.id }),
     queryFn: queryFunctions.interview.questions({ id: params.id }),
-    throwOnError: true,
   });
 
   const answerMutation = useMutation({
@@ -42,6 +44,7 @@ export default function Page({ params }: { params: { id: string } }) {
         answer: string;
       }[];
       grade: string;
+      universityId: string;
       notes: string;
     }) => {
       const res = await fetch(`/api/interview/${params.id}/questions/`, {
@@ -91,13 +94,14 @@ export default function Page({ params }: { params: { id: string } }) {
         questions.questions.map((question) => ({
           id: question.id,
           question: question.question,
-          answer: question.answers[0].answer,
+          answer: question.answers[0]?.answer,
         })),
       );
     }
 
     setGrade(questions?.grade || "");
     setNotes(questions?.notes || "");
+    setUniversityId(questions?.universityId || "");
   }, [questions]);
 
   if (isLoading) return <Loading />;
@@ -115,13 +119,11 @@ export default function Page({ params }: { params: { id: string } }) {
     );
   }
 
-  if (!questions?.questions.length) {
-    notFound();
-  }
+  if (!questions?.questions.length) notFound();
 
   return (
-    <main className="flex flex-grow flex-col md:h-screen">
-      <div className="sticky top-[4.0625rem] flex items-center justify-between bg-primary px-4 py-8 md:static md:px-8">
+    <main className="m-4 mt-0 flex flex-grow flex-col overflow-hidden rounded-2xl border md:m-1 md:mx-0 md:mt-1 md:h-[calc(100dvh-0.5rem)]">
+      <div className="flex items-center justify-between border-b bg-primary p-4 md:p-6">
         <h1 className="text-display-xs font-semibold md:text-display-sm">
           Answers
         </h1>
@@ -140,15 +142,19 @@ export default function Page({ params }: { params: { id: string } }) {
             </button>
           ) : null}
           <button
-            className={buttonStyles({
-              size: "sm",
-              variant: "primary",
-            })}
+            className={buttonStyles(
+              {
+                size: "sm",
+                variant: "primary",
+              },
+              "min-h-[2.375rem]",
+            )}
             onClick={async () => {
               if (editing) {
                 await answerMutation.mutateAsync({
                   answers: data.map((q) => ({ id: q.id, answer: q.answer })),
                   grade,
+                  universityId,
                   notes,
                 });
               } else {
@@ -157,12 +163,48 @@ export default function Page({ params }: { params: { id: string } }) {
             }}
             disabled={answerMutation.isPending}
           >
-            {editing ? <Check size={16} /> : <Pencil size={16} />}
+            {answerMutation.isPending ? (
+              <Spinner size={16} />
+            ) : editing ? (
+              <Check size={16} />
+            ) : (
+              <Pencil size={16} />
+            )}
             <span>{editing ? "Save" : "Edit"}</span>
           </button>
         </div>
       </div>
-      <div className="flex flex-col gap-8 overflow-auto px-4 pb-8 md:px-8">
+      <div className="flex flex-col gap-8 overflow-auto p-4 md:p-6">
+        <div className="flex flex-col gap-1.5">
+          <label
+            htmlFor="university-id"
+            className="text-sm font-medium text-primary"
+          >
+            University ID
+          </label>
+          {editing ? (
+            <textarea
+              rows={3}
+              className={inputStyles(
+                {
+                  size: "md",
+                  variant: "primary",
+                },
+                "w-full max-w-96",
+              )}
+              value={universityId || ""}
+              onChange={(e) => {
+                setUniversityId(e.target.value);
+              }}
+            />
+          ) : (
+            <p className="text-secondary">
+              {universityId || (
+                <span className="text-disabled">Not specified</span>
+              )}
+            </p>
+          )}
+        </div>
         {data.map((question) => (
           <div key={question.id} className="flex flex-col gap-1.5">
             <label
@@ -193,15 +235,15 @@ export default function Page({ params }: { params: { id: string } }) {
               />
             ) : (
               <p className="text-secondary">
-                {
-                  questions.questions.filter((q) => q.id === question.id)[0]
-                    .answers[0].answer
-                }
+                {questions.questions.filter((q) => q.id === question.id)[0]
+                  .answers[0]?.answer || (
+                  <span className="text-disabled">Not specified</span>
+                )}
               </p>
             )}
           </div>
         ))}
-        <div key="grade" className="flex flex-col gap-1.5">
+        <div className="flex flex-col gap-1.5">
           <label htmlFor="grade" className="text-sm font-medium text-primary">
             Grade
           </label>
@@ -222,11 +264,11 @@ export default function Page({ params }: { params: { id: string } }) {
             />
           ) : (
             <p className={getGradeColor(grade, "text-secondary")}>
-              {grade || <span className="text-disabled">No grade added</span>}
+              {grade || <span className="text-disabled">Not specified</span>}
             </p>
           )}
         </div>
-        <div key="notes" className="flex flex-col gap-1.5">
+        <div className="flex flex-col gap-1.5">
           <label htmlFor="notes" className="text-sm font-medium text-primary">
             Notes
           </label>
@@ -247,7 +289,7 @@ export default function Page({ params }: { params: { id: string } }) {
             />
           ) : (
             <p className="text-secondary">
-              {notes || <span className="text-disabled">No notes added</span>}
+              {notes || <span className="text-disabled">Not specified</span>}
             </p>
           )}
         </div>

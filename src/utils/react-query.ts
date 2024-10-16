@@ -1,11 +1,9 @@
 import {
-  getCompletedInterviews,
-  getMissedInterviews,
+  getAllInterviews,
   getTodaysInterviews,
   getTomorrowsInterviews,
-  getUpcomingInterviews,
 } from "@/data/interviews";
-import { getUser } from "@/utils/auth/user";
+import { getUser } from "@/utils/auth";
 import { getInterviewById, getInterviewQuestions } from "@/data/interview";
 
 export const queryKeys = {
@@ -16,9 +14,12 @@ export const queryKeys = {
       upcoming,
     ],
     tomorrow: () => ["interviews", "tomorrow"],
-    completed: () => ["interviews", "completed"],
-    missed: () => ["interviews", "missed"],
-    upcoming: () => ["interviews", "upcoming"],
+    all: ({ pageIndex, pageSize }: { pageIndex: number; pageSize: number }) => [
+      "interviews",
+      "completed",
+      pageIndex,
+      pageSize,
+    ],
   },
   interview: {
     id: ({ id }: { id: string }) => ["interview", id],
@@ -57,45 +58,23 @@ export const queryFunctions = {
         ReturnType<typeof getTomorrowsInterviews>
       >;
     },
-    completed: async () => {
-      const res = await fetch("/api/interviews/completed");
+    all:
+      ({ pageIndex, pageSize }: { pageIndex: number; pageSize: number }) =>
+      async () => {
+        const res = await fetch(
+          `/api/interviews/all?page_index=${pageIndex}&page_size=${pageSize}`,
+        );
 
-      if (res.status === 401) return null;
+        if (res.status === 401) return null;
 
-      if (!res.ok) {
-        throw new Error();
-      }
+        if (!res.ok) {
+          throw new Error();
+        }
 
-      return (await res.json()) as Awaited<
-        ReturnType<typeof getCompletedInterviews>
-      >;
-    },
-    missed: async () => {
-      const res = await fetch("/api/interviews/missed");
-
-      if (res.status === 401) return null;
-
-      if (!res.ok) {
-        throw new Error();
-      }
-
-      return (await res.json()) as Awaited<
-        ReturnType<typeof getMissedInterviews>
-      >;
-    },
-    upcoming: async () => {
-      const res = await fetch("/api/interviews/upcoming");
-
-      if (res.status === 401) return null;
-
-      if (!res.ok) {
-        throw new Error();
-      }
-
-      return (await res.json()) as Awaited<
-        ReturnType<typeof getUpcomingInterviews>
-      >;
-    },
+        return (await res.json()) as Awaited<
+          ReturnType<typeof getAllInterviews>
+        >;
+      },
   },
   interview: {
     id:

@@ -1,11 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  content: [
-    "./src/app/**/*.{ts,tsx}",
-    "./src/components/**/*.{ts,tsx}",
-    "./src/utils/styles/*.ts",
-  ],
+  content: ["./src/**/*.{ts,tsx}"],
   theme: {
     extend: {
       colors: {
@@ -145,11 +141,11 @@ const config: Config = {
         "quaternary-onbrand": "rgba(var(--text-quaternary-onbrand))",
         disabled: "rgba(var(--text-disabled))",
         placeholder: "rgba(var(--text-placeholder))",
-        placeholder_subtle: "rgba(var(--text-placeholder_subtle))",
+        "placeholder-subtle": "rgba(var(--text-placeholder-subtle))",
         "brand-primary": "rgba(var(--text-brand-primary))",
         "brand-secondary": "rgba(var(--text-brand-secondary))",
         "brand-tertiary": "rgba(var(--text-brand-tertiary))",
-        "brand-tertiary_alt": "rgba(var(--text-brand-tertiary_alt))",
+        "brand-tertiary-alt": "rgba(var(--text-brand-tertiary-alt))",
         "error-primary": "rgba(var(--text-error-primary))",
         "warning-primary": "rgba(var(--text-warning-primary))",
         "success-primary": "rgba(var(--text-success-primary))",
@@ -195,6 +191,16 @@ const config: Config = {
         "success-secondary": "rgba(var(--bg-success-secondary))",
         "success-solid": "rgba(var(--bg-success-solid))",
       },
+      keyframes: {
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+      },
     },
     fontSize: {
       xs: ["0.75rem", { lineHeight: "1.125rem" }],
@@ -223,15 +229,17 @@ const config: Config = {
     },
     boxShadow: {
       none: "none",
-      xs: "0px 1px 2px 0px #1018280D",
-      sm: "0px 1px 3px 0px #1018281A, 0px 1px 2px 0px #1018280F",
-      md: "0px 4px 8px -2px #1018281A, 0px 2px 4px -2px #1018280F",
-      lg: "0px 12px 16px -4px #10182814, 0px 4px 6px -2px #10182808",
-      xl: "0px 20px 24px -4px #10182814, 0px 8px 8px -4px #10182808",
-      "2xl": "0px 24px 48px -12px #1018282E",
-      "3xl": "0px 32px 64px -12px #10182824",
+      xs: "0px 1px 2px 0px hsla(220, 29%, 5%, 0.05)",
+      sm: "0px 1px 3px 0px hsla(220, 29%, 5%, 0.1), 0px 1px 2px -1px hsla(220, 29%, 5%, 0.1)",
+      md: "0px 4px 6px -1px hsla(220, 29%, 5%, 0.1), 0px 2px 4px -2px hsla(220, 29%, 5%, 0.06)",
+      lg: "0px 12px 16px -4px hsla(220, 29%, 5%, 0.08), 0px 4px 6px -2px hsla(220, 29%, 5%, 0.03), 0px 2px 2px -1px hsla(220, 29%, 5%, 0.04)",
+      xl: "0px 20px 24px -4px hsla(220, 29%, 5%, 0.08), 0px 8px 8px -4px hsla(220, 29%, 5%, 0.03), 0px 3px 3px -1.5px hsla(220, 29%, 5%, 0.04)",
+      "2xl":
+        "0px 24px 48px -12px hsla(220, 29%, 5%, 0.18), 0px 4px 4px -2px hsla(220, 29%, 5%, 0.04)",
+      "3xl":
+        "0px 32px 64px -12px hsla(220, 29%, 5%, 0.14), 0px 5px 5px -2.5px hsla(220, 29%, 5%, 0.04)",
       "xs-skeuomorphic":
-        "0px -1px 0px 0px #1018280D inset, 0px 1px 2px 0px #1018280D",
+        "0px 0px 0px 1px #0A0D122E inset, 0px -2px 0px 0px #0A0D120D inset, 0px 1px 2px 0px #0A0D120D",
       "focus-ring":
         " 0px 0px 0px 2px rgba(var(--bg-primary)), 0px 0px 0px 4px rgba(var(--brand-500))",
       "focus-ring-alt":
@@ -242,12 +250,16 @@ const config: Config = {
         "0px 1px 2px 0px #1018280D, 0px 0px 0px 2px rgba(var(--bg-primary)), 0px 0px 0px 4px rgba(var(--brand-500))",
       "focus-ring-shadow-sm":
         "0px 1px 2px 0px #1018280F, 0px 0px 0px 2px rgba(var(--bg-primary)), 0px 0px 0px 4px rgba(var(--brand-500))",
+      "focus-ring-alt-shadow-xs":
+        "0px 1px 2px 0px #1018280D, 0px 0px 0px 2px rgba(var(--bg-primary-alt)), 0px 0px 0px 4px rgba(var(--brand-500))",
+      "focus-ring-alt-shadow-sm":
+        "0px 1px 2px 0px #1018280F, 0px 0px 0px 2px rgba(var(--bg-primary-alt)), 0px 0px 0px 4px rgba(var(--brand-500))",
       "focus-ring-error-shadow-xs":
         "0px 1px 2px 0px #1018280D, 0px 0px 0px 2px rgba(var(--bg-primary)), 0px 0px 0px 4px rgba(var(--error-500))",
       "focus-ring-shadow-xs-skeuomorphic":
-        "0px -1px 0px 0px #1018280D inset, 0px 1px 2px 0px #1018280D, 0px 0px 0px 2px rgba(var(--bg-primary)), 0px 0px 0px 4px rgba(var(--brand-500))",
+        "0px 0px 0px 1px #0A0D122E inset, 0px -2px 0px 0px #0A0D120D inset, 0px 1px 2px 0px #0A0D120D, 0px 0px 0px 2px rgba(var(--bg-primary)), 0px 0px 0px 4px rgba(var(--brand-500))",
       "focus-ring-error-shadow-xs-skeuomorphic":
-        "0px -1px 0px 0px #1018280D inset, 0px 1px 2px 0px #1018280D, 0px 0px 0px 2px rgba(var(--bg-primary)), 0px 0px 0px 4px rgba(var(--error-500))",
+        "0px 0px 0px 1px #0A0D122E inset, 0px -2px 0px 0px #0A0D120D inset, 0px 1px 2px 0px #0A0D120D, 0px 0px 0px 2px rgba(var(--bg-primary)), 0px 0px 0px 4px rgba(var(--error-500))",
     },
     borderRadius: {
       none: "0",
@@ -265,4 +277,5 @@ const config: Config = {
   },
   plugins: [require("tailwindcss-animate")],
 };
+
 export default config;

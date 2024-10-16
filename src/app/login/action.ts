@@ -2,7 +2,12 @@
 
 import * as v from "valibot";
 import prisma from "@/utils/db";
-import { createSession } from "@/utils/auth/session";
+import {
+  createSession,
+  generateSessionToken,
+  setSessionTokenCookie,
+} from "@/utils/auth";
+import { redirect } from "next/navigation";
 
 const schema = v.object({
   username: v.string("Username is required"),
@@ -45,5 +50,11 @@ export default async function action(
     } as FormState;
   }
 
-  await createSession(user.id);
+  const token = generateSessionToken();
+
+  await createSession(token, user.id);
+
+  setSessionTokenCookie(token, new Date(Date.now() + 1000 * 60 * 60 * 24 * 30));
+
+  return redirect("/");
 }

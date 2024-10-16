@@ -1,3 +1,6 @@
+import { $Enums } from "@prisma/client";
+import dayjs from "dayjs";
+
 export const getGradeColor = (
   grade: string | undefined | null,
   defaultValue: string,
@@ -27,3 +30,32 @@ export const getGradeColor = (
           ? "text-utility-error-500"
           : defaultValue;
 };
+
+export const faculties: Record<$Enums.Faculty, string> = {
+  ALSUN: "Al-Alsun",
+  MASS_COM: "Mass communication",
+  CS: "Computer science",
+  ENGINEERING: "Engineering",
+  BUSINESS: "Business",
+  ARCHITECTURE: "Architecture",
+  DENTISTRY: "Dentistry",
+  PHARMACY: "Pharmacy",
+};
+
+export function generateTimes(
+  start: string,
+  end: string,
+  interval: number,
+): string[] {
+  const times: string[] = [];
+
+  let currentTime = dayjs(`1970-01-01 ${start}`);
+
+  while (!currentTime.isAfter(dayjs(`1970-01-01 ${end}`))) {
+    times.push(currentTime.format("HH:mm"));
+
+    currentTime = currentTime.add(interval, "minute");
+  }
+
+  return times;
+}

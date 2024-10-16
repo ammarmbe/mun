@@ -1,15 +1,13 @@
 "use client";
 
-import { Bell, Check, CircleAlert, Home, Settings, Timer } from "lucide-react";
+import { Bell, BookOpenText, Home, Settings } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const links = [
   { href: "/home", label: "Home", icon: Home },
-  { href: "/interviews/completed", label: "Completed", icon: Check },
-  { href: "/interviews/missed", label: "Missed", icon: CircleAlert },
-  { href: "/interviews/upcoming", label: "Upcoming", icon: Timer },
+  { href: "/interviews/all", label: "All interviews", icon: BookOpenText },
 ];
 
 export default function Links() {
@@ -18,7 +16,7 @@ export default function Links() {
   return (
     <div className="flex flex-grow flex-col justify-between">
       <div className="flex flex-col">
-        <div className="relative mx-5 mt-4 size-[32px] md:mx-6 md:mt-8 md:size-[56px]">
+        <div className="relative mx-4 mb-0.5 mt-[1.125rem] size-[32px] md:mx-5 md:mb-0 md:mt-5 md:size-[56px] md:py-0">
           <Image
             src="/logo.png"
             fill
@@ -26,18 +24,18 @@ export default function Links() {
             alt="Logo"
           />
         </div>
-        <nav className="mt-5 flex flex-col gap-1 px-2 md:mt-6 md:px-4">
+        <nav className="mt-5 flex flex-col gap-1 px-2 md:px-4">
           {links.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className={`hover active flex min-w-48 items-center gap-3 rounded-md px-3 py-3 font-semibold transition-all active:shadow-focus-ring ${
+              className={`hover active flex min-w-48 items-center gap-2.5 rounded-sm px-3 py-2 font-semibold transition-all active:shadow-focus-ring ${
                 pathname === link.href
                   ? "bg-active text-primary"
                   : "bg-primary text-secondary"
               }`}
             >
-              <link.icon className="text-tertiary" size={24} />
+              <link.icon className="text-tertiary" size={20} />
               {link.label}
             </Link>
           ))}
@@ -46,24 +44,24 @@ export default function Links() {
       <div className="flex flex-col gap-1 px-2 md:px-4">
         <Link
           href="/settings"
-          className={`hover active flex min-w-48 items-center gap-3 rounded-md px-3 py-3 font-semibold transition-all active:shadow-focus-ring ${
+          className={`hover active flex min-w-48 items-center gap-2.5 rounded-sm px-3 py-2 font-semibold transition-all active:shadow-focus-ring ${
             pathname === "/settings"
               ? "bg-active text-primary"
               : "bg-primary text-secondary"
           }`}
         >
-          <Settings className="text-tertiary" size={24} />
+          <Settings className="text-tertiary" size={20} />
           Settings
         </Link>
         <Link
           href="/notifications"
-          className={`hover active flex min-w-48 items-center gap-3 rounded-md px-3 py-3 font-semibold transition-all active:shadow-focus-ring ${
+          className={`hover active flex min-w-48 items-center gap-2.5 rounded-sm px-3 py-2 font-semibold transition-all active:shadow-focus-ring ${
             pathname === "/notifications"
               ? "bg-active text-primary"
               : "bg-primary text-secondary"
           }`}
         >
-          <Bell className="text-tertiary" size={24} />
+          <Bell className="text-tertiary" size={20} />
           Notifications
         </Link>
       </div>

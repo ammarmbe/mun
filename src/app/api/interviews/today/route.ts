@@ -1,5 +1,5 @@
 import { getTodaysInterviews } from "@/data/interviews";
-import { getUser } from "@/utils/auth/user";
+import { getUser } from "@/utils/auth";
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
@@ -8,14 +8,14 @@ export async function GET(req: Request) {
     ? searchParams.get("upcoming") === "true"
     : undefined;
 
-  const user = await getUser();
+  const { user } = await getUser();
 
   if (!user) {
     return new Response(null, { status: 401 });
   }
 
   const interviews = await getTodaysInterviews({
-    council: user.council,
+    council: user.admin ? undefined : user.council,
     upcoming,
   });
 

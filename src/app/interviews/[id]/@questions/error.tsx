@@ -40,7 +40,7 @@ export default function Error({
           )}
           onClick={() => reset()}
         >
-          Try again
+          <span>Try again</span>
         </button>
       </div>
     </main>

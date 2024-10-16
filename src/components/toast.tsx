@@ -14,7 +14,7 @@ export default function Toast({
   t: string | number;
 }) {
   return (
-    <div className="relative flex gap-3 rounded-xl border border-primary bg-primary-alt p-4 shadow-lg">
+    <div className="relative flex w-full gap-3 rounded-xl border border-primary bg-primary-alt p-4 shadow-lg">
       {variant === "success" ? (
         <CheckCircle2 size={32} className="text-success-primary" />
       ) : variant === "error" ? (
@@ -33,7 +33,7 @@ export default function Toast({
             size: "sm",
             symmetrical: true,
           },
-          "enabled:active:shadow-focus-ring-alt absolute right-2 top-2 h-fit bg-primary-alt",
+          "absolute right-2 top-2 h-fit bg-primary-alt enabled:active:shadow-focus-ring-alt",
         )}
         onClick={() => {
           toast.dismiss(t);

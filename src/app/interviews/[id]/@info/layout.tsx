@@ -6,7 +6,7 @@ export default async function Layout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="flex flex-col gap-8 border-b px-4 py-8 md:w-72 md:border-b-0 md:border-l md:px-8">
+    <main className="m-4 flex flex-col gap-5 rounded-2xl border p-4 shadow-xs md:m-1 md:w-72 md:p-5">
       {children}
     </main>
   );

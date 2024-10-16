@@ -6,9 +6,9 @@ export async function getInterviewById({
   council,
 }: {
   id: string;
-  council: $Enums.Council;
+  council?: $Enums.Council;
 }) {
-  return prisma.interview.findFirst({
+  const interview = await prisma.interview.findFirst({
     where: {
       id,
       delegate: {
@@ -18,9 +18,13 @@ export async function getInterviewById({
     select: {
       id: true,
       date: true,
-      status: true,
       grade: true,
       notes: true,
+      _count: {
+        select: {
+          answers: true,
+        },
+      },
       user: {
         select: {
           id: true,
@@ -33,12 +37,29 @@ export async function getInterviewById({
           council: true,
           firstName: true,
           lastName: true,
+          universityId: true,
           phoneNumber: true,
           faculty: true,
         },
       },
     },
   });
+
+  const questionCount = await prisma.question.count({
+    where: {
+      council,
+    },
+  });
+
+  return interview
+    ? {
+        ...interview,
+        _count: {
+          ...interview._count,
+          questions: questionCount,
+        },
+      }
+    : null;
 }
 
 export async function getInterviewQuestions({
@@ -46,7 +67,7 @@ export async function getInterviewQuestions({
   council,
 }: {
   id: string;
-  council: $Enums.Council;
+  council?: $Enums.Council;
 }) {
   const questions = await prisma.question.findMany({
     where: {
@@ -75,6 +96,11 @@ export async function getInterviewQuestions({
     },
     select: {
       grade: true,
+      delegate: {
+        select: {
+          universityId: true,
+        },
+      },
       notes: true,
     },
   });
@@ -82,6 +108,7 @@ export async function getInterviewQuestions({
   return {
     questions,
     grade: interview?.grade,
+    universityId: interview?.delegate.universityId,
     notes: interview?.notes,
   };
 }

@@ -6,10 +6,10 @@ export async function getTodaysInterviews({
   council,
   upcoming,
 }: {
-  council: $Enums.Council;
+  council?: $Enums.Council;
   upcoming?: boolean;
 }) {
-  return prisma.interview.findMany({
+  const interviews = await prisma.interview.findMany({
     where: {
       date: {
         gte: upcoming ? dayjs().startOf("day").toDate() : dayjs().toDate(),
@@ -22,7 +22,19 @@ export async function getTodaysInterviews({
     select: {
       id: true,
       date: true,
-      status: true,
+      grade: true,
+      user: {
+        select: {
+          id: true,
+          firstName: true,
+          lastName: true,
+        },
+      },
+      _count: {
+        select: {
+          answers: true,
+        },
+      },
       delegate: {
         select: {
           council: true,
@@ -36,14 +48,28 @@ export async function getTodaysInterviews({
       date: "asc",
     },
   });
+
+  const questionCount = await prisma.question.count({
+    where: {
+      council,
+    },
+  });
+
+  return interviews.map((interview) => ({
+    ...interview,
+    _count: {
+      ...interview._count,
+      questions: questionCount,
+    },
+  }));
 }
 
 export async function getTomorrowsInterviews({
   council,
 }: {
-  council: $Enums.Council;
+  council?: $Enums.Council;
 }) {
-  return prisma.interview.findMany({
+  const interviews = await prisma.interview.findMany({
     where: {
       date: {
         gte: dayjs().add(1, "day").startOf("day").toDate(),
@@ -56,7 +82,19 @@ export async function getTomorrowsInterviews({
     select: {
       id: true,
       date: true,
-      status: true,
+      grade: true,
+      user: {
+        select: {
+          id: true,
+          firstName: true,
+          lastName: true,
+        },
+      },
+      _count: {
+        select: {
+          answers: true,
+        },
+      },
       delegate: {
         select: {
           council: true,
@@ -70,16 +108,33 @@ export async function getTomorrowsInterviews({
       date: "asc",
     },
   });
+
+  const questionCount = await prisma.question.count({
+    where: {
+      council,
+    },
+  });
+
+  return interviews.map((interview) => ({
+    ...interview,
+    _count: {
+      ...interview._count,
+      questions: questionCount,
+    },
+  }));
 }
 
-export async function getCompletedInterviews({
+export async function getAllInterviews({
   council,
+  pageIndex,
+  pageSize,
 }: {
-  council: $Enums.Council;
+  council?: $Enums.Council;
+  pageIndex: number;
+  pageSize: number;
 }) {
-  return prisma.interview.findMany({
+  const interviews = await prisma.interview.findMany({
     where: {
-      status: "COMPLETED",
       delegate: {
         council,
       },
@@ -88,7 +143,11 @@ export async function getCompletedInterviews({
       id: true,
       date: true,
       grade: true,
-      status: true,
+      _count: {
+        select: {
+          answers: true,
+        },
+      },
       user: {
         select: {
           id: true,
@@ -106,94 +165,30 @@ export async function getCompletedInterviews({
       },
     },
     orderBy: { date: "desc" },
+    skip: pageIndex * pageSize,
+    take: pageSize,
   });
-}
 
-export async function getMissedInterviews({
-  council,
-}: {
-  council: $Enums.Council;
-}) {
-  return prisma.interview.findMany({
+  const questionCount = await prisma.question.count({
     where: {
-      status: "MISSED",
-      delegate: {
-        council,
-      },
+      council,
     },
-    select: {
-      id: true,
-      date: true,
-      status: true,
-      delegate: {
-        select: {
-          council: true,
-          firstName: true,
-          lastName: true,
-          phoneNumber: true,
+  });
+
+  return {
+    interviews: interviews.map((interview) => ({
+      ...interview,
+      _count: {
+        ...interview._count,
+        questions: questionCount,
+      },
+    })),
+    rowCount: await prisma.interview.count({
+      where: {
+        delegate: {
+          council,
         },
       },
-    },
-    orderBy: { date: "desc" },
-  });
-}
-
-export async function getUpcomingInterviews({
-  council,
-}: {
-  council: $Enums.Council;
-}) {
-  return prisma.interview.findMany({
-    where: {
-      date: {
-        gte: dayjs().toDate(),
-      },
-      status: "PENDING",
-      delegate: {
-        council,
-      },
-    },
-    select: {
-      id: true,
-      date: true,
-      status: true,
-      delegate: {
-        select: {
-          council: true,
-          firstName: true,
-          lastName: true,
-          phoneNumber: true,
-        },
-      },
-    },
-    orderBy: { date: "asc" },
-  });
-}
-
-export async function getAllInterviews({
-  council,
-}: {
-  council: $Enums.Council;
-}) {
-  return prisma.interview.findMany({
-    where: {
-      delegate: {
-        council,
-      },
-    },
-    select: {
-      id: true,
-      date: true,
-      status: true,
-      delegate: {
-        select: {
-          council: true,
-          firstName: true,
-          lastName: true,
-          phoneNumber: true,
-        },
-      },
-    },
-    orderBy: { date: "desc" },
-  });
+    }),
+  };
 }
