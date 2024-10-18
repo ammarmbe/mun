@@ -4,7 +4,7 @@ import prisma from "@/utils/db";
 export async function getCouncilQuestions({
   council,
 }: {
-  council?: $Enums.Council;
+  council?: $Enums.Council | null;
 }) {
   const data = await prisma.question.findMany({
     where: {

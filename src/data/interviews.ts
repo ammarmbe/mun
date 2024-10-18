@@ -6,7 +6,7 @@ export async function getTodaysInterviews({
   council,
   upcoming,
 }: {
-  council?: $Enums.Council;
+  council?: $Enums.Council | null;
   upcoming?: boolean;
 }) {
   const interviews = await prisma.interview.findMany({
@@ -77,7 +77,7 @@ export async function getTodaysInterviews({
 export async function getTomorrowsInterviews({
   council,
 }: {
-  council?: $Enums.Council;
+  council?: $Enums.Council | null;
 }) {
   const interviews = await prisma.interview.findMany({
     where: {
@@ -149,7 +149,7 @@ export async function getAllInterviews({
   pageIndex,
   pageSize,
 }: {
-  council?: $Enums.Council;
+  council?: $Enums.Council | null;
   pageIndex: number;
   pageSize: number;
 }) {
