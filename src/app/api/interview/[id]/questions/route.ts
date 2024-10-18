@@ -2,7 +2,10 @@ import { getUser } from "@/utils/auth";
 import { getInterviewQuestions } from "@/data/interview";
 import prisma from "@/utils/db";
 
-export async function GET(_: Request, props: { params: Promise<{ id: string }> }) {
+export async function GET(
+  _: Request,
+  props: { params: Promise<{ id: string }> },
+) {
   const params = await props.params;
   const { user } = await getUser();
 
@@ -18,7 +21,10 @@ export async function GET(_: Request, props: { params: Promise<{ id: string }> }
   return new Response(JSON.stringify(questions));
 }
 
-export async function POST(req: Request, props: { params: Promise<{ id: string }> }) {
+export async function POST(
+  req: Request,
+  props: { params: Promise<{ id: string }> },
+) {
   const params = await props.params;
   const { user } = await getUser();
 
@@ -29,6 +35,7 @@ export async function POST(req: Request, props: { params: Promise<{ id: string }
   const data: {
     answers: {
       id: string;
+      value: string;
       answer: string;
     }[];
     grade: string;

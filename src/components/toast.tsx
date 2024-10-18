@@ -33,7 +33,7 @@ export default function Toast({
             size: "sm",
             symmetrical: true,
           },
-          "absolute right-2 top-2 h-fit bg-primary-alt enabled:active:shadow-focus-ring-alt",
+          "enabled:active:shadow-ring-alt absolute right-2 top-2 h-fit bg-primary-alt",
         )}
         onClick={() => {
           toast.dismiss(t);

@@ -21,7 +21,7 @@ model User {
   id         String      @id @default(cuid())
   firstName  String
   lastName   String
-  council    Council
+  council    Council?
   admin      Boolean     @default(false)
   username   String      @unique
   password   String
@@ -34,14 +34,6 @@ model Session {
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String
   expiresAt DateTime
-}
-
-model Question {
-  id       String   @id @default(cuid())
-  number   Int
-  question String
-  council  Council
-  answers  Answer[]
 }
 
 enum DelegateStatus {
@@ -86,6 +78,15 @@ model Interview {
   answers    Answer[]
 }
 
+model Question {
+  id        String    @id @default(cuid())
+  order     Int
+  value     String
+  council   Council
+  answers   Answer[]
+  deletedAt DateTime?
+}
+
 model Answer {
   id          String    @id @default(cuid())
   question    Question  @relation(fields: [questionId], references: [id], onDelete: Cascade)
@@ -97,9 +98,18 @@ model Answer {
   @@unique([questionId, interviewId])
 }
 
-model Settings {
-  id                                   Int     @id @default(1)
-  allowInterviewsFromDifferentCouncils Boolean @default(false)
-  allowChangeQuestions                 Boolean @default(false)
-  allowEditDelegateInfo                Boolean @default(false)
+enum SettingType {
+  STRING
+  NUMBER
+  BOOLEAN
+}
+
+model Setting {
+  id          String      @id
+  label       String
+  description String
+  type        SettingType
+  min         Int?
+  max         Int?
+  value       String
 }

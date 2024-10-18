@@ -52,6 +52,16 @@ export async function getTodaysInterviews({
   const questionCount = await prisma.question.count({
     where: {
       council,
+      OR: [
+        {
+          deletedAt: null,
+        },
+        {
+          answers: {
+            some: {},
+          },
+        },
+      ],
     },
   });
 
@@ -112,6 +122,16 @@ export async function getTomorrowsInterviews({
   const questionCount = await prisma.question.count({
     where: {
       council,
+      OR: [
+        {
+          deletedAt: null,
+        },
+        {
+          answers: {
+            some: {},
+          },
+        },
+      ],
     },
   });
 
@@ -172,6 +192,16 @@ export async function getAllInterviews({
   const questionCount = await prisma.question.count({
     where: {
       council,
+      OR: [
+        {
+          deletedAt: null,
+        },
+        {
+          answers: {
+            some: {},
+          },
+        },
+      ],
     },
   });
 

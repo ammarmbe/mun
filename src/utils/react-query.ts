@@ -1,10 +1,11 @@
-import {
+import type {
   getAllInterviews,
   getTodaysInterviews,
   getTomorrowsInterviews,
 } from "@/data/interviews";
-import { getUser } from "@/utils/auth";
-import { getInterviewById, getInterviewQuestions } from "@/data/interview";
+import type { getUser } from "@/utils/auth";
+import type { getInterviewById, getInterviewQuestions } from "@/data/interview";
+import type { getCouncilQuestions } from "@/data/council";
 
 export const queryKeys = {
   interviews: {
@@ -26,6 +27,7 @@ export const queryKeys = {
     questions: ({ id }: { id: string }) => ["interview", id, "questions"],
   },
   user: () => ["user"],
+  questions: () => ["questions"],
 };
 
 export const queryFunctions = {
@@ -118,5 +120,18 @@ export const queryFunctions = {
     }
 
     return (await res.json()) as Awaited<ReturnType<typeof getUser>>;
+  },
+  questions: async () => {
+    const res = await fetch("/api/questions");
+
+    if (res.status === 401) return null;
+
+    if (!res.ok) {
+      throw new Error();
+    }
+
+    return (await res.json()) as Awaited<
+      ReturnType<typeof getCouncilQuestions>
+    >;
   },
 };

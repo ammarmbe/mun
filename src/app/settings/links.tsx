@@ -28,8 +28,8 @@ export default function Links() {
           key={link.href}
           className={`rounded-xl px-3 py-2 text-sm font-semibold transition-all ${
             pathname === link.href
-              ? "active:shadow-focus-ring-alt-shadow-sm bg-tertiary text-secondary shadow-sm"
-              : "text-quaternary hover:bg-tertiary hover:text-secondary hover:shadow-sm active:bg-secondary-subtle active:text-quaternary active:shadow-focus-ring-alt"
+              ? "active:shadow-ring-alt-shadow-sm bg-tertiary text-secondary shadow-sm"
+              : "active:shadow-ring-alt text-quaternary hover:bg-tertiary hover:text-secondary hover:shadow-sm active:bg-secondary-subtle active:text-quaternary"
           }`}
           href={link.href}
         >

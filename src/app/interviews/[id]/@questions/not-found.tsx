@@ -9,7 +9,7 @@ export default function NotFound() {
         You haven&apos;t added any questions yet.
       </p>
       <Link
-        href="/home"
+        href="/settings/questions"
         className={buttonStyles(
           {
             variant: "secondary",
@@ -18,7 +18,7 @@ export default function NotFound() {
           "mt-5",
         )}
       >
-        <span>Return to home</span>
+        <span>Go to settings</span>
       </Link>
     </div>
   );

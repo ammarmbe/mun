@@ -73,7 +73,7 @@ export default function Personal({ user }: { user: User }) {
       toast.custom((t) => (
         <Toast
           variant="success"
-          title="Answers saved"
+          title="Data saved"
           t={t}
           message="Your data has been saved successfully."
         />
@@ -91,13 +91,10 @@ export default function Personal({ user }: { user: User }) {
           </p>
         </div>
         <button
-          className={buttonStyles(
-            {
-              variant: "primary",
-              size: "md",
-            },
-            "h-fit",
-          )}
+          className={buttonStyles({
+            variant: "primary",
+            size: "sm",
+          })}
           disabled={updateMutation.isPending}
           onClick={() => updateMutation.mutate()}
         >
@@ -126,7 +123,7 @@ export default function Personal({ user }: { user: User }) {
                 className={inputStyles(
                   {
                     variant: "primary",
-                    size: "md",
+                    size: "sm",
                   },
                   "w-full",
                 )}
@@ -147,7 +144,7 @@ export default function Personal({ user }: { user: User }) {
                 className={inputStyles(
                   {
                     variant: "primary",
-                    size: "md",
+                    size: "sm",
                   },
                   "w-full",
                 )}
@@ -165,7 +162,7 @@ export default function Personal({ user }: { user: User }) {
             <select
               className={inputStyles({
                 variant: "primary",
-                size: "md",
+                size: "sm",
               })}
               disabled
             >

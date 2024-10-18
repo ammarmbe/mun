@@ -4,7 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { queryFunctions, queryKeys } from "@/utils/react-query";
 import Loading from "@/app/interviews/[id]/@questions/loading";
 import { notFound, useSearchParams } from "next/navigation";
-import React, { useEffect, use } from "react";
+import React, { useEffect, use, useState } from "react";
 import { inputStyles } from "@/utils/styles/input";
 import buttonStyles from "@/utils/styles/button";
 import { Check, Pencil } from "lucide-react";
@@ -18,16 +18,16 @@ export default function Page(props: { params: Promise<{ id: string }> }) {
   const searchParams = useSearchParams();
   const queryClient = useQueryClient();
 
-  const [editing, setEditing] = React.useState(
+  const [editing, setEditing] = useState(
     searchParams.get("editing") === "true",
   );
-  const [grade, setGrade] = React.useState("");
-  const [notes, setNotes] = React.useState("");
-  const [universityId, setUniversityId] = React.useState("");
-  const [data, setData] = React.useState<
+  const [grade, setGrade] = useState("");
+  const [notes, setNotes] = useState("");
+  const [universityId, setUniversityId] = useState("");
+  const [data, setData] = useState<
     {
       id: string;
-      question: string;
+      value: string;
       answer: string;
     }[]
   >([]);
@@ -41,6 +41,7 @@ export default function Page(props: { params: Promise<{ id: string }> }) {
     mutationFn: async (data: {
       answers: {
         id: string;
+        value: string;
         answer: string;
       }[];
       grade: string;
@@ -93,7 +94,7 @@ export default function Page(props: { params: Promise<{ id: string }> }) {
       setData(
         questions.questions.map((question) => ({
           id: question.id,
-          question: question.question,
+          value: question.value,
           answer: question.answers[0]?.answer,
         })),
       );
@@ -152,7 +153,11 @@ export default function Page(props: { params: Promise<{ id: string }> }) {
             onClick={async () => {
               if (editing) {
                 await answerMutation.mutateAsync({
-                  answers: data.map((q) => ({ id: q.id, answer: q.answer })),
+                  answers: data.map((q) => ({
+                    id: q.id,
+                    answer: q.answer,
+                    value: q.value,
+                  })),
                   grade,
                   universityId,
                   notes,
@@ -211,7 +216,7 @@ export default function Page(props: { params: Promise<{ id: string }> }) {
               htmlFor={question.id}
               className="text-sm font-medium text-primary"
             >
-              {question.question}
+              {question.value}
             </label>
             {editing ? (
               <textarea

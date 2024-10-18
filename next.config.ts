@@ -1,15 +1,17 @@
 import { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  async rewrites() {
+  async redirects() {
     return [
       {
         source: "/",
         destination: "/home",
+        permanent: true,
       },
       {
         source: "/settings",
         destination: "/settings/personal",
+        permanent: true,
       },
     ];
   },

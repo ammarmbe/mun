@@ -29,7 +29,7 @@ export default function Links() {
             <Link
               key={link.href}
               href={link.href}
-              className={`hover active flex min-w-48 items-center gap-2.5 rounded-sm px-3 py-2 font-semibold transition-all active:shadow-focus-ring ${
+              className={`hover active active:shadow-ring flex min-w-48 items-center gap-2.5 rounded-sm px-3 py-2 font-semibold transition-all ${
                 pathname === link.href
                   ? "bg-active text-primary"
                   : "bg-primary text-secondary"
@@ -44,7 +44,7 @@ export default function Links() {
       <div className="flex flex-col gap-1 px-2 md:px-4">
         <Link
           href="/settings"
-          className={`hover active flex min-w-48 items-center gap-2.5 rounded-sm px-3 py-2 font-semibold transition-all active:shadow-focus-ring ${
+          className={`hover active active:shadow-ring flex min-w-48 items-center gap-2.5 rounded-sm px-3 py-2 font-semibold transition-all ${
             pathname === "/settings"
               ? "bg-active text-primary"
               : "bg-primary text-secondary"
@@ -55,7 +55,7 @@ export default function Links() {
         </Link>
         <Link
           href="/notifications"
-          className={`hover active flex min-w-48 items-center gap-2.5 rounded-sm px-3 py-2 font-semibold transition-all active:shadow-focus-ring ${
+          className={`hover active active:shadow-ring flex min-w-48 items-center gap-2.5 rounded-sm px-3 py-2 font-semibold transition-all ${
             pathname === "/notifications"
               ? "bg-active text-primary"
               : "bg-primary text-secondary"

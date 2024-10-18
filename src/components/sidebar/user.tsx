@@ -42,7 +42,9 @@ export default async function User() {
           <p className="truncate text-sm font-semibold text-secondary">
             {user?.firstName} {user?.lastName}
           </p>
-          <p className="text-sm font-medium text-tertiary">{user?.council}</p>
+          <p className="text-sm font-medium text-tertiary">
+            {user?.admin ? "Admin" : user?.council}
+          </p>
         </div>
       </div>
       <button

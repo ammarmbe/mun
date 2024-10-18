@@ -240,25 +240,26 @@ const config: Config = {
         "0px 32px 64px -12px hsla(220, 29%, 5%, 0.14), 0px 5px 5px -2.5px hsla(220, 29%, 5%, 0.04)",
       "xs-skeuomorphic":
         "0px 0px 0px 1px #0A0D122E inset, 0px -2px 0px 0px #0A0D120D inset, 0px 1px 2px 0px #0A0D120D",
-      "focus-ring":
-        " 0px 0px 0px 2px rgba(var(--bg-primary)), 0px 0px 0px 4px rgba(var(--brand-500))",
-      "focus-ring-alt":
+      "xs-skeuomorphic-alt":
+        "0px 0px 0px 1px #00000000 inset, 0px -2px 0px 0px #0A0D120D inset, 0px 1px 2px 0px #0A0D120D",
+      ring: " 0px 0px 0px 2px rgba(var(--bg-primary)), 0px 0px 0px 4px rgba(var(--brand-500))",
+      "ring-alt":
         " 0px 0px 0px 2px rgba(var(--bg-primary-alt)), 0px 0px 0px 4px rgba(var(--brand-500))",
-      "focus-ring-error":
+      "ring-error":
         " 0px 0px 0px 2px rgba(var(--bg-error-primary)), 0px 0px 0px 4px rgba(var(--error-500))",
-      "focus-ring-shadow-xs":
+      "ring-shadow-xs":
         "0px 1px 2px 0px #1018280D, 0px 0px 0px 2px rgba(var(--bg-primary)), 0px 0px 0px 4px rgba(var(--brand-500))",
-      "focus-ring-shadow-sm":
+      "ring-shadow-sm":
         "0px 1px 2px 0px #1018280F, 0px 0px 0px 2px rgba(var(--bg-primary)), 0px 0px 0px 4px rgba(var(--brand-500))",
-      "focus-ring-alt-shadow-xs":
+      "ring-alt-shadow-xs":
         "0px 1px 2px 0px #1018280D, 0px 0px 0px 2px rgba(var(--bg-primary-alt)), 0px 0px 0px 4px rgba(var(--brand-500))",
-      "focus-ring-alt-shadow-sm":
+      "ring-alt-shadow-sm":
         "0px 1px 2px 0px #1018280F, 0px 0px 0px 2px rgba(var(--bg-primary-alt)), 0px 0px 0px 4px rgba(var(--brand-500))",
-      "focus-ring-error-shadow-xs":
+      "ring-error-shadow-xs":
         "0px 1px 2px 0px #1018280D, 0px 0px 0px 2px rgba(var(--bg-primary)), 0px 0px 0px 4px rgba(var(--error-500))",
-      "focus-ring-shadow-xs-skeuomorphic":
+      "ring-shadow-xs-skeuomorphic":
         "0px 0px 0px 1px #0A0D122E inset, 0px -2px 0px 0px #0A0D120D inset, 0px 1px 2px 0px #0A0D120D, 0px 0px 0px 2px rgba(var(--bg-primary)), 0px 0px 0px 4px rgba(var(--brand-500))",
-      "focus-ring-error-shadow-xs-skeuomorphic":
+      "ring-error-shadow-xs-skeuomorphic":
         "0px 0px 0px 1px #0A0D122E inset, 0px -2px 0px 0px #0A0D120D inset, 0px 1px 2px 0px #0A0D120D, 0px 0px 0px 2px rgba(var(--bg-primary)), 0px 0px 0px 4px rgba(var(--error-500))",
     },
     borderRadius: {

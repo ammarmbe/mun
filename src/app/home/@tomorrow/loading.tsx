@@ -1,4 +1,4 @@
-import { Clock, Phone } from "lucide-react";
+import { Clock, Flag, Phone } from "lucide-react";
 import Skeleton from "react-loading-skeleton";
 
 export default function Loading() {
@@ -22,6 +22,10 @@ export default function Loading() {
                 </div>
               </div>
               <div className="mt-4 flex flex-col gap-3">
+                <p className="flex items-center gap-2 text-sm font-medium text-secondary">
+                  <Flag size={16} className="text-tertiary" />
+                  <Skeleton className="!w-32" />
+                </p>
                 <p className="flex items-center gap-2 text-sm font-medium text-secondary">
                   <Clock size={16} className="text-tertiary" />
                   <Skeleton className="!w-36" />

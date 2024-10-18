@@ -11,6 +11,23 @@ const sizes: Record<Size, string> = {
   "2xl": "py-[1.125rem] px-[1.375rem] gap-2.5 text-lg rounded-lg",
 };
 
+const primarySizes: Record<Size, string> = {
+  sm: "[&:not(:disabled)]:py-[calc(0.5rem+1px)] [&:not(:disabled)]:px-[calc(0.75rem+1px)]",
+  md: "[&:not(:disabled)]:py-[calc(0.625rem+1px)] [&:not(:disabled)]:px-[calc(0.875rem+1px)]",
+  lg: "[&:not(:disabled)]:py-[calc(0.75rem+1px)] [&:not(:disabled)]:px-[calc(1rem+1px)]",
+  xl: "[&:not(:disabled)]:py-[calc(0.875rem+1px)] [&:not(:disabled)]:px-[calc(1.125rem+1px)]",
+  "2xl":
+    "[&:not(:disabled)]:py-[calc(1.125rem+1px)] [&:not(:disabled)]:px-[calc(1.375rem+1px)]",
+};
+
+const primarySymmetricalSizes: Record<Size, string> = {
+  sm: "[&:not(:disabled)]:p-[calc(0.5rem+1px)]",
+  md: "[&:not(:disabled)]:p-[calc(0.625rem+1px)]",
+  lg: "[&:not(:disabled)]:p-[calc(0.75rem+1px)]",
+  xl: "[&:not(:disabled)]:p-[calc(0.875rem+1px)]",
+  "2xl": "[&:not(:disabled)]:p-[calc(1.125rem+1px)]",
+};
+
 const symmetricalSizes: Record<Size, string> = {
   sm: "p-2 gap-1 text-sm rounded-md",
   md: "p-2.5 gap-1.5 text-sm rounded-md",
@@ -21,42 +38,25 @@ const symmetricalSizes: Record<Size, string> = {
 
 const variants: Record<Variant, string> = {
   primary: `
-    transition-all after:transition-all before:transition-all 
-    before:absolute after:absolute bg-brand-solid 
-    hover:bg-brand-700 active:bg-brand-solid border border-transparent
-    before:inset-0 disabled:before:!bg-transparent before:bg-gradient-to-b before:from-[#FFFFFF1F] before:to-[#FFFFFF00] 
-    after:inset-0.5 after:bg-brand-solid hover:after:bg-brand-700 active:after:!bg-brand-solid 
-    text-white relative [&_*]:z-10 !border-0 shadow-xs-skeuomorphic [&:not(:disabled)]:active:shadow-focus-ring-shadow-xs-skeuomorphic 
-    disabled:!text-disabled disabled:!bg-disabled disabled:!border-disabled 
-    disabled:before:!hidden disabled:after:!bg-disabled disabled:after:!bg-disabled disabled:after:!border-disabled-subtle disabled:!shadow-none
+    transition-[box-shadow] button-skeuomorphic border-transparent
+    bg-brand-600 hover:bg-brand-700 active:bg-brand-600 relative before:rounded-[inherit]
+    shadow-xs-skeuomorphic [&:not(:disabled)]:active:shadow-ring-shadow-xs-skeuomorphic [&_*]:z-10
+    disabled:!text-disabled disabled:!bg-disabled disabled:!border-disabled-subtle disabled:border disabled:shadow-none
   `,
   secondary: `
-    transition-all after:transition-all before:transition-all 
-    before:absolute after:absolute before:inset-0 before:absolute
-    before:bg-gradient-to-b before:from-[#FFFFFF00] before:to-[#FFFFFF00] 
-    after:absolute bg-primary-alt active:bg-primary-alt hover:bg-gray-50 dark:hover:bg-gray-800 active:bg-primary-alt 
-    shadow-xs-skeuomorphic [&:not(:disabled)]:active:shadow-focus-ring-shadow-xs-skeuomorphic 
-    after:inset-px after:bg-primary-alt active:after:!bg-primary-alt
-    hover:after:bg-gray-50 dark:hover:after:bg-gray-800 
-    relative [&_*]:z-10 border-primary border text-secondary 
-    disabled:!text-disabled disabled:!bg-disabled disabled:!border-disabled-subtle disabled:after:!bg-disabled disabled:!shadow-none
+    [&_*]:z-10 border-primary border text-secondary transition-all
+    hover hover:bg-primary bg-primary-alt active
+    shadow-xs-skeuomorphic-alt [&:not(:disabled)]:active:shadow-ring-shadow-xs-skeuomorphic 
+    disabled:!text-disabled disabled:!bg-disabled disabled:!border-disabled-subtle
   `,
   tertiary: `
-    bg-primary border-primary active text-secondary hover 
-    [&:not(:disabled)]:active:shadow-focus-ring disabled:!text-disabled
+    bg-primary active text-secondary hover border border-transparent
+    [&:not(:disabled)]:active:shadow-ring disabled:!text-disabled
   `,
   dropdown: `
     bg-primary border-primary hover text-secondary
     disabled:!text-disabled !rounded-none w-full !justify-start
   `,
-};
-
-const primarySecondaryRoundedClasses: Record<Size, string> = {
-  sm: "before:rounded-md after:rounded-[calc(0.5rem-2px)] rounded-md",
-  md: "before:rounded-md after:rounded-[calc(0.5rem-2px)] rounded-md",
-  lg: "before:rounded-md after:rounded-[calc(0.5rem-2px)] rounded-md",
-  xl: "before:rounded-md after:rounded-[calc(0.5rem-2px)] rounded-md",
-  "2xl": "before:rounded-lg after:rounded-[calc(0.625rem-2px)] rounded-lg",
 };
 
 export default function buttonStyles(
@@ -71,17 +71,21 @@ export default function buttonStyles(
   },
   className?: string,
 ) {
-  const baseClasses =
-    "transition-all flex items-center justify-center [&_span]:px-0.5 font-semibold";
-  const variantClasses = variants[variant];
+  const classes: string[] = [];
 
-  let sizeClasses: string;
+  classes.push(
+    "transition-all flex items-center justify-center [&_span]:px-0.5 font-semibold h-fit",
+  );
 
-  sizeClasses = symmetrical ? symmetricalSizes[size] : sizes[size];
+  classes.push(variants[variant]);
 
-  if (variant === "primary" || variant === "secondary") {
-    sizeClasses += ` ${primarySecondaryRoundedClasses[size]}`;
+  classes.push(symmetrical ? symmetricalSizes[size] : sizes[size]);
+
+  if (variant === "primary") {
+    classes.push(
+      symmetrical ? primarySymmetricalSizes[size] : primarySizes[size],
+    );
   }
 
-  return twMerge(baseClasses, variantClasses, sizeClasses, className);
+  return twMerge(...classes, className);
 }

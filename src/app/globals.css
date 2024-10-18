@@ -3,350 +3,370 @@
 @tailwind utilities;
 
 * {
-  @apply border-secondary outline-none;
+    @apply border-secondary outline-none;
 }
 
 *:disabled {
-  cursor: not-allowed;
+    cursor: not-allowed;
 }
 
 @keyframes spinner {
-  to {
-    opacity: 0.15;
-  }
+    to {
+        opacity: 0.15;
+    }
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    color-scheme: dark;
-  }
+    :root {
+        color-scheme: dark;
+    }
 }
 
 .react-loading-skeleton {
-  --base-color: rgb(var(--utility-gray-100));
-  --highlight-color: rgb(var(--utility-gray-200))
+    --base-color: rgb(var(--utility-gray-100));
+    --highlight-color: rgb(var(--utility-gray-200))
 }
 
 :root {
-  --gray-25: 252, 252, 252;
-  --gray-50: 250, 250, 250;
-  --gray-100: 245, 245, 245;
-  --gray-200: 233, 234, 235;
-  --gray-300: 213, 215, 218;
-  --gray-400: 164, 167, 174;
-  --gray-500: 113, 118, 128;
-  --gray-600: 83, 88, 98;
-  --gray-700: 65, 70, 81;
-  --gray-800: 37, 43, 55;
-  --gray-900: 24, 29, 39;
-  --gray-950: 10, 13, 18;
+    --gray-25: 252, 252, 252;
+    --gray-50: 250, 250, 250;
+    --gray-100: 245, 245, 245;
+    --gray-200: 233, 234, 235;
+    --gray-300: 213, 215, 218;
+    --gray-400: 164, 167, 174;
+    --gray-500: 113, 118, 128;
+    --gray-600: 83, 88, 98;
+    --gray-700: 65, 70, 81;
+    --gray-800: 37, 43, 55;
+    --gray-900: 24, 29, 39;
+    --gray-950: 10, 13, 18;
 
-  --brand-25: 252, 250, 255;
-  --brand-50: 249, 245, 255;
-  --brand-100: 244, 235, 255;
-  --brand-200: 233, 215, 254;
-  --brand-300: 214, 187, 251;
-  --brand-400: 182, 146, 246;
-  --brand-500: 158, 119, 237;
-  --brand-600: 127, 86, 217;
-  --brand-700: 105, 65, 198;
-  --brand-800: 83, 56, 158;
-  --brand-900: 66, 48, 125;
-  --brand-950: 44, 28, 95;
+    --brand-25: 252, 250, 255;
+    --brand-50: 249, 245, 255;
+    --brand-100: 244, 235, 255;
+    --brand-200: 233, 215, 254;
+    --brand-300: 214, 187, 251;
+    --brand-400: 182, 146, 246;
+    --brand-500: 158, 119, 237;
+    --brand-600: 127, 86, 217;
+    --brand-700: 105, 65, 198;
+    --brand-800: 83, 56, 158;
+    --brand-900: 66, 48, 125;
+    --brand-950: 44, 28, 95;
 
-  --error-25: 255, 250, 250;
-  --error-50: 254, 243, 242;
-  --error-100: 254, 228, 226;
-  --error-200: 254, 205, 201;
-  --error-300: 253, 161, 155;
-  --error-400: 249, 112, 102;
-  --error-500: 240, 68, 56;
-  --error-600: 217, 45, 32;
-  --error-700: 179, 35, 24;
-  --error-800: 145, 32, 24;
-  --error-900: 122, 39, 26;
-  --error-950: 85, 22, 12;
+    --error-25: 255, 250, 250;
+    --error-50: 254, 243, 242;
+    --error-100: 254, 228, 226;
+    --error-200: 254, 205, 201;
+    --error-300: 253, 161, 155;
+    --error-400: 249, 112, 102;
+    --error-500: 240, 68, 56;
+    --error-600: 217, 45, 32;
+    --error-700: 179, 35, 24;
+    --error-800: 145, 32, 24;
+    --error-900: 122, 39, 26;
+    --error-950: 85, 22, 12;
 
-  --warning-25: 255, 252, 245;
-  --warning-50: 255, 250, 235;
-  --warning-100: 254, 239, 198;
-  --warning-200: 254, 223, 137;
-  --warning-300: 254, 200, 75;
-  --warning-400: 253, 176, 34;
-  --warning-500: 247, 144, 9;
-  --warning-600: 220, 104, 3;
-  --warning-700: 181, 71, 8;
-  --warning-800: 147, 55, 13;
-  --warning-900: 121, 46, 13;
-  --warning-950: 78, 29, 9;
+    --warning-25: 255, 252, 245;
+    --warning-50: 255, 250, 235;
+    --warning-100: 254, 239, 198;
+    --warning-200: 254, 223, 137;
+    --warning-300: 254, 200, 75;
+    --warning-400: 253, 176, 34;
+    --warning-500: 247, 144, 9;
+    --warning-600: 220, 104, 3;
+    --warning-700: 181, 71, 8;
+    --warning-800: 147, 55, 13;
+    --warning-900: 121, 46, 13;
+    --warning-950: 78, 29, 9;
 
-  --success-25: 246, 254, 249;
-  --success-50: 236, 253, 243;
-  --success-100: 219, 250, 230;
-  --success-200: 169, 239, 197;
-  --success-300: 117, 224, 167;
-  --success-400: 71, 205, 137;
-  --success-500: 23, 178, 106;
-  --success-600: 7, 148, 85;
-  --success-700: 6, 118, 71;
-  --success-800: 8, 93, 58;
-  --success-900: 7, 77, 49;
-  --success-950: 5, 51, 33;
+    --success-25: 246, 254, 249;
+    --success-50: 236, 253, 243;
+    --success-100: 219, 250, 230;
+    --success-200: 169, 239, 197;
+    --success-300: 117, 224, 167;
+    --success-400: 71, 205, 137;
+    --success-500: 23, 178, 106;
+    --success-600: 7, 148, 85;
+    --success-700: 6, 118, 71;
+    --success-800: 8, 93, 58;
+    --success-900: 7, 77, 49;
+    --success-950: 5, 51, 33;
 
-  --utility-gray-50: var(--gray-50);
-  --utility-gray-100: var(--gray-100);
-  --utility-gray-200: var(--gray-200);
-  --utility-gray-300: var(--gray-300);
-  --utility-gray-400: var(--gray-400);
-  --utility-gray-500: var(--gray-500);
-  --utility-gray-600: var(--gray-600);
-  --utility-gray-700: var(--gray-700);
-  --utility-gray-800: var(--gray-800);
-  --utility-gray-900: var(--gray-900);
+    --utility-gray-50: var(--gray-50);
+    --utility-gray-100: var(--gray-100);
+    --utility-gray-200: var(--gray-200);
+    --utility-gray-300: var(--gray-300);
+    --utility-gray-400: var(--gray-400);
+    --utility-gray-500: var(--gray-500);
+    --utility-gray-600: var(--gray-600);
+    --utility-gray-700: var(--gray-700);
+    --utility-gray-800: var(--gray-800);
+    --utility-gray-900: var(--gray-900);
 
-  --utility-brand-50: var(--brand-50);
-  --utility-brand-100: var(--brand-100);
-  --utility-brand-200: var(--brand-200);
-  --utility-brand-300: var(--brand-300);
-  --utility-brand-400: var(--brand-400);
-  --utility-brand-500: var(--brand-500);
-  --utility-brand-600: var(--brand-600);
-  --utility-brand-700: var(--brand-700);
-  --utility-brand-800: var(--brand-800);
-  --utility-brand-900: var(--brand-900);
+    --utility-brand-50: var(--brand-50);
+    --utility-brand-100: var(--brand-100);
+    --utility-brand-200: var(--brand-200);
+    --utility-brand-300: var(--brand-300);
+    --utility-brand-400: var(--brand-400);
+    --utility-brand-500: var(--brand-500);
+    --utility-brand-600: var(--brand-600);
+    --utility-brand-700: var(--brand-700);
+    --utility-brand-800: var(--brand-800);
+    --utility-brand-900: var(--brand-900);
 
-  --utility-error-50: var(--error-50);
-  --utility-error-100: var(--error-100);
-  --utility-error-200: var(--error-200);
-  --utility-error-300: var(--error-300);
-  --utility-error-400: var(--error-400);
-  --utility-error-500: var(--error-500);
-  --utility-error-600: var(--error-600);
-  --utility-error-700: var(--error-700);
+    --utility-error-50: var(--error-50);
+    --utility-error-100: var(--error-100);
+    --utility-error-200: var(--error-200);
+    --utility-error-300: var(--error-300);
+    --utility-error-400: var(--error-400);
+    --utility-error-500: var(--error-500);
+    --utility-error-600: var(--error-600);
+    --utility-error-700: var(--error-700);
 
-  --utility-warning-50: var(--warning-50);
-  --utility-warning-100: var(--warning-100);
-  --utility-warning-200: var(--warning-200);
-  --utility-warning-300: var(--warning-300);
-  --utility-warning-400: var(--warning-400);
-  --utility-warning-500: var(--warning-500);
-  --utility-warning-600: var(--warning-600);
-  --utility-warning-700: var(--warning-700);
+    --utility-warning-50: var(--warning-50);
+    --utility-warning-100: var(--warning-100);
+    --utility-warning-200: var(--warning-200);
+    --utility-warning-300: var(--warning-300);
+    --utility-warning-400: var(--warning-400);
+    --utility-warning-500: var(--warning-500);
+    --utility-warning-600: var(--warning-600);
+    --utility-warning-700: var(--warning-700);
 
-  --utility-success-50: var(--success-50);
-  --utility-success-100: var(--success-100);
-  --utility-success-200: var(--success-200);
-  --utility-success-300: var(--success-300);
-  --utility-success-400: var(--success-400);
-  --utility-success-500: var(--success-500);
-  --utility-success-600: var(--success-600);
-  --utility-success-700: var(--success-700);
+    --utility-success-50: var(--success-50);
+    --utility-success-100: var(--success-100);
+    --utility-success-200: var(--success-200);
+    --utility-success-300: var(--success-300);
+    --utility-success-400: var(--success-400);
+    --utility-success-500: var(--success-500);
+    --utility-success-600: var(--success-600);
+    --utility-success-700: var(--success-700);
 
-  --text-primary: var(--gray-900);
-  --text-primary-onbrand: 255, 255, 255;
-  --text-secondary: var(--gray-700);
-  --text-secondary-onbrand: var(--brand-200);
-  --text-tertiary: var(--gray-600);
-  --text-tertiary-onbrand: var(--brand-200);
-  --text-quaternary: var(--gray-500);
-  --text-quaternary-onbrand: var(--brand-300);
-  --text-disabled: var(--gray-500);
-  --text-placeholder: var(--gray-500);
-  --text-placeholder-subtle: var(--gray-300);
-  --text-brand-primary: var(--brand-900);
-  --text-brand-secondary: var(--brand-700);
-  --text-brand-tertiary: var(--brand-600);
-  --text-brand-tertiary-alt: var(--brand-600);
-  --text-error-primary: var(--error-600);
-  --text-warning-primary: var(--warning-600);
-  --text-success-primary: var(--success-600);
+    --text-primary: var(--gray-900);
+    --text-primary-onbrand: 255, 255, 255;
+    --text-secondary: var(--gray-700);
+    --text-secondary-onbrand: var(--brand-200);
+    --text-tertiary: var(--gray-600);
+    --text-tertiary-onbrand: var(--brand-200);
+    --text-quaternary: var(--gray-500);
+    --text-quaternary-onbrand: var(--brand-300);
+    --text-disabled: var(--gray-500);
+    --text-placeholder: var(--gray-500);
+    --text-placeholder-subtle: var(--gray-300);
+    --text-brand-primary: var(--brand-900);
+    --text-brand-secondary: var(--brand-700);
+    --text-brand-tertiary: var(--brand-600);
+    --text-brand-tertiary-alt: var(--brand-600);
+    --text-error-primary: var(--error-600);
+    --text-warning-primary: var(--warning-600);
+    --text-success-primary: var(--success-600);
 
-  --border-primary: var(--gray-300);
-  --border-secondary: var(--gray-200);
-  --border-tertiary: var(--gray-100);
-  --border-disabled: var(--gray-300);
-  --border-disabled-subtle: var(--gray-200);
-  --border-brand: var(--brand-500);
-  --border-brand-alt: var(--brand-600);
-  --border-error: var(--error-500);
-  --border-error-subtle: var(--error-300);
+    --border-primary: var(--gray-300);
+    --border-secondary: var(--gray-200);
+    --border-tertiary: var(--gray-100);
+    --border-disabled: var(--gray-300);
+    --border-disabled-subtle: var(--gray-200);
+    --border-brand: var(--brand-500);
+    --border-brand-alt: var(--brand-600);
+    --border-error: var(--error-500);
+    --border-error-subtle: var(--error-300);
 
-  --bg-primary: 255, 255, 255;
-  --bg-primary-alt: 255, 255, 255;
-  --bg-primary-solid: var(--gray-950);
-  --bg-secondary: var(--gray-50);
-  --bg-secondary-alt: var(--gray-50);
-  --bg-secondary-subtle: var(--gray-25);
-  --bg-secondary-solid: var(--gray-600);
-  --bg-tertiary: var(--gray-100);
-  --bg-quaternary: var(--gray-200);
-  --bg-active: var(--gray-50);
-  --bg-disabled: var(--gray-100);
-  --bg-disabled-subtle: var(--gray-50);
-  --bg-overlay: var(--gray-950);
-  --bg-brand-primary: var(--brand-50);
-  --bg-brand-primary-alt: var(--brand-50);
-  --bg-brand-secondary: var(--brand-100);
-  --bg-brand-solid: var(--brand-600);
-  --bg-brand-section: var(--brand-800);
-  --bg-brand-section-subtle: var(--brand-700);
-  --bg-error-primary: var(--error-50);
-  --bg-error-secondary: var(--error-100);
-  --bg-error-solid: var(--error-600);
-  --bg-warning-primary: var(--warning-50);
-  --bg-warning-secondary: var(--warning-100);
-  --bg-warning-solid: var(--warning-600);
-  --bg-success-primary: var(--success-50);
-  --bg-success-secondary: var(--success-100);
-  --bg-success-solid: var(--success-600);
+    --bg-primary: 255, 255, 255;
+    --bg-primary-alt: 255, 255, 255;
+    --bg-primary-solid: var(--gray-950);
+    --bg-secondary: var(--gray-50);
+    --bg-secondary-alt: var(--gray-50);
+    --bg-secondary-subtle: var(--gray-25);
+    --bg-secondary-solid: var(--gray-600);
+    --bg-tertiary: var(--gray-100);
+    --bg-quaternary: var(--gray-200);
+    --bg-active: var(--gray-50);
+    --bg-disabled: var(--gray-100);
+    --bg-disabled-subtle: var(--gray-50);
+    --bg-overlay: var(--gray-950);
+    --bg-brand-primary: var(--brand-50);
+    --bg-brand-primary-alt: var(--brand-50);
+    --bg-brand-secondary: var(--brand-100);
+    --bg-brand-solid: var(--brand-600);
+    --bg-brand-section: var(--brand-800);
+    --bg-brand-section-subtle: var(--brand-700);
+    --bg-error-primary: var(--error-50);
+    --bg-error-secondary: var(--error-100);
+    --bg-error-solid: var(--error-600);
+    --bg-warning-primary: var(--warning-50);
+    --bg-warning-secondary: var(--warning-100);
+    --bg-warning-solid: var(--warning-600);
+    --bg-success-primary: var(--success-50);
+    --bg-success-secondary: var(--success-100);
+    --bg-success-solid: var(--success-600);
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --gray-25: 250, 250, 250;
-    --gray-50: 247, 247, 247;
-    --gray-100: 240, 240, 241;
-    --gray-200: 236, 236, 237;
-    --gray-300: 206, 207, 210;
-    --gray-400: 148, 151, 156;
-    --gray-500: 133, 136, 142;
-    --gray-600: 97, 101, 108;
-    --gray-700: 55, 58, 65;
-    --gray-800: 34, 38, 47;
-    --gray-900: 19, 22, 27;
-    --gray-950: 12, 14, 18;
+    :root {
+        --gray-25: 250, 250, 250;
+        --gray-50: 247, 247, 247;
+        --gray-100: 240, 240, 241;
+        --gray-200: 236, 236, 237;
+        --gray-300: 206, 207, 210;
+        --gray-400: 148, 151, 156;
+        --gray-500: 133, 136, 142;
+        --gray-600: 97, 101, 108;
+        --gray-700: 55, 58, 65;
+        --gray-800: 34, 38, 47;
+        --gray-900: 19, 22, 27;
+        --gray-950: 12, 14, 18;
 
-    --utility-gray-50: var(--gray-900);
-    --utility-gray-100: var(--gray-800);
-    --utility-gray-200: var(--gray-700);
-    --utility-gray-300: var(--gray-700);
-    --utility-gray-400: var(--gray-600);
-    --utility-gray-500: var(--gray-500);
-    --utility-gray-600: var(--gray-400);
-    --utility-gray-700: var(--gray-300);
-    --utility-gray-800: var(--gray-200);
-    --utility-gray-900: var(--gray-100);
+        --utility-gray-50: var(--gray-900);
+        --utility-gray-100: var(--gray-800);
+        --utility-gray-200: var(--gray-700);
+        --utility-gray-300: var(--gray-700);
+        --utility-gray-400: var(--gray-600);
+        --utility-gray-500: var(--gray-500);
+        --utility-gray-600: var(--gray-400);
+        --utility-gray-700: var(--gray-300);
+        --utility-gray-800: var(--gray-200);
+        --utility-gray-900: var(--gray-100);
 
-    --utility-brand-50: var(--brand-950);
-    --utility-brand-100: var(--brand-900);
-    --utility-brand-200: var(--brand-800);
-    --utility-brand-300: var(--brand-700);
-    --utility-brand-400: var(--brand-600);
-    --utility-brand-500: var(--brand-500);
-    --utility-brand-600: var(--brand-400);
-    --utility-brand-700: var(--brand-300);
-    --utility-brand-800: var(--brand-200);
-    --utility-brand-900: var(--brand-100);
+        --utility-brand-50: var(--brand-950);
+        --utility-brand-100: var(--brand-900);
+        --utility-brand-200: var(--brand-800);
+        --utility-brand-300: var(--brand-700);
+        --utility-brand-400: var(--brand-600);
+        --utility-brand-500: var(--brand-500);
+        --utility-brand-600: var(--brand-400);
+        --utility-brand-700: var(--brand-300);
+        --utility-brand-800: var(--brand-200);
+        --utility-brand-900: var(--brand-100);
 
-    --utility-error-50: var(--error-950);
-    --utility-error-100: var(--error-900);
-    --utility-error-200: var(--error-800);
-    --utility-error-300: var(--error-700);
-    --utility-error-400: var(--error-600);
-    --utility-error-500: var(--error-500);
-    --utility-error-600: var(--error-400);
-    --utility-error-700: var(--error-300);
+        --utility-error-50: var(--error-950);
+        --utility-error-100: var(--error-900);
+        --utility-error-200: var(--error-800);
+        --utility-error-300: var(--error-700);
+        --utility-error-400: var(--error-600);
+        --utility-error-500: var(--error-500);
+        --utility-error-600: var(--error-400);
+        --utility-error-700: var(--error-300);
 
-    --utility-warning-50: var(--warning-950);
-    --utility-warning-100: var(--warning-900);
-    --utility-warning-200: var(--warning-800);
-    --utility-warning-300: var(--warning-700);
-    --utility-warning-400: var(--warning-600);
-    --utility-warning-500: var(--warning-500);
-    --utility-warning-600: var(--warning-400);
-    --utility-warning-700: var(--warning-300);
+        --utility-warning-50: var(--warning-950);
+        --utility-warning-100: var(--warning-900);
+        --utility-warning-200: var(--warning-800);
+        --utility-warning-300: var(--warning-700);
+        --utility-warning-400: var(--warning-600);
+        --utility-warning-500: var(--warning-500);
+        --utility-warning-600: var(--warning-400);
+        --utility-warning-700: var(--warning-300);
 
-    --utility-success-50: var(--success-950);
-    --utility-success-100: var(--success-900);
-    --utility-success-200: var(--success-800);
-    --utility-success-300: var(--success-700);
-    --utility-success-400: var(--success-600);
-    --utility-success-500: var(--success-500);
-    --utility-success-600: var(--success-400);
-    --utility-success-700: var(--success-300);
+        --utility-success-50: var(--success-950);
+        --utility-success-100: var(--success-900);
+        --utility-success-200: var(--success-800);
+        --utility-success-300: var(--success-700);
+        --utility-success-400: var(--success-600);
+        --utility-success-500: var(--success-500);
+        --utility-success-600: var(--success-400);
+        --utility-success-700: var(--success-300);
 
-    --text-primary: var(--gray-50);
-    --text-primary-onbrand: var(--gray-50);
-    --text-secondary: var(--gray-300);
-    --text-secondary-onbrand: var(--gray-300);
-    --text-tertiary: var(--gray-400);
-    --text-tertiary-onbrand: var(--gray-400);
-    --text-quaternary: var(--gray-400);
-    --text-quaternary-onbrand: var(--gray-400);
-    --text-disabled: var(--gray-500);
-    --text-placeholder: var(--gray-400);
-    --text-placeholder-subtle: var(--gray-700);
-    --text-brand-primary: var(--gray-50);
-    --text-brand-secondary: var(--gray-300);
-    --text-brand-tertiary: var(--gray-400);
-    --text-brand-tertiary-alt: var(--gray-50);
-    --text-error-primary: var(--error-500);
-    --text-warning-primary: var(--warning-500);
-    --text-success-primary: var(--success-500);
+        --text-primary: var(--gray-50);
+        --text-primary-onbrand: var(--gray-50);
+        --text-secondary: var(--gray-300);
+        --text-secondary-onbrand: var(--gray-300);
+        --text-tertiary: var(--gray-400);
+        --text-tertiary-onbrand: var(--gray-400);
+        --text-quaternary: var(--gray-400);
+        --text-quaternary-onbrand: var(--gray-400);
+        --text-disabled: var(--gray-500);
+        --text-placeholder: var(--gray-400);
+        --text-placeholder-subtle: var(--gray-700);
+        --text-brand-primary: var(--gray-50);
+        --text-brand-secondary: var(--gray-300);
+        --text-brand-tertiary: var(--gray-400);
+        --text-brand-tertiary-alt: var(--gray-50);
+        --text-error-primary: var(--error-500);
+        --text-warning-primary: var(--warning-500);
+        --text-success-primary: var(--success-500);
 
-    --border-primary: var(--gray-700);
-    --border-secondary: var(--gray-800);
-    --border-tertiary: var(--gray-800);
-    --border-disabled: var(--gray-700);
-    --border-disabled-subtle: var(--gray-800);
-    --border-brand: var(--brand-400);
-    --border-brand-alt: var(--gray-700);
-    --border-error: var(--error-400);
-    --border-error-subtle: var(--error-400);
+        --border-primary: var(--gray-700);
+        --border-secondary: var(--gray-800);
+        --border-tertiary: var(--gray-800);
+        --border-disabled: var(--gray-700);
+        --border-disabled-subtle: var(--gray-800);
+        --border-brand: var(--brand-400);
+        --border-brand-alt: var(--gray-700);
+        --border-error: var(--error-400);
+        --border-error-subtle: var(--error-400);
 
-    --bg-primary: var(--gray-950);
-    --bg-primary-alt: var(--gray-900);
-    --bg-primary-solid: var(--gray-900);
-    --bg-secondary: var(--gray-900);
-    --bg-secondary-alt: var(--gray-950);
-    --bg-secondary-subtle: var(--gray-900);
-    --bg-secondary-solid: var(--gray-600);
-    --bg-tertiary: var(--gray-800);
-    --bg-quaternary: var(--gray-700);
-    --bg-active: var(--gray-800);
-    --bg-disabled: var(--gray-800);
-    --bg-disabled-subtle: var(--gray-900);
-    --bg-overlay: var(--gray-800);
-    --bg-brand-primary: var(--brand-500);
-    --bg-brand-primary-alt: var(--gray-800);
-    --bg-brand-secondary: var(--brand-600);
-    --bg-brand-solid: var(--brand-600);
-    --bg-brand-section: var(--gray-800);
-    --bg-brand-section-subtle: var(--gray-950);
-    --bg-error-primary: var(--error-500);
-    --bg-error-secondary: var(--error-600);
-    --bg-error-solid: var(--error-600);
-    --bg-warning-primary: var(--warning-500);
-    --bg-warning-secondary: var(--warning-600);
-    --bg-warning-solid: var(--warning-600);
-    --bg-success-primary: var(--success-500);
-    --bg-success-secondary: var(--success-600);
-    --bg-success-solid: var(--success-600);
-  }
+        --bg-primary: var(--gray-950);
+        --bg-primary-alt: var(--gray-900);
+        --bg-primary-solid: var(--gray-900);
+        --bg-secondary: var(--gray-900);
+        --bg-secondary-alt: var(--gray-950);
+        --bg-secondary-subtle: var(--gray-900);
+        --bg-secondary-solid: var(--gray-600);
+        --bg-tertiary: var(--gray-800);
+        --bg-quaternary: var(--gray-700);
+        --bg-active: var(--gray-800);
+        --bg-disabled: var(--gray-800);
+        --bg-disabled-subtle: var(--gray-900);
+        --bg-overlay: var(--gray-800);
+        --bg-brand-primary: var(--brand-500);
+        --bg-brand-primary-alt: var(--gray-800);
+        --bg-brand-secondary: var(--brand-600);
+        --bg-brand-solid: var(--brand-600);
+        --bg-brand-section: var(--gray-800);
+        --bg-brand-section-subtle: var(--gray-950);
+        --bg-error-primary: var(--error-500);
+        --bg-error-secondary: var(--error-600);
+        --bg-error-solid: var(--error-600);
+        --bg-warning-primary: var(--warning-500);
+        --bg-warning-secondary: var(--warning-600);
+        --bg-warning-solid: var(--warning-600);
+        --bg-success-primary: var(--success-500);
+        --bg-success-secondary: var(--success-600);
+        --bg-success-solid: var(--success-600);
+    }
 }
 
 @layer utilities {
-  .text-secondary.hover:not(.active:active):not(:disabled):hover {
-    @apply text-gray-800 dark:text-gray-200;
-  }
+    .text-secondary.hover:not(.active:active):not(:disabled):hover {
+        @apply text-gray-800 dark:text-gray-200;
+    }
 
-  .text-tertiary.hover:not(.active:active):not(:disabled):hover {
-    @apply text-gray-700 dark:text-gray-300;
-  }
+    .text-tertiary.hover:not(.active:active):not(:disabled):hover {
+        @apply text-gray-700 dark:text-gray-300;
+    }
 
-  .bg-primary.hover:not(.active:active):not(:disabled):hover {
-    @apply bg-gray-50 dark:bg-gray-800;
-  }
+    .bg-primary.hover:not(.active:active):not(:disabled):hover {
+        @apply bg-gray-50 dark:bg-gray-800;
+    }
 
-  .bg-primary-alt.hover:not(.active:active):not(:disabled):hover {
-    @apply bg-gray-50 dark:bg-gray-800;
-  }
+    .bg-primary-alt.hover:not(.active:active):not(:disabled):hover {
+        @apply bg-gray-50 dark:bg-gray-800;
+    }
 
-  .bg-secondary.hover:not(.active:active):not(:disabled):hover {
-    @apply bg-gray-100 dark:bg-gray-800;
-  }
+    .bg-secondary.hover:not(.active:active):not(:disabled):hover {
+        @apply bg-gray-100 dark:bg-gray-800;
+    }
 
-  .bg-brand-solid.hover:not(.active:active):not(:disabled):hover {
-    @apply bg-brand-700 dark:bg-brand-500;
-  }
+    .bg-brand-solid.hover:not(.active:active):not(:disabled):hover {
+        @apply bg-brand-700 dark:bg-brand-500;
+    }
+
+    .button-skeuomorphic::before {
+        @apply absolute inset-0 border-2 border-transparent;
+        background: linear-gradient(to bottom, rgb(var(--brand-600)), rgb(var(--brand-600))) padding-box,
+        linear-gradient(to bottom, #FFFFFF1F, #FFFFFF00) border-box;
+    }
+
+    .button-skeuomorphic:disabled::before {
+        display: none;
+    }
+
+    .button-skeuomorphic:hover::before {
+        background: linear-gradient(to bottom, rgb(var(--brand-700)), rgb(var(--brand-700))) padding-box,
+        linear-gradient(to bottom, #FFFFFF1F, #FFFFFF00) border-box;
+    }
+
+    .button-skeuomorphic:hover:active::before {
+        background: linear-gradient(to bottom, rgb(var(--brand-600)), rgb(var(--brand-600))) padding-box,
+        linear-gradient(to bottom, #FFFFFF1F, #FFFFFF00) border-box;
+    }
 }

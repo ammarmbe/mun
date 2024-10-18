@@ -37,6 +37,14 @@ export default function Loading() {
                   </th>
                   <th
                     style={{
+                      width: "15%",
+                    }}
+                    className="px-6 pb-2 pt-3 text-start text-sm font-semibold text-secondary"
+                  >
+                    Grade
+                  </th>
+                  <th
+                    style={{
                       width: "calc(90px + 3rem)",
                     }}
                     className="px-6 pb-2 pt-3 text-start text-sm font-semibold text-secondary"
@@ -72,6 +80,18 @@ export default function Loading() {
                         <Skeleton
                           style={{
                             width: `${Math.floor(Math.random() * (90 - 40 + 1)) + 40}%`,
+                          }}
+                        />
+                      </td>
+                      <td
+                        style={{
+                          width: "15%",
+                        }}
+                        className="px-6 py-4 text-secondary"
+                      >
+                        <Skeleton
+                          style={{
+                            width: `${Math.floor(Math.random() * (100 - 80 + 1)) + 80}%`,
                           }}
                         />
                       </td>

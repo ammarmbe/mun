@@ -48,6 +48,16 @@ export async function getInterviewById({
   const questionCount = await prisma.question.count({
     where: {
       council,
+      OR: [
+        {
+          deletedAt: null,
+        },
+        {
+          answers: {
+            some: {},
+          },
+        },
+      ],
     },
   });
 
@@ -72,10 +82,20 @@ export async function getInterviewQuestions({
   const questions = await prisma.question.findMany({
     where: {
       council,
+      OR: [
+        {
+          deletedAt: null,
+        },
+        {
+          answers: {
+            some: {},
+          },
+        },
+      ],
     },
     select: {
       id: true,
-      question: true,
+      value: true,
       answers: {
         where: {
           interviewId: id,
@@ -84,6 +104,9 @@ export async function getInterviewQuestions({
           answer: true,
         },
       },
+    },
+    orderBy: {
+      order: "asc",
     },
   });
 
