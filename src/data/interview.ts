@@ -6,7 +6,7 @@ export async function getInterviewById({
   council,
 }: {
   id: string;
-  council?: $Enums.Council | null;
+  council?: $Enums.Council;
 }) {
   const interview = await prisma.interview.findFirst({
     where: {
@@ -77,7 +77,7 @@ export async function getInterviewQuestions({
   council,
 }: {
   id: string;
-  council?: $Enums.Council | null;
+  council?: $Enums.Council;
 }) {
   const questions = await prisma.question.findMany({
     where: {

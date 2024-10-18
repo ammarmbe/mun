@@ -15,7 +15,7 @@ export async function GET(
 
   const questions = await getInterviewQuestions({
     id: params.id,
-    council: user.admin ? undefined : user.council,
+    council: user.admin ? undefined : (user.council ?? undefined),
   });
 
   return new Response(JSON.stringify(questions));
@@ -53,7 +53,7 @@ export async function POST(
           },
           interview: {
             delegate: {
-              council: user.admin ? undefined : user.council,
+              council: user.admin ? undefined : (user.council ?? undefined),
             },
           },
         },

@@ -19,7 +19,7 @@ export async function GET(req: Request) {
   }
 
   const interviews = await getAllInterviews({
-    council: user.admin ? undefined : user.council,
+    council: user.admin ? undefined : (user.council ?? underined),
     pageIndex: pageIndex ?? 0,
     pageSize: pageSize ?? 10,
   });

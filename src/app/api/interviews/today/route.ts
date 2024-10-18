@@ -15,7 +15,7 @@ export async function GET(req: Request) {
   }
 
   const interviews = await getTodaysInterviews({
-    council: user.admin ? undefined : user.council,
+    council: user.admin ? undefined : (user.council ?? undefined),
     upcoming,
   });
 

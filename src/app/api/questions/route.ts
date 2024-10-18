@@ -11,7 +11,7 @@ export async function GET() {
   }
 
   const questions = await getCouncilQuestions({
-    council: user.admin ? undefined : user.council,
+    council: user.admin ? undefined : (user.council ?? undefined),
   });
 
   return new Response(JSON.stringify(questions));

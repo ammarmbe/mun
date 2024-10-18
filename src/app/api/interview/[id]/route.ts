@@ -11,7 +11,7 @@ export async function GET(_: Request, props: { params: Promise<{ id: string }> }
 
   const interview = await getInterviewById({
     id: params.id,
-    council: user.admin ? undefined : user.council,
+    council: user.admin ? undefined : (user.council ?? undefined),
   });
 
   return new Response(JSON.stringify(interview));

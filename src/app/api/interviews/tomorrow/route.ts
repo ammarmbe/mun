@@ -9,7 +9,7 @@ export async function GET() {
   }
 
   const interviews = await getTomorrowsInterviews({
-    council: user.admin ? undefined : user.council,
+    council: user.admin ? undefined : (user.council ?? undefined),
   });
 
   return new Response(JSON.stringify(interviews));
