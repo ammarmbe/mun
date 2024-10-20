@@ -16,12 +16,12 @@ import { faculties, generateTimes } from "@/utils";
 import Spinner from "@/components/spinner";
 
 const days = [
-  "2024-10-15",
-  "2024-10-16",
-  "2024-10-17",
-  "2024-10-18",
-  "2024-10-19",
   "2024-10-20",
+  "2024-10-21",
+  "2024-10-22",
+  "2024-10-23",
+  "2024-10-24",
+  "2024-10-25",
 ];
 
 const times = generateTimes("10:00", "17:00", 15);
