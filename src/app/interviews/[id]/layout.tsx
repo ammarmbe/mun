@@ -1,4 +1,5 @@
-import React from "react";
+import React, { Suspense } from "react";
+import Loading from "@/app/interviews/[id]/@questions/loading";
 
 export default async function Layout({
   info,
@@ -9,7 +10,7 @@ export default async function Layout({
 }) {
   return (
     <main className="flex flex-grow flex-col-reverse md:flex-row">
-      {questions}
+      <Suspense fallback={<Loading />}>{questions}</Suspense>
       {info}
     </main>
   );
