@@ -4,9 +4,9 @@ import { inputStyles } from "@/utils/styles/input";
 import { useDebouncedCallback } from "use-debounce";
 import { Search as SearchIcon } from "lucide-react";
 import { useQueryState } from "nuqs";
-import { useEffect, useRef } from "react";
+import { Suspense, useEffect, useRef } from "react";
 
-export default function Search({
+function SearchComponent({
   className,
   placeholder,
   value,
@@ -46,5 +46,43 @@ export default function Search({
         <SearchIcon size={20} />
       </div>
     </div>
+  );
+}
+
+export default function Search({
+  className,
+  placeholder,
+  value,
+}: {
+  className?: string;
+  placeholder?: string;
+  value: string;
+}) {
+  return (
+    <Suspense
+      fallback={
+        <div className={`relative flex ${className}`}>
+          <input
+            type="search"
+            name="Search"
+            className={inputStyles(
+              { size: "sm", variant: "primary" },
+              `h-fit pl-10 ${className}`,
+            )}
+            placeholder={placeholder}
+            disabled
+          />
+          <div className="absolute left-px top-px flex size-10 items-center justify-center text-quaternary">
+            <SearchIcon size={20} />
+          </div>
+        </div>
+      }
+    >
+      <SearchComponent
+        value={value}
+        placeholder={placeholder}
+        className={className}
+      />
+    </Suspense>
   );
 }
