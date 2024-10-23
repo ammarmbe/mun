@@ -8,6 +8,7 @@ const colors = {
     "bg-utility-warning-50 text-utility-warning-700 border-utility-warning-200",
   green:
     "bg-utility-success-50 text-utility-success-700 border-utility-success-200",
+  blue: "bg-utility-blue-50 text-utility-blue-700 border-utility-blue-200",
 };
 
 const sizes = {

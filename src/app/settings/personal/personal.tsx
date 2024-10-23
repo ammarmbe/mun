@@ -154,22 +154,24 @@ export default function Personal({ user }: { user: User }) {
         </div>
         <div className="grid gap-1.5 border-b p-4 md:grid-cols-[1fr,2fr]">
           <p className={labelStyles({ required: true })}>Photo</p>
-          <FileUpload file={file} setFile={setFile} user={user} />
+          <FileUpload file={file} setFile={setFile} userId={user.id} />
         </div>
-        <div className="grid gap-1.5 p-4 md:grid-cols-[1fr,2fr]">
-          <p className={labelStyles({ required: true })}>Council</p>
-          <InputWrapper size="md" Icon={ChevronsUpDown}>
-            <select
-              className={inputStyles({
-                variant: "primary",
-                size: "sm",
-              })}
-              disabled
-            >
-              <option value="ECOSOC">ECOSOC</option>
-            </select>
-          </InputWrapper>
-        </div>
+        {user.council ? (
+          <div className="grid gap-1.5 p-4 md:grid-cols-[1fr,2fr]">
+            <p className={labelStyles({ required: true })}>Council</p>
+            <InputWrapper size="sm" Icon={ChevronsUpDown}>
+              <select
+                className={inputStyles({
+                  variant: "primary",
+                  size: "sm",
+                })}
+                disabled
+              >
+                <option value={user.council}>{user.council}</option>
+              </select>
+            </InputWrapper>
+          </div>
+        ) : null}
       </div>
     </div>
   );

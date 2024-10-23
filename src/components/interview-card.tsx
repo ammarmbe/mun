@@ -21,7 +21,7 @@ export default function InterviewCard({
         <div key={interview.id} className="flex flex-col">
           <div className="flex min-w-0 flex-col gap-1">
             <h3 className="truncate text-lg font-semibold">
-              {interview.delegate.firstName} {interview.delegate.lastName}
+              {interview.delegate.name}
             </h3>
             <p className="text-sm font-medium text-secondary">
               {dayjs(interview.date).fromNow()}
@@ -34,7 +34,7 @@ export default function InterviewCard({
             </p>
             <p className="flex items-center gap-2 text-sm font-medium text-secondary">
               <Clock size={16} className="text-tertiary" />
-              {dayjs(interview.date).format("dddd, MMMM D, hh:mm A")}
+              {dayjs(interview.date).format("MMM D, hh:mm A")}
             </p>
             {interview._count.answers > 0 ? (
               <p className="flex items-center gap-2 text-sm font-medium text-secondary">
@@ -47,10 +47,13 @@ export default function InterviewCard({
             {interview.grade ? (
               <p className="flex items-center gap-2 text-sm font-medium text-secondary">
                 <Badge size={16} className="text-tertiary" />
-                <span
-                  className={getGradeColor(interview.grade, "text-secondary")}
-                >
-                  Grade: {interview.grade}
+                <span className="text-secondary">
+                  Grade:{" "}
+                  <span
+                    className={getGradeColor(interview.grade, "text-secondary")}
+                  >
+                    {interview.grade}
+                  </span>
                 </span>
               </p>
             ) : null}

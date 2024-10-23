@@ -13,9 +13,18 @@ export async function GET(
     return new Response(null, { status: 401 });
   }
 
+  const canAccess = await prisma.setting.findUnique({
+    where: {
+      id: "allowCrossCouncil",
+    },
+  });
+
   const questions = await getInterviewQuestions({
     id: params.id,
-    council: user.admin ? undefined : (user.council ?? undefined),
+    council:
+      canAccess?.value === "TRUE" || user.admin
+        ? undefined
+        : (user.council ?? undefined),
   });
 
   return new Response(JSON.stringify(questions));
@@ -43,6 +52,12 @@ export async function POST(
     notes: string;
   } = await req.json();
 
+  const canAccess = await prisma.setting.findUnique({
+    where: {
+      id: "allowCrossCouncil",
+    },
+  });
+
   for (const d of data.answers) {
     if (d.answer)
       await prisma.answer.upsert({
@@ -53,7 +68,10 @@ export async function POST(
           },
           interview: {
             delegate: {
-              council: user.admin ? undefined : (user.council ?? undefined),
+              council:
+                canAccess?.value === "TRUE" || user.admin
+                  ? undefined
+                  : (user.council ?? undefined),
             },
           },
         },

@@ -1,7 +1,6 @@
 import { getUser } from "@/utils/auth";
 import { getCouncilQuestions } from "@/data/council";
 import prisma from "@/utils/db";
-import { $Enums } from "@prisma/client";
 
 export async function GET() {
   const { user } = await getUser();
@@ -10,8 +9,18 @@ export async function GET() {
     return new Response(null, { status: 401 });
   }
 
+  const canAccess = await prisma.setting.findUnique({
+    where: {
+      id: "allowCrossCouncil",
+    },
+  });
+
   const questions = await getCouncilQuestions({
-    council: user.admin ? undefined : (user.council ?? undefined),
+    council:
+      canAccess?.value === "TRUE" || user.admin
+        ? undefined
+        : (user.council ?? undefined),
+    admin: user.admin,
   });
 
   return new Response(JSON.stringify(questions));

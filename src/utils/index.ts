@@ -59,3 +59,12 @@ export function generateTimes(
 
   return times;
 }
+
+export const councilColors = {
+  UNSC: "blue",
+  ICJ: "green",
+  ECOSOC: "red",
+  JDC: "yellow",
+  ASAM: "brand",
+  ODC: "gray",
+} as const;

@@ -75,16 +75,12 @@ export default function Questions({ user }: { user: User }) {
       ));
     },
     onSuccess: async () => {
-      await queryClient.invalidateQueries({
-        queryKey: queryKeys.user(),
-      });
-
       toast.custom((t) => (
         <Toast
           variant="success"
           title="Page saved"
           t={t}
-          message="Your questions has been saved successfully."
+          message="Your questions have been saved successfully."
         />
       ));
     },

@@ -41,7 +41,7 @@ const variants: Record<Variant, string> = {
     transition-[box-shadow] button-skeuomorphic border-transparent
     bg-brand-600 hover:bg-brand-700 active:bg-brand-600 relative before:rounded-[inherit]
     shadow-xs-skeuomorphic [&:not(:disabled)]:active:shadow-ring-shadow-xs-skeuomorphic [&_*]:z-10
-    disabled:!text-disabled disabled:!bg-disabled disabled:!border-disabled-subtle disabled:border disabled:shadow-none
+    disabled:!text-disabled disabled:!bg-disabled disabled:!border-disabled-subtle disabled:border disabled:shadow-none text-white
   `,
   secondary: `
     [&_*]:z-10 border-primary border text-secondary transition-all

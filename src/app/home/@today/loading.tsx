@@ -7,7 +7,7 @@ export default function Loading() {
       <h2 className="flex-none px-6 pb-2 pt-3 text-sm font-semibold text-secondary">
         Up next
       </h2>
-      <div className="-m-px flex flex-grow flex-col divide-y overflow-hidden rounded-2xl border bg-primary md:max-h-[calc(100dvh-4rem-2.375rem-2.5rem-1px)]">
+      <div className="-m-px flex flex-grow flex-col divide-y overflow-hidden rounded-2xl border bg-primary md:max-h-[calc(100dvh-4rem-2.625rem-2.5rem-1px)]">
         {Array.from({ length: 10 }).map((_, i) => (
           <div key={i} className="h-fit p-5">
             <div className="flex flex-col">

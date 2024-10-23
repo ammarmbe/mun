@@ -33,6 +33,7 @@ export async function PATCH(req: Request) {
 
   if (file) {
     const uploadDir = "./public/uploads/";
+
     if (!fs.existsSync(uploadDir)) {
       fs.mkdirSync(uploadDir, { recursive: true });
     }

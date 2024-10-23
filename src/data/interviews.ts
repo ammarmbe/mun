@@ -4,15 +4,13 @@ import dayjs from "dayjs";
 
 export async function getTodaysInterviews({
   council,
-  upcoming,
 }: {
   council?: $Enums.Council;
-  upcoming?: boolean;
 }) {
   const interviews = await prisma.interview.findMany({
     where: {
       date: {
-        gte: upcoming ? dayjs().startOf("day").toDate() : dayjs().toDate(),
+        gte: dayjs().startOf("day").toDate(),
         lte: dayjs().endOf("day").toDate(),
       },
       delegate: {
@@ -37,9 +35,10 @@ export async function getTodaysInterviews({
       },
       delegate: {
         select: {
+          id: true,
+          status: true,
           council: true,
-          firstName: true,
-          lastName: true,
+          name: true,
           phoneNumber: true,
         },
       },
@@ -49,9 +48,8 @@ export async function getTodaysInterviews({
     },
   });
 
-  const questionCount = await prisma.question.count({
+  const questions = await prisma.question.findMany({
     where: {
-      council,
       OR: [
         {
           deletedAt: null,
@@ -63,13 +61,16 @@ export async function getTodaysInterviews({
         },
       ],
     },
+    select: { council: true },
   });
 
   return interviews.map((interview) => ({
     ...interview,
     _count: {
       ...interview._count,
-      questions: questionCount,
+      questions: questions.filter(
+        (q) => q.council === interview.delegate.council,
+      ).length,
     },
   }));
 }
@@ -107,9 +108,10 @@ export async function getTomorrowsInterviews({
       },
       delegate: {
         select: {
+          id: true,
+          status: true,
           council: true,
-          firstName: true,
-          lastName: true,
+          name: true,
           phoneNumber: true,
         },
       },
@@ -119,9 +121,8 @@ export async function getTomorrowsInterviews({
     },
   });
 
-  const questionCount = await prisma.question.count({
+  const questions = await prisma.question.findMany({
     where: {
-      council,
       OR: [
         {
           deletedAt: null,
@@ -133,13 +134,16 @@ export async function getTomorrowsInterviews({
         },
       ],
     },
+    select: { council: true },
   });
 
   return interviews.map((interview) => ({
     ...interview,
     _count: {
       ...interview._count,
-      questions: questionCount,
+      questions: questions.filter(
+        (q) => q.council === interview.delegate.council,
+      ).length,
     },
   }));
 }
@@ -148,16 +152,66 @@ export async function getAllInterviews({
   council,
   pageIndex,
   pageSize,
+  search,
+  orderBy,
 }: {
   council?: $Enums.Council;
   pageIndex: number;
   pageSize: number;
+  search?: string;
+  orderBy:
+    | { delegate: { [p: string]: "asc" | "desc" } }
+    | { answers: { _count: "asc" | "desc" } }
+    | { [p: string]: "asc" | "desc" };
 }) {
-  const interviews = await prisma.interview.findMany({
-    where: {
+  const councils = Object.keys($Enums.Council);
+
+  const councilSearch = search
+    ? councils.filter((council) =>
+        council.toLowerCase().includes(search.toLowerCase()),
+      )
+    : null;
+
+  const constraints: {
+    delegate: {
+      council?: $Enums.Council;
+      name?: {
+        contains: string;
+        mode: "insensitive";
+      };
+    };
+  }[] = [];
+
+  if (council) {
+    constraints.push({
       delegate: {
         council,
       },
+    });
+  } else if (councilSearch?.length) {
+    councilSearch.forEach((council) => {
+      constraints.push({
+        delegate: {
+          council: council as $Enums.Council,
+        },
+      });
+    });
+  }
+
+  if (search) {
+    constraints.push({
+      delegate: {
+        name: {
+          contains: search,
+          mode: "insensitive",
+        },
+      },
+    });
+  }
+
+  const interviews = await prisma.interview.findMany({
+    where: {
+      OR: constraints.length ? constraints : undefined,
     },
     select: {
       id: true,
@@ -177,21 +231,21 @@ export async function getAllInterviews({
       },
       delegate: {
         select: {
+          id: true,
+          status: true,
           council: true,
-          firstName: true,
-          lastName: true,
+          name: true,
           phoneNumber: true,
         },
       },
     },
-    orderBy: { date: "desc" },
+    orderBy,
     skip: pageIndex * pageSize,
     take: pageSize,
   });
 
-  const questionCount = await prisma.question.count({
+  const questions = await prisma.question.findMany({
     where: {
-      council,
       OR: [
         {
           deletedAt: null,
@@ -203,6 +257,7 @@ export async function getAllInterviews({
         },
       ],
     },
+    select: { council: true },
   });
 
   return {
@@ -210,7 +265,9 @@ export async function getAllInterviews({
       ...interview,
       _count: {
         ...interview._count,
-        questions: questionCount,
+        questions: questions.filter(
+          (q) => q.council === interview.delegate.council,
+        ).length,
       },
     })),
     rowCount: await prisma.interview.count({

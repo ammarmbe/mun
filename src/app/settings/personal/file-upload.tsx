@@ -7,16 +7,15 @@ import PngIcon from "@/components/file-upload/png-icon";
 import WebpIcon from "@/components/file-upload/webp-icon";
 import ImgIcon from "@/components/file-upload/img-icon";
 import * as Avatar from "@radix-ui/react-avatar";
-import { User } from "@prisma/client";
 
 export default function FileUpload({
   file,
   setFile,
-  user,
+  userId,
 }: {
   file: File | undefined;
   setFile: Dispatch<SetStateAction<File | undefined>>;
-  user: User;
+  userId: string;
 }) {
   const ref = useRef<HTMLLabelElement>(null);
 
@@ -28,7 +27,7 @@ export default function FileUpload({
           width={64}
           height={64}
           alt="Profile picture"
-          src={file ? URL.createObjectURL(file) : `/uploads/${user.id}.jpg`}
+          src={file ? URL.createObjectURL(file) : `/uploads/${userId}.jpg`}
         />
         <Avatar.Fallback>
           <div className="size-16 rounded-full bg-utility-gray-300" />
@@ -38,13 +37,13 @@ export default function FileUpload({
         <label
           ref={ref}
           htmlFor="file"
-          className="relative flex h-[8.25rem] cursor-pointer flex-col items-center justify-center rounded-xl border px-6 py-4 hover:border-primary"
+          className="group relative flex h-[8.25rem] cursor-pointer flex-col items-center justify-center rounded-xl border px-4 py-3 text-center hover:border-primary aria-disabled:pointer-events-none aria-disabled:!bg-disabled-subtle aria-disabled:!text-disabled"
         >
           <div className="pointer-events-none rounded-md border p-2.5 text-secondary shadow-xs-skeuomorphic">
             <UploadCloud size={20} />
           </div>
           <p className="pointer-events-none mt-3 text-sm text-tertiary">
-            <span className="font-semibold text-brand-secondary">
+            <span className="font-semibold text-brand-secondary group-aria-disabled:text-disabled">
               Click to upload
             </span>{" "}
             or drag and drop

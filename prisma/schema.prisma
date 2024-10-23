@@ -55,8 +55,7 @@ enum Faculty {
 
 model Delegate {
   id           String         @id @default(cuid())
-  firstName    String
-  lastName     String
+  name         String
   faculty      Faculty
   council      Council
   phoneNumber  String
@@ -88,14 +87,13 @@ model Question {
 }
 
 model Answer {
-  id          String    @id @default(cuid())
   question    Question  @relation(fields: [questionId], references: [id], onDelete: Cascade)
   questionId  String
   interview   Interview @relation(fields: [interviewId], references: [id], onDelete: Cascade)
   interviewId String
   answer      String
 
-  @@unique([questionId, interviewId])
+  @@id([questionId, interviewId])
 }
 
 enum SettingType {

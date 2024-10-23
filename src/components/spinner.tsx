@@ -1,10 +1,17 @@
-export default function Spinner({ size = 20 }: { size?: number }) {
+export default function Spinner({
+  size = 20,
+  className,
+}: {
+  size?: number;
+  className?: string;
+}) {
   return (
     <div
       style={{
         width: size + "px",
         height: size + "px",
       }}
+      className={className}
     >
       <div
         style={{

@@ -6,20 +6,32 @@ import type {
 import type { getUser } from "@/utils/auth";
 import type { getInterviewById, getInterviewQuestions } from "@/data/interview";
 import type { getCouncilQuestions } from "@/data/council";
+import type { getSettings } from "@/data/settings";
 
 export const queryKeys = {
   interviews: {
-    today: ({ upcoming }: { upcoming: boolean }) => [
-      "interviews",
-      "today",
-      upcoming,
-    ],
+    today: () => ["interviews", "today"],
     tomorrow: () => ["interviews", "tomorrow"],
-    all: ({ pageIndex, pageSize }: { pageIndex: number; pageSize: number }) => [
+    all: ({
+      pageIndex,
+      pageSize,
+      search,
+      sortingId,
+      sortingDirection,
+    }: {
+      pageIndex: number;
+      pageSize: number;
+      search: string | null;
+      sortingId: string;
+      sortingDirection: "asc" | "desc";
+    }) => [
       "interviews",
       "completed",
       pageIndex,
       pageSize,
+      search,
+      sortingId,
+      sortingDirection,
     ],
   },
   interview: {
@@ -28,25 +40,24 @@ export const queryKeys = {
   },
   user: () => ["user"],
   questions: () => ["questions"],
+  settings: () => ["settings"],
 };
 
 export const queryFunctions = {
   interviews: {
-    today:
-      ({ upcoming }: { upcoming: boolean }) =>
-      async () => {
-        const res = await fetch(`/api/interviews/today?upcoming=${upcoming}`);
+    today: () => async () => {
+      const res = await fetch(`/api/interviews/today`);
 
-        if (res.status === 401) return null;
+      if (res.status === 401) return null;
 
-        if (!res.ok) {
-          throw new Error();
-        }
+      if (!res.ok) {
+        throw new Error();
+      }
 
-        return (await res.json()) as Awaited<
-          ReturnType<typeof getTodaysInterviews>
-        >;
-      },
+      return (await res.json()) as Awaited<
+        ReturnType<typeof getTodaysInterviews>
+      >;
+    },
     tomorrow: async () => {
       const res = await fetch("/api/interviews/tomorrow");
 
@@ -61,10 +72,22 @@ export const queryFunctions = {
       >;
     },
     all:
-      ({ pageIndex, pageSize }: { pageIndex: number; pageSize: number }) =>
+      ({
+        pageIndex,
+        pageSize,
+        search,
+        sortingId,
+        sortingDirection,
+      }: {
+        pageIndex: number;
+        pageSize: number;
+        search: string | null;
+        sortingId: string;
+        sortingDirection: "asc" | "desc";
+      }) =>
       async () => {
         const res = await fetch(
-          `/api/interviews/all?page_index=${pageIndex}&page_size=${pageSize}`,
+          `/api/interviews/all?page_index=${pageIndex}&page_size=${pageSize}&search=${search ?? ""}&sorting_id=${sortingId}&sorting_direction=${sortingDirection}`,
         );
 
         if (res.status === 401) return null;
@@ -133,5 +156,16 @@ export const queryFunctions = {
     return (await res.json()) as Awaited<
       ReturnType<typeof getCouncilQuestions>
     >;
+  },
+  settings: async () => {
+    const res = await fetch("/api/settings");
+
+    if (res.status === 401) return null;
+
+    if (!res.ok) {
+      throw new Error();
+    }
+
+    return (await res.json()) as Awaited<ReturnType<typeof getSettings>>;
   },
 };

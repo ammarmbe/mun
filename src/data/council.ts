@@ -3,8 +3,10 @@ import prisma from "@/utils/db";
 
 export async function getCouncilQuestions({
   council,
+  admin,
 }: {
   council?: $Enums.Council;
+  admin: boolean;
 }) {
   const data = await prisma.question.findMany({
     where: {
@@ -49,6 +51,6 @@ export async function getCouncilQuestions({
 
   return {
     questions: questionsArray,
-    canEdit: canEdit?.value === "TRUE",
+    canEdit: admin ? true : canEdit?.value === "TRUE",
   };
 }

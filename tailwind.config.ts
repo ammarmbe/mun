@@ -129,6 +129,16 @@ const config: Config = {
           600: "rgba(var(--utility-success-600))",
           700: "rgba(var(--utility-success-700))",
         },
+        "utility-blue": {
+          50: "rgba(var(--utility-blue-50))",
+          100: "rgba(var(--utility-blue-100))",
+          200: "rgba(var(--utility-blue-200))",
+          300: "rgba(var(--utility-blue-300))",
+          400: "rgba(var(--utility-blue-400))",
+          500: "rgba(var(--utility-blue-500))",
+          600: "rgba(var(--utility-blue-600))",
+          700: "rgba(var(--utility-blue-700))",
+        },
       },
       textColor: {
         primary: "rgba(var(--text-primary))",

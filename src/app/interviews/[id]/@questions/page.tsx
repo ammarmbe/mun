@@ -4,14 +4,14 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { queryFunctions, queryKeys } from "@/utils/react-query";
 import Loading from "@/app/interviews/[id]/@questions/loading";
 import { notFound, useSearchParams } from "next/navigation";
-import React, { useEffect, use, useState } from "react";
-import { inputStyles } from "@/utils/styles/input";
+import React, { use, useEffect, useState } from "react";
 import buttonStyles from "@/utils/styles/button";
 import { Check, Pencil } from "lucide-react";
 import { toast } from "sonner";
 import Toast from "@/components/toast";
 import { getGradeColor } from "@/utils";
 import Spinner from "@/components/spinner";
+import Textarea from "@/app/interviews/[id]/@questions/textarea";
 
 export default function Page(props: { params: Promise<{ id: string }> }) {
   const params = use(props.params);
@@ -107,18 +107,7 @@ export default function Page(props: { params: Promise<{ id: string }> }) {
 
   if (isLoading) return <Loading />;
 
-  if (questions === null) {
-    return (
-      <main className="flex flex-grow flex-col gap-8 px-4 py-8 md:px-8">
-        <div className="flex min-h-72 flex-grow flex-col items-center justify-center">
-          <h1 className="text-xl font-semibold">You are not logged in</h1>
-          <p className="mt-1 text-sm font-medium text-secondary">
-            Please log in to view this interview&apos;s questions
-          </p>
-        </div>
-      </main>
-    );
-  }
+  if (questions === null) return null;
 
   if (!questions?.questions.length) notFound();
 
@@ -188,15 +177,7 @@ export default function Page(props: { params: Promise<{ id: string }> }) {
             University ID
           </label>
           {editing ? (
-            <textarea
-              rows={3}
-              className={inputStyles(
-                {
-                  size: "md",
-                  variant: "primary",
-                },
-                "w-full max-w-96",
-              )}
+            <Textarea
               value={universityId || ""}
               onChange={(e) => {
                 setUniversityId(e.target.value);
@@ -219,16 +200,8 @@ export default function Page(props: { params: Promise<{ id: string }> }) {
               {question.value}
             </label>
             {editing ? (
-              <textarea
-                rows={3}
-                className={inputStyles(
-                  {
-                    size: "md",
-                    variant: "primary",
-                  },
-                  "w-full max-w-96",
-                )}
-                value={question.answer}
+              <Textarea
+                value={question.answer || ""}
                 onChange={(e) => {
                   const index = data.findIndex((q) => q.id === question.id);
                   const newData = [...data];
@@ -253,15 +226,7 @@ export default function Page(props: { params: Promise<{ id: string }> }) {
             Grade
           </label>
           {editing ? (
-            <textarea
-              rows={3}
-              className={inputStyles(
-                {
-                  size: "md",
-                  variant: "primary",
-                },
-                "w-full max-w-96",
-              )}
+            <Textarea
               value={grade || ""}
               onChange={(e) => {
                 setGrade(e.target.value);
@@ -278,15 +243,7 @@ export default function Page(props: { params: Promise<{ id: string }> }) {
             Notes
           </label>
           {editing ? (
-            <textarea
-              rows={3}
-              className={inputStyles(
-                {
-                  size: "md",
-                  variant: "primary",
-                },
-                "w-full max-w-96",
-              )}
+            <Textarea
               value={notes || ""}
               onChange={(e) => {
                 setNotes(e.target.value);

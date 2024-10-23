@@ -9,6 +9,7 @@ import ReactQuery from "@/components/utility/react-query";
 import ProgressBar from "@/components/progress-bar";
 import "react-loading-skeleton/dist/skeleton.css";
 import "./globals.css";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -37,7 +38,9 @@ export default function RootLayout({
         <SidebarWrapper>
           <Sidebar />
         </SidebarWrapper>
-        <ReactQuery>{children}</ReactQuery>
+        <ReactQuery>
+          <NuqsAdapter>{children}</NuqsAdapter>
+        </ReactQuery>
       </body>
     </html>
   );

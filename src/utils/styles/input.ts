@@ -1,8 +1,9 @@
 import { twMerge } from "tailwind-merge";
 
 const sizes = {
-  sm: "py-2 px-3",
-  md: "py-2.5 px-3.5",
+  xs: "py-2 px-3 text-sm",
+  sm: "py-2 px-3 text-md",
+  md: "py-2.5 px-3.5 text-md",
 };
 
 const variants = {
@@ -23,7 +24,7 @@ export function inputStyles(
   className?: string,
 ) {
   return twMerge(
-    "relative peer appearance-none text-md rounded-md resize-none shadow-xs border placeholder:text-placeholder text-primary bg-primary enabled:focus:ring-1 disabled:bg-disabled-subtle disabled:!border-disabled disabled:!text-disabled",
+    "relative peer appearance-none rounded-md resize-none shadow-xs border placeholder:text-placeholder text-primary bg-primary enabled:focus:ring-1 disabled:bg-disabled-subtle disabled:!border-disabled disabled:!text-disabled",
     variants[variant],
     sizes[size],
     className,

@@ -12,9 +12,11 @@ export default async function Layout({
 
   return (
     <main className="flex flex-grow flex-col">
-      <h1 className="p-6 text-display-xs font-semibold md:text-display-sm">
-        Hello, {user?.firstName}
-      </h1>
+      <div className="flex min-h-[5.625rem] items-center p-6">
+        <h1 className="text-display-xs font-semibold md:text-display-sm">
+          Hello, {user?.firstName}
+        </h1>
+      </div>
       <div className="grid flex-grow grid-cols-1 gap-4 p-4 pt-0 md:grid-cols-2 md:pl-3 xl:grid-cols-3">
         {today}
         {tomorrow}

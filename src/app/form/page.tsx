@@ -35,37 +35,19 @@ export default function Page() {
     <form action={action} className="mt-6 flex w-full flex-col gap-5 md:w-auto">
       <div className="flex flex-col gap-1.5">
         <label htmlFor="first-name" className={labelStyles({ required: true })}>
-          First name
+          Name
         </label>
         <input
-          name="first-name"
-          id="first-name"
+          name="name"
+          id="name"
           className={inputStyles({
             size: "sm",
-            variant: state?.errors.firstName ? "error" : "primary",
+            variant: state?.errors.name ? "error" : "primary",
           })}
         />
-        {state?.errors.firstName ? (
+        {state?.errors.name ? (
           <p className={helperTextStyles({ error: true })}>
-            {state?.errors.firstName}
-          </p>
-        ) : null}
-      </div>
-      <div className="flex flex-col gap-1.5">
-        <label htmlFor="last-name" className={labelStyles({ required: true })}>
-          Last name
-        </label>
-        <input
-          name="last-name"
-          id="last-name"
-          className={inputStyles({
-            size: "sm",
-            variant: state?.errors.lastName ? "error" : "primary",
-          })}
-        />
-        {state?.errors.lastName ? (
-          <p className={helperTextStyles({ error: true })}>
-            {state?.errors.lastName}
+            {state?.errors.name}
           </p>
         ) : null}
       </div>
@@ -175,7 +157,7 @@ export default function Page() {
                 .filter((day) => !dayjs(day).isBefore(dayjs(), "day"))
                 .map((day) => (
                   <option value={day} key={day}>
-                    {dayjs(day).format("dddd, MMMM D")}
+                    {dayjs(day).format("MMM D")}
                   </option>
                 ))}
             </select>

@@ -1,5 +1,6 @@
 import prisma from "@/utils/db";
 import { $Enums } from "@prisma/client";
+import fs from "fs";
 
 export async function getInterviewById({
   id,
@@ -34,9 +35,10 @@ export async function getInterviewById({
       },
       delegate: {
         select: {
+          id: true,
+          name: true,
+          status: true,
           council: true,
-          firstName: true,
-          lastName: true,
           universityId: true,
           phoneNumber: true,
           faculty: true,
@@ -44,6 +46,16 @@ export async function getInterviewById({
       },
     },
   });
+
+  if (!interview) return null;
+
+  // search in public folder for an image with the id as name
+  const image = `./public/uploads/${interview.delegate.id}.jpg`;
+
+  const imageExists = await fs.promises
+    .access(image, fs.constants.F_OK)
+    .then(() => true)
+    .catch(() => false);
 
   const questionCount = await prisma.question.count({
     where: {
@@ -61,15 +73,14 @@ export async function getInterviewById({
     },
   });
 
-  return interview
-    ? {
-        ...interview,
-        _count: {
-          ...interview._count,
-          questions: questionCount,
-        },
-      }
-    : null;
+  return {
+    ...interview,
+    imageExists,
+    _count: {
+      ...interview._count,
+      questions: questionCount,
+    },
+  };
 }
 
 export async function getInterviewQuestions({
@@ -79,9 +90,28 @@ export async function getInterviewQuestions({
   id: string;
   council?: $Enums.Council;
 }) {
+  const interview = await prisma.interview.findFirst({
+    where: {
+      id,
+      delegate: {
+        council,
+      },
+    },
+    select: {
+      grade: true,
+      delegate: {
+        select: {
+          universityId: true,
+          council: true,
+        },
+      },
+      notes: true,
+    },
+  });
+
   const questions = await prisma.question.findMany({
     where: {
-      council,
+      council: council ?? interview?.delegate.council,
       OR: [
         {
           deletedAt: null,
@@ -110,23 +140,9 @@ export async function getInterviewQuestions({
     },
   });
 
-  const interview = await prisma.interview.findFirst({
-    where: {
-      id,
-      delegate: {
-        council,
-      },
-    },
-    select: {
-      grade: true,
-      delegate: {
-        select: {
-          universityId: true,
-        },
-      },
-      notes: true,
-    },
-  });
+  console.log(questions);
+
+  if (!interview) return null;
 
   return {
     questions,

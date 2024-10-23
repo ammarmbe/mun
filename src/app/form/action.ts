@@ -7,8 +7,7 @@ import dayjs from "dayjs";
 import { redirect } from "next/navigation";
 
 const schema = v.object({
-  firstName: v.string("First name is required"),
-  lastName: v.string("Last name is required"),
+  name: v.string("Name is required"),
   phoneNumber: v.pipe(
     v.string("Phone number is required"),
     v.minLength(11, "Phone number must be 11 characters"),
@@ -34,8 +33,7 @@ export default async function action(
   formData: FormData,
 ) {
   const data = v.safeParse(schema, {
-    firstName: formData.get("first-name"),
-    lastName: formData.get("last-name"),
+    name: formData.get("name"),
     phoneNumber: formData.get("phone-number"),
     faculty: formData.get("faculty"),
     council: formData.get("council"),
@@ -73,8 +71,7 @@ export default async function action(
     data: {
       delegate: {
         create: {
-          firstName: data.output.firstName,
-          lastName: data.output.lastName,
+          name: data.output.name,
           phoneNumber: data.output.phoneNumber,
           council: data.output.council,
           faculty: data.output.faculty,
