@@ -5,6 +5,10 @@ const publicRoutes = ["/login", "/form", "/success", "/_next/", "/api/"];
 
 export async function middleware(request: NextRequest): Promise<NextResponse> {
   if (request.method === "GET") {
+    if (request.nextUrl.pathname === "/manifest.webmanifest") {
+      return NextResponse.next();
+    }
+
     const response = NextResponse.next();
     const token = request.cookies.get("session")?.value ?? null;
 
