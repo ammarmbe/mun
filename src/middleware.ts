@@ -5,7 +5,10 @@ const publicRoutes = ["/login", "/form", "/success", "/_next/", "/api/"];
 
 export async function middleware(request: NextRequest): Promise<NextResponse> {
   if (request.method === "GET") {
-    if (request.nextUrl.pathname === "/manifest.webmanifest") {
+    if (
+      request.nextUrl.pathname === "/manifest.webmanifest" ||
+      request.nextUrl.pathname.startsWith("/images/icon-")
+    ) {
       return NextResponse.next();
     }
 
