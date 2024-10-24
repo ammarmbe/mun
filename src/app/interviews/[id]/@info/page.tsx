@@ -133,9 +133,9 @@ export default function Page(props: { params: Promise<{ id: string }> }) {
         </div>
         <div className="flex flex-col gap-1">
           <p className="text-sm font-medium text-primary">Status</p>
-          <p className="text-secondary">
+          <div className="text-secondary">
             <UpdateStatus interview={interview} />
-          </p>
+          </div>
         </div>
         <div className="flex flex-col gap-1">
           <p className="text-sm font-medium text-primary">Phone number</p>

@@ -3,7 +3,7 @@
 import buttonStyles from "@/utils/styles/button";
 import { inputStyles, labelStyles } from "@/utils/styles/input";
 import React, { useEffect, useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import Toast from "@/components/toast";
 import { queryFunctions, queryKeys } from "@/utils/react-query";
@@ -14,8 +14,6 @@ import type { getCouncilQuestions } from "@/data/council";
 import type { User } from "@prisma/client";
 
 export default function Questions({ user }: { user: User }) {
-  const queryClient = useQueryClient();
-
   const [questions, setQuestions] = useState<
     | NonNullable<Awaited<ReturnType<typeof getCouncilQuestions>>>["questions"]
     | null
@@ -119,7 +117,7 @@ export default function Questions({ user }: { user: User }) {
         <div className="inset-0 flex flex-col overflow-auto md:absolute">
           {questions?.map(([council, councilQuestions]) => (
             <div
-              className="grid gap-5 border-b p-4 last:border-b-0 md:grid-cols-[1fr,2fr]"
+              className="grid gap-5 border-b p-4 last:border-b-0 sm:grid-cols-2 md:grid-cols-[1fr,2fr]"
               key={council}
             >
               <div className="flex flex-col">
@@ -133,10 +131,7 @@ export default function Questions({ user }: { user: User }) {
               <div className="flex flex-col gap-4">
                 {councilQuestions.length ? (
                   councilQuestions.map((question) => (
-                    <div
-                      className="flex items-center gap-3"
-                      key={question.order}
-                    >
+                    <div className="flex items-center gap-3" key={question.id}>
                       <input
                         type="text"
                         value={question.value}

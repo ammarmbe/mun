@@ -17,7 +17,7 @@ export default function FileUpload({
       className="group relative flex h-full w-full cursor-pointer flex-col items-center justify-center rounded-xl border px-4 py-3 text-center hover:border-primary aria-disabled:pointer-events-none aria-disabled:!bg-disabled-subtle aria-disabled:!text-disabled"
       aria-disabled={isLoading}
     >
-      <div className="pointer-events-none rounded-md border p-2.5 text-secondary shadow-xs-skeuomorphic">
+      <div className="pointer-events-none rounded-md border border-primary p-2.5 text-secondary shadow-xs-skeuomorphic">
         <UploadCloud size={20} />
       </div>
       <p className="pointer-events-none mt-3 text-sm text-tertiary">

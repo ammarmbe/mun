@@ -5,6 +5,7 @@ import prisma from "@/utils/db";
 import { $Enums } from "@prisma/client";
 import dayjs from "dayjs";
 import { redirect } from "next/navigation";
+import { sendNotification } from "@/utils/server";
 
 const schema = v.object({
   name: v.string("Name is required"),
@@ -67,7 +68,7 @@ export default async function action(
     } as FormState;
   }
 
-  await prisma.interview.create({
+  const interview = await prisma.interview.create({
     data: {
       delegate: {
         create: {
@@ -81,6 +82,49 @@ export default async function action(
       date: dayjs(`${data.output.day} ${data.output.time}`).toDate(),
     },
   });
+
+  const users = await prisma.user.findMany({
+    where: {
+      council: data.output.council,
+    },
+    select: {
+      id: true,
+      notificationSubscription: true,
+      newInterviewNotification: true,
+    },
+  });
+
+  for (const user of users) {
+    if (user.newInterviewNotification && user.notificationSubscription) {
+      await sendNotification({
+        subscription: user.notificationSubscription,
+        name: data.output.name,
+        date: dayjs(`${data.output.day} ${data.output.time}`).toDate(),
+        type: "NEW",
+      });
+    }
+
+    await prisma.notification.create({
+      data: {
+        user: {
+          connect: {
+            id: user.id,
+          },
+        },
+        interview: {
+          connect: {
+            id: interview.id,
+          },
+        },
+        title: "New interview",
+        body: `You have an interview with ${data.output.name} on ${dayjs(
+          `${data.output.day} ${data.output.time}`,
+        ).format("dddd, MMMM DD")} at ${dayjs(
+          `${data.output.day} ${data.output.time}`,
+        ).format("hh:mm A")}`,
+      },
+    });
+  }
 
   redirect("/success");
 }

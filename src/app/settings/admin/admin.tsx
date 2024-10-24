@@ -88,7 +88,10 @@ export default function Admin() {
       <div className="flex flex-grow flex-col">
         {settings?.length ? (
           settings.map((setting) => (
-            <div className="grid gap-1.5 gap-x-6 border-b p-4 last:border-b-0 md:grid-cols-[1fr,2fr]">
+            <div
+              key={setting.id}
+              className="grid gap-1.5 gap-x-6 border-b p-4 last:border-b-0 sm:grid-cols-2 md:grid-cols-[1fr,2fr]"
+            >
               <div className="flex flex-col gap-1">
                 <p className={labelStyles({ required: true })}>
                   {setting.label}

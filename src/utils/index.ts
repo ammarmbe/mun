@@ -1,5 +1,4 @@
 import { $Enums } from "@prisma/client";
-import dayjs from "dayjs";
 
 export const getGradeColor = (
   grade: string | undefined | null,
@@ -42,24 +41,6 @@ export const faculties: Record<$Enums.Faculty, string> = {
   PHARMACY: "Pharmacy",
 };
 
-export function generateTimes(
-  start: string,
-  end: string,
-  interval: number,
-): string[] {
-  const times: string[] = [];
-
-  let currentTime = dayjs(`1970-01-01 ${start}`);
-
-  while (!currentTime.isAfter(dayjs(`1970-01-01 ${end}`))) {
-    times.push(currentTime.format("HH:mm"));
-
-    currentTime = currentTime.add(interval, "minute");
-  }
-
-  return times;
-}
-
 export const councilColors = {
   UNSC: "blue",
   ICJ: "green",
@@ -68,3 +49,33 @@ export const councilColors = {
   ASAM: "brand",
   ODC: "gray",
 } as const;
+
+export const subscribe = async (
+  userid: string | null | undefined,
+): Promise<PushSubscription | null> => {
+  if (!userid) return null;
+
+  // check if a service worker is already registered
+  let swRegistration = await navigator.serviceWorker.getRegistration();
+
+  if (!swRegistration) {
+    swRegistration = await registerServiceWorker();
+  }
+
+  await window?.Notification.requestPermission();
+
+  try {
+    const options = {
+      applicationServerKey: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
+      userVisibleOnly: true,
+    };
+
+    return await swRegistration.pushManager.subscribe(options);
+  } catch (err) {}
+
+  return null;
+};
+
+export const registerServiceWorker = async () => {
+  return navigator.serviceWorker.register("/service.js");
+};

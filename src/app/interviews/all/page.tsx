@@ -251,7 +251,7 @@ export default function Page() {
                   ))}
                 </thead>
               </table>
-              <div className="-m-px mt-0 flex-grow rounded-2xl border bg-primary">
+              <div className="-m-px mt-0 flex-grow overflow-hidden rounded-2xl border bg-primary">
                 {data?.interviews?.length ? (
                   <table className="w-full table-fixed">
                     <tbody>

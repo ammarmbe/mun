@@ -18,15 +18,19 @@ enum Council {
 }
 
 model User {
-  id         String      @id @default(cuid())
-  firstName  String
-  lastName   String
-  council    Council?
-  admin      Boolean     @default(false)
-  username   String      @unique
-  password   String
-  interviews Interview[]
-  sessions   Session[]
+  id                            String         @id @default(cuid())
+  firstName                     String
+  lastName                      String
+  council                       Council?
+  notificationSubscription      String?
+  newInterviewNotification      Boolean        @default(false)
+  upcomingInterviewNotification Boolean        @default(false)
+  admin                         Boolean        @default(false)
+  username                      String         @unique
+  password                      String
+  interviews                    Interview[]
+  sessions                      Session[]
+  notifications                 Notification[]
 }
 
 model Session {
@@ -66,15 +70,16 @@ model Delegate {
 }
 
 model Interview {
-  id         String   @id @default(cuid())
-  delegate   Delegate @relation(fields: [delegateId], references: [id], onDelete: Cascade)
-  delegateId String   @unique
-  user       User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
-  userId     String?
-  date       DateTime
-  grade      String?
-  notes      String?
-  answers    Answer[]
+  id            String         @id @default(cuid())
+  delegate      Delegate       @relation(fields: [delegateId], references: [id], onDelete: Cascade)
+  delegateId    String         @unique
+  user          User?          @relation(fields: [userId], references: [id], onDelete: SetNull)
+  userId        String?
+  date          DateTime
+  grade         String?
+  notes         String?
+  answers       Answer[]
+  notifications Notification[]
 }
 
 model Question {
@@ -110,4 +115,18 @@ model Setting {
   min         Int?
   max         Int?
   value       String
+}
+
+model Notification {
+  id          String     @id @default(cuid())
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String
+  interviewId String?
+  interview   Interview? @relation(fields: [interviewId], references: [id], onDelete: SetNull)
+  title       String
+  body        String
+  read        Boolean    @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

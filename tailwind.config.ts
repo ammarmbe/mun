@@ -249,7 +249,7 @@ const config: Config = {
       "3xl":
         "0px 32px 64px -12px hsla(220, 29%, 5%, 0.14), 0px 5px 5px -2.5px hsla(220, 29%, 5%, 0.04)",
       "xs-skeuomorphic":
-        "0px 0px 0px 1px #0A0D122E inset, 0px -2px 0px 0px #0A0D120D inset, 0px 1px 2px 0px #0A0D120D",
+        "0px -1px 0px 0px #0A0D120D inset, 0px 1px 2px 0px #0A0D120D",
       "xs-skeuomorphic-alt":
         "0px 0px 0px 1px #00000000 inset, 0px -2px 0px 0px #0A0D120D inset, 0px 1px 2px 0px #0A0D120D",
       ring: " 0px 0px 0px 2px rgba(var(--bg-primary)), 0px 0px 0px 4px rgba(var(--brand-500))",

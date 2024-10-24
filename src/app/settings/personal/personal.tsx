@@ -67,7 +67,7 @@ export default function Personal({ user }: { user: User }) {
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({
-        queryKey: queryKeys.user(),
+        queryKey: queryKeys.user.current(),
       });
 
       toast.custom((t) => (
@@ -103,7 +103,7 @@ export default function Personal({ user }: { user: User }) {
         </button>
       </div>
       <div className="flex flex-col">
-        <div className="grid gap-1.5 border-b p-4 md:grid-cols-[1fr,2fr]">
+        <div className="grid gap-1.5 border-b p-4 sm:grid-cols-2 md:grid-cols-[1fr,2fr]">
           <p className={labelStyles({ required: true }, "hidden md:block")}>
             Name
           </p>
@@ -152,12 +152,12 @@ export default function Personal({ user }: { user: User }) {
             </div>
           </div>
         </div>
-        <div className="grid gap-1.5 border-b p-4 md:grid-cols-[1fr,2fr]">
+        <div className="grid gap-1.5 border-b p-4 sm:grid-cols-2 md:grid-cols-[1fr,2fr]">
           <p className={labelStyles({ required: true })}>Photo</p>
           <FileUpload file={file} setFile={setFile} userId={user.id} />
         </div>
         {user.council ? (
-          <div className="grid gap-1.5 p-4 md:grid-cols-[1fr,2fr]">
+          <div className="grid gap-1.5 p-4 sm:grid-cols-2 md:grid-cols-[1fr,2fr]">
             <p className={labelStyles({ required: true })}>Council</p>
             <InputWrapper size="sm" Icon={ChevronsUpDown}>
               <select

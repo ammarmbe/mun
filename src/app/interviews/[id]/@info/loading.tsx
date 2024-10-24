@@ -1,6 +1,8 @@
 import React from "react";
 import Skeleton from "react-loading-skeleton";
 import { AspectRatio } from "@radix-ui/react-aspect-ratio";
+import buttonStyles from "@/utils/styles/button";
+import { Pencil } from "lucide-react";
 
 export default function Loading() {
   return (
@@ -29,9 +31,21 @@ export default function Loading() {
         </div>
         <div className="flex flex-col gap-1">
           <p className="text-sm font-medium text-primary">Status</p>
-          <p className="text-secondary">
-            <Skeleton className="!w-40" />
-          </p>
+          <div className="text-secondary">
+            <div className="flex w-full items-center justify-between">
+              <Skeleton className="!w-40" />
+              <button
+                className={buttonStyles({
+                  size: "md",
+                  variant: "secondary",
+                  symmetrical: true,
+                })}
+                disabled={true}
+              >
+                <Pencil size={16} />
+              </button>
+            </div>
+          </div>
         </div>
         <div className="flex flex-col gap-1">
           <p className="text-sm font-medium text-primary">Phone number</p>

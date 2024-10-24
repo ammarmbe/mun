@@ -6,7 +6,11 @@ import type {
 import type { getUser } from "@/utils/auth";
 import type { getInterviewById, getInterviewQuestions } from "@/data/interview";
 import type { getCouncilQuestions } from "@/data/council";
-import type { getSettings } from "@/data/settings";
+import type { getNotificationSettings, getSettings } from "@/data/settings";
+import type {
+  getNotifications,
+  getUnreadNotificationCount,
+} from "@/data/notifications";
 
 export const queryKeys = {
   interviews: {
@@ -38,9 +42,16 @@ export const queryKeys = {
     id: ({ id }: { id: string }) => ["interview", id],
     questions: ({ id }: { id: string }) => ["interview", id, "questions"],
   },
-  user: () => ["user"],
+  user: {
+    current: () => ["user"],
+    notifications: () => ["user", "notifications"],
+  },
   questions: () => ["questions"],
   settings: () => ["settings"],
+  notifications: {
+    get: ({ type }: { type: string }) => ["notifications", type],
+    unread: () => ["notifications", "unread"],
+  },
 };
 
 export const queryFunctions = {
@@ -133,16 +144,31 @@ export const queryFunctions = {
         >;
       },
   },
-  user: async () => {
-    const res = await fetch("/api/user");
+  user: {
+    current: async () => {
+      const res = await fetch("/api/user");
 
-    if (res.status === 401) return null;
+      if (res.status === 401) return null;
 
-    if (!res.ok) {
-      throw new Error();
-    }
+      if (!res.ok) {
+        throw new Error();
+      }
 
-    return (await res.json()) as Awaited<ReturnType<typeof getUser>>;
+      return (await res.json()) as Awaited<ReturnType<typeof getUser>>;
+    },
+    notifications: async () => {
+      const res = await fetch("/api/user/notifications");
+
+      if (res.status === 401) return null;
+
+      if (!res.ok) {
+        throw new Error();
+      }
+
+      return (await res.json()) as Awaited<
+        ReturnType<typeof getNotificationSettings>
+      >;
+    },
   },
   questions: async () => {
     const res = await fetch("/api/questions");
@@ -167,5 +193,35 @@ export const queryFunctions = {
     }
 
     return (await res.json()) as Awaited<ReturnType<typeof getSettings>>;
+  },
+  notifications: {
+    get:
+      ({ type }: { type: "all" | "new" }) =>
+      async () => {
+        const res = await fetch(`/api/notifications?type=${type}`);
+
+        if (res.status === 401) return null;
+
+        if (!res.ok) {
+          throw new Error();
+        }
+
+        return (await res.json()) as Awaited<
+          ReturnType<typeof getNotifications>
+        >;
+      },
+    unread: async () => {
+      const res = await fetch("/api/notifications/unread");
+
+      if (res.status === 401) return null;
+
+      if (!res.ok) {
+        throw new Error();
+      }
+
+      return (await res.json()) as Awaited<
+        ReturnType<typeof getUnreadNotificationCount>
+      >;
+    },
   },
 };

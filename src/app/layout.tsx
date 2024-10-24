@@ -36,10 +36,10 @@ export default function RootLayout({
           }}
         />
         <ProgressBar />
-        <SidebarWrapper>
-          <Sidebar />
-        </SidebarWrapper>
         <ReactQuery>
+          <SidebarWrapper>
+            <Sidebar />
+          </SidebarWrapper>
           <NuqsAdapter>{children}</NuqsAdapter>
         </ReactQuery>
       </body>
