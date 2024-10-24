@@ -94,7 +94,6 @@ export default function Page() {
           name="phone-number"
           id="phone-number"
           type="tel"
-          pattern="01[0-9]{9}"
           className={inputStyles({
             size: "sm",
             variant: state?.errors.phoneNumber ? "error" : "primary",

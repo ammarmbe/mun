@@ -26,13 +26,13 @@ export default function Notifications() {
           : "bg-primary text-secondary"
       }`}
     >
-      <div className="relative flex size-5 items-center justify-center">
-        <Bell className="text-tertiary" size={20} />
+      <Bell className="text-tertiary" size={20} />
+      <div className="flex items-center gap-2">
+        Notifications
         <div
-          className={`absolute -top-1 left-0 size-3 rounded-full bg-red-600 transition-all ${data ? "opacity-100" : "opacity-0"}`}
+          className={`size-2 rounded-full bg-red-600 transition-all ${data ? "opacity-100" : "opacity-0"}`}
         />
       </div>
-      Notifications
     </Link>
   );
 }

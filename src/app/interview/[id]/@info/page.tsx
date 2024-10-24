@@ -2,7 +2,7 @@
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { queryFunctions, queryKeys } from "@/utils/react-query";
-import Loading from "@/app/interviews/[id]/@info/loading";
+import Loading from "@/app/interview/[id]/@info/loading";
 import React, { use, useEffect, useState } from "react";
 import dayjs from "dayjs";
 import { councilColors, faculties, getGradeColor } from "@/utils";
@@ -13,7 +13,7 @@ import { toast } from "sonner";
 import Toast from "@/components/toast";
 import Badge from "@/components/badge";
 import * as Avatar from "@radix-ui/react-avatar";
-import UpdateStatus from "@/app/interviews/[id]/@info/update-status";
+import UpdateStatus from "@/app/interview/[id]/@info/update-status";
 
 export default function Page(props: { params: Promise<{ id: string }> }) {
   const queryClient = useQueryClient();

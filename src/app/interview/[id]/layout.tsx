@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import Loading from "@/app/interviews/[id]/@questions/loading";
+import Loading from "@/app/interview/[id]/@questions/loading";
 
 export default async function Layout({
   info,

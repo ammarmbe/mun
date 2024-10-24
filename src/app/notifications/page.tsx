@@ -4,7 +4,7 @@ import { useQueryState } from "nuqs";
 import { useQuery } from "@tanstack/react-query";
 import { queryFunctions, queryKeys } from "@/utils/react-query";
 import Loading from "@/app/notifications/loading";
-import React, { Fragment } from "react";
+import React from "react";
 import Image from "next/image";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -46,7 +46,7 @@ export default function Page() {
                           {dayjs(notification.createdAt).fromNow()}
                         </p>
                       </div>
-                      {!notification.read ? (
+                      {dayjs().diff(notification.readAt, "second") < 5 ? (
                         <div className="size-2 rounded-full bg-success-600" />
                       ) : null}
                     </div>
@@ -58,7 +58,7 @@ export default function Page() {
               return notification.interviewId ? (
                 <Link
                   key={notification.id}
-                  href={`/interviews/${notification.interviewId}`}
+                  href={`/interview/${notification.interviewId}`}
                   className="hover flex gap-3 border-b bg-primary p-4"
                 >
                   {content}

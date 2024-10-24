@@ -1,6 +1,7 @@
 import { getAllInterviews } from "@/data/interviews";
 import { getUser } from "@/utils/auth";
 import prisma from "@/utils/db";
+import { $Enums } from "@prisma/client";
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
@@ -14,6 +15,7 @@ export async function GET(req: Request) {
   const pageSize = searchParams.has("page_size")
     ? Number(searchParams.get("page_size"))
     : undefined;
+  let council = searchParams.get("council") as $Enums.Council | null;
 
   const { user } = await getUser();
 
@@ -60,10 +62,14 @@ export async function GET(req: Request) {
     } as const;
   }
 
+  if (!Object.keys($Enums.Council).includes(council ?? "")) {
+    council = null;
+  }
+
   const interviews = await getAllInterviews({
     council:
       canAccess?.value === "TRUE" || user.admin
-        ? undefined
+        ? (council ?? undefined)
         : (user.council ?? undefined),
     pageIndex: pageIndex ?? 0,
     pageSize: pageSize ?? 10,

@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import TailwindIndicator from "@/components/utility/tailwind-indicator";
 import Sidebar from "@/components/sidebar/sidebar";
-import SidebarWrapper from "@/components/sidebar/sidebar-wrapper";
 import React from "react";
 import { Toaster } from "sonner";
 import ReactQuery from "@/components/utility/react-query";
@@ -37,9 +36,7 @@ export default function RootLayout({
         />
         <ProgressBar />
         <ReactQuery>
-          <SidebarWrapper>
-            <Sidebar />
-          </SidebarWrapper>
+          <Sidebar />
           <NuqsAdapter>{children}</NuqsAdapter>
         </ReactQuery>
       </body>

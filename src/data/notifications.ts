@@ -8,7 +8,9 @@ export async function getUnreadNotificationCount({
   return prisma.notification.count({
     where: {
       userId,
-      read: false,
+      readAt: {
+        equals: null,
+      },
     },
   });
 }
@@ -23,7 +25,12 @@ export async function getNotifications({
   const notifications = prisma.notification.findMany({
     where: {
       userId,
-      read: type === "new" ? false : undefined,
+      readAt:
+        type === "new"
+          ? {
+              equals: null,
+            }
+          : undefined,
     },
     select: {
       id: true,
@@ -31,16 +38,19 @@ export async function getNotifications({
       title: true,
       body: true,
       interviewId: true,
-      read: true,
+      readAt: true,
     },
   });
 
   await prisma.notification.updateMany({
     where: {
       userId,
+      readAt: {
+        equals: null,
+      },
     },
     data: {
-      read: true,
+      readAt: new Date(),
     },
   });
 

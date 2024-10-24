@@ -16,7 +16,7 @@ export default function InterviewCard({
   upNext?: boolean;
 }) {
   return (
-    <Link href={`/interviews/${interview.id}`} legacyBehavior>
+    <Link href={`/interview/${interview.id}`} legacyBehavior>
       <div className="hover h-fit cursor-pointer bg-primary p-5 transition-all">
         <div key={interview.id} className="flex flex-col">
           <div className="flex min-w-0 flex-col gap-1">
@@ -68,7 +68,7 @@ export default function InterviewCard({
           </div>
           {upNext ? (
             <Link
-              href={`/interviews/${interview.id}?editing=true`}
+              href={`/interview/${interview.id}?editing=true`}
               onClick={(e) => e.stopPropagation()}
               className={buttonStyles(
                 {

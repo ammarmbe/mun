@@ -2,7 +2,7 @@
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { queryFunctions, queryKeys } from "@/utils/react-query";
-import Loading from "@/app/interviews/[id]/@questions/loading";
+import Loading from "@/app/interview/[id]/@questions/loading";
 import { notFound, useSearchParams } from "next/navigation";
 import React, { use, useEffect, useState } from "react";
 import buttonStyles from "@/utils/styles/button";
@@ -11,7 +11,7 @@ import { toast } from "sonner";
 import Toast from "@/components/toast";
 import { getGradeColor } from "@/utils";
 import Spinner from "@/components/spinner";
-import Textarea from "@/app/interviews/[id]/@questions/textarea";
+import Textarea from "@/app/interview/[id]/@questions/textarea";
 
 export default function Page(props: { params: Promise<{ id: string }> }) {
   const params = use(props.params);

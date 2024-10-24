@@ -125,7 +125,7 @@ model Notification {
   interview   Interview? @relation(fields: [interviewId], references: [id], onDelete: SetNull)
   title       String
   body        String
-  read        Boolean    @default(false)
+  readAt      DateTime?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

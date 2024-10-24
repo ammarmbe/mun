@@ -11,18 +11,21 @@ import type {
   getNotifications,
   getUnreadNotificationCount,
 } from "@/data/notifications";
+import { QueryClient } from "@tanstack/react-query";
 
 export const queryKeys = {
   interviews: {
     today: () => ["interviews", "today"],
     tomorrow: () => ["interviews", "tomorrow"],
     all: ({
+      council,
       pageIndex,
       pageSize,
       search,
       sortingId,
       sortingDirection,
     }: {
+      council?: string;
       pageIndex: number;
       pageSize: number;
       search: string | null;
@@ -36,6 +39,7 @@ export const queryKeys = {
       search,
       sortingId,
       sortingDirection,
+      council,
     ],
   },
   interview: {
@@ -84,12 +88,14 @@ export const queryFunctions = {
     },
     all:
       ({
+        council,
         pageIndex,
         pageSize,
         search,
         sortingId,
         sortingDirection,
       }: {
+        council?: string;
         pageIndex: number;
         pageSize: number;
         search: string | null;
@@ -98,7 +104,7 @@ export const queryFunctions = {
       }) =>
       async () => {
         const res = await fetch(
-          `/api/interviews/all?page_index=${pageIndex}&page_size=${pageSize}&search=${search ?? ""}&sorting_id=${sortingId}&sorting_direction=${sortingDirection}`,
+          `/api/interviews/all?page_index=${pageIndex}&page_size=${pageSize}&search=${search ?? ""}&sorting_id=${sortingId}&sorting_direction=${sortingDirection}&council=${council}`,
         );
 
         if (res.status === 401) return null;
@@ -154,7 +160,7 @@ export const queryFunctions = {
         throw new Error();
       }
 
-      return (await res.json()) as Awaited<ReturnType<typeof getUser>>;
+      return (await res.json()) as Awaited<ReturnType<typeof getUser>>["user"];
     },
     notifications: async () => {
       const res = await fetch("/api/user/notifications");
@@ -225,3 +231,24 @@ export const queryFunctions = {
     },
   },
 };
+
+let clientQueryClientSingleton: QueryClient;
+
+function makeQueryClient() {
+  return new QueryClient({
+    defaultOptions: {
+      queries: {
+        staleTime: 30 * 1000,
+        throwOnError: true,
+      },
+    },
+  });
+}
+
+export function getQueryClient() {
+  if (typeof window === "undefined") {
+    return makeQueryClient();
+  }
+
+  return (clientQueryClientSingleton ??= makeQueryClient());
+}

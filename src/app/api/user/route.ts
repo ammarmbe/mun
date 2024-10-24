@@ -5,6 +5,8 @@ import fs from "fs";
 export async function GET() {
   const { user } = await getUser();
 
+  console.log("user", user);
+
   return new Response(JSON.stringify(user));
 }
 

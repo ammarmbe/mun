@@ -1,18 +1,48 @@
 "use client";
 
-import { BookOpenText, Home, Settings } from "lucide-react";
-import Image from "next/image";
+import { BookOpen, BookOpenText, Home, Settings } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import Notifications from "@/components/sidebar/notifications";
+import type { User } from "@prisma/client";
+import { useMemo } from "react";
+import Image from "next/image";
+import Notifications from "./notifications";
+import { queryKeys, queryFunctions } from "@/utils/react-query";
+import { useQuery } from "@tanstack/react-query";
 
-const links = [
-  { href: "/home", label: "Home", icon: Home },
-  { href: "/interviews/all", label: "All interviews", icon: BookOpenText },
-];
-
-export default function Links() {
+export default function Links({ user }: { user: User | null | undefined }) {
   const pathname = usePathname();
+
+  const { data: settings } = useQuery({
+    queryKey: queryKeys.settings(),
+    queryFn: queryFunctions.settings,
+  });
+
+  const links = useMemo(() => {
+    const links = [{ href: "/home", label: "Home", icon: Home }];
+
+    if (user?.council) {
+      links.push({
+        href: `/interviews/${user?.council}`,
+        label: `${user?.council} interviews`,
+        icon: BookOpen,
+      });
+    }
+
+    if (
+      settings?.find((setting) => setting.id === "canAccess")?.value ===
+        "TRUE" ||
+      user?.admin
+    ) {
+      links.push({
+        href: "/interviews",
+        label: "All interviews",
+        icon: BookOpenText,
+      });
+    }
+
+    return links;
+  }, [user]);
 
   return (
     <div className="flex flex-grow flex-col justify-between">

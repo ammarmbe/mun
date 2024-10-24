@@ -11,7 +11,9 @@ const schema = v.object({
   name: v.string("Name is required"),
   phoneNumber: v.pipe(
     v.string("Phone number is required"),
-    v.minLength(11, "Phone number must be 11 characters"),
+    v.trim(),
+    v.minLength(10, "Phone number must be correct"),
+    v.maxLength(13, "Phone number must be correct"),
   ),
   faculty: v.picklist(
     Object.values($Enums.Faculty),
@@ -64,6 +66,27 @@ export default async function action(
     return {
       errors: {
         time: "Time can't be before now",
+      },
+    } as FormState;
+  }
+
+  if (
+    !(
+      data.output.phoneNumber.startsWith("01") &&
+      data.output.phoneNumber.length === 11
+    ) &&
+    !(
+      data.output.phoneNumber.startsWith("1") &&
+      data.output.phoneNumber.length === 10
+    ) &&
+    !(
+      data.output.phoneNumber.startsWith("+20") &&
+      data.output.phoneNumber.length === 13
+    )
+  ) {
+    return {
+      errors: {
+        phoneNumber: "Phone number must be correct",
       },
     } as FormState;
   }
