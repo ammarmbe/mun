@@ -46,7 +46,9 @@ export default function Page() {
                           {dayjs(notification.createdAt).fromNow()}
                         </p>
                       </div>
-                      <div className="size-2 rounded-full bg-success-600" />
+                      {!notification.read ? (
+                        <div className="size-2 rounded-full bg-success-600" />
+                      ) : null}
                     </div>
                     <p className="text-sm text-tertiary">{notification.body}</p>
                   </div>
