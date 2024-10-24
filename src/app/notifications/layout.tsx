@@ -12,7 +12,9 @@ export default function Layout({ children }: { children: ReactNode }) {
       </div>
       <div className="flex flex-grow grid-cols-3 gap-4 p-4 pt-0 md:grid md:grid-cols-2 md:pl-3 xl:grid-cols-3">
         <div className="col-span-2 flex flex-grow flex-col rounded-2xl border bg-secondary-subtle">
-          <Links />
+          <Suspense>
+            <Links />
+          </Suspense>
           <Suspense fallback={<Loading />}>{children}</Suspense>
         </div>
       </div>
