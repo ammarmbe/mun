@@ -127,7 +127,7 @@ export default function Notifications({ user }: { user: User }) {
             </p>
           </div>
         </label>
-        <div className="flex flex-grow flex-col">
+        {/* <div className="flex flex-grow flex-col">
           <label
             htmlFor="upcoming"
             className="flex gap-1.5 gap-x-6 border-b p-4 last:border-b-0"
@@ -153,7 +153,7 @@ export default function Notifications({ user }: { user: User }) {
               </p>
             </div>
           </label>
-        </div>
+        </div> */}
       </div>
     </div>
   );

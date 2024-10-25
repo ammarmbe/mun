@@ -1,6 +1,11 @@
 import prisma from "@/utils/db";
 import { $Enums } from "@prisma/client";
 import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 export async function getTodaysInterviews({
   council,
@@ -10,8 +15,8 @@ export async function getTodaysInterviews({
   const interviews = await prisma.interview.findMany({
     where: {
       date: {
-        gte: dayjs().startOf("day").toDate(),
-        lte: dayjs().endOf("day").toDate(),
+        gte: dayjs().tz("Africa/Cairo").startOf("day").toDate(),
+        lte: dayjs().tz("Africa/Cairo").endOf("day").toDate(),
       },
       delegate: {
         council,
@@ -83,8 +88,8 @@ export async function getTomorrowsInterviews({
   const interviews = await prisma.interview.findMany({
     where: {
       date: {
-        gte: dayjs().add(1, "day").startOf("day").toDate(),
-        lte: dayjs().add(1, "day").endOf("day").toDate(),
+        gte: dayjs().tz("Africa/Cairo").add(1, "day").startOf("day").toDate(),
+        lte: dayjs().tz("Africa/Cairo").add(1, "day").endOf("day").toDate(),
       },
       delegate: {
         council,

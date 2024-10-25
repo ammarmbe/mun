@@ -6,6 +6,11 @@ import { $Enums } from "@prisma/client";
 import dayjs from "dayjs";
 import { redirect } from "next/navigation";
 import { sendNotification } from "@/utils/server";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 const schema = v.object({
   name: v.string("Name is required"),
@@ -52,7 +57,11 @@ export default async function action(
     } as FormState;
   }
 
-  if (dayjs(data.output.day).isBefore(dayjs(), "day")) {
+  if (
+    dayjs(data.output.day)
+      .tz("Africa/Cairo")
+      .isBefore(dayjs().tz("Africa/Cairo"), "day")
+  ) {
     return {
       errors: {
         day: "Day can't be before today",
@@ -61,7 +70,9 @@ export default async function action(
   }
 
   if (
-    dayjs(`${data.output.day} ${data.output.time}`).isBefore(dayjs(), "minute")
+    dayjs(`${data.output.day} ${data.output.time}`)
+      .tz("Africa/Cairo")
+      .isBefore(dayjs().tz("Africa/Cairo"), "minute")
   ) {
     return {
       errors: {
@@ -102,7 +113,9 @@ export default async function action(
           status: "PENDING",
         },
       },
-      date: dayjs(`${data.output.day} ${data.output.time}`).toDate(),
+      date: dayjs(`${data.output.day} ${data.output.time}`)
+        .tz("Africa/Cairo")
+        .toDate(),
     },
   });
 
@@ -122,7 +135,9 @@ export default async function action(
       await sendNotification({
         subscription: user.notificationSubscription,
         name: data.output.name,
-        date: dayjs(`${data.output.day} ${data.output.time}`).toDate(),
+        date: dayjs(`${data.output.day} ${data.output.time}`)
+          .tz("Africa/Cairo")
+          .toDate(),
         type: "NEW",
       });
     }
@@ -142,9 +157,13 @@ export default async function action(
         title: "New interview",
         body: `You have an interview with ${data.output.name} on ${dayjs(
           `${data.output.day} ${data.output.time}`,
-        ).format("dddd, MMMM DD")} at ${dayjs(
+        )
+          .tz("Africa/Cairo")
+          .format("dddd, MMMM DD")} at ${dayjs(
           `${data.output.day} ${data.output.time}`,
-        ).format("hh:mm A")}`,
+        )
+          .tz("Africa/Cairo")
+          .format("hh:mm A")}`,
       },
     });
   }
