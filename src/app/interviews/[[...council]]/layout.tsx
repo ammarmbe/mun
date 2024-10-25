@@ -1,5 +1,5 @@
 import { ReactNode, Suspense } from "react";
-import Loading from "@/app/interviews/[[...council]]/loading";
+import Loading from "@/app/interviews/[[...council]]/table-loading";
 import Search from "@/components/search";
 
 export default async function Layout({
@@ -13,7 +13,7 @@ export default async function Layout({
 
   return (
     <main className="flex flex-grow flex-col">
-      <div className="flex min-h-[5.625rem] flex-wrap items-center justify-between gap-y-3 p-6">
+      <div className="flex min-h-[5.625rem] flex-none flex-wrap items-center justify-between gap-y-3 p-4 md:p-6">
         <h1 className="text-display-xs font-semibold md:text-display-sm">
           <span className={council ? "uppercase" : undefined}>
             {council ?? "All"}

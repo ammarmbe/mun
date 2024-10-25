@@ -188,7 +188,11 @@ export default function Page(props: {
                     alt="Profile picture"
                     width={24}
                     height={24}
-                    src={`/uploads/${interview.user?.id}.jpg`}
+                    src={
+                      interview.user
+                        ? `/uploads/${interview.user.id}.jpg`
+                        : undefined
+                    }
                   />
                   <Avatar.Fallback>
                     <span className="block size-6 rounded-full bg-utility-gray-300" />

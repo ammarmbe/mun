@@ -1,5 +1,6 @@
 import { $Enums } from "@prisma/client";
 import prisma from "@/utils/db";
+import groupBy from "object.groupby";
 
 export async function getCouncilQuestions({
   council,
@@ -23,7 +24,7 @@ export async function getCouncilQuestions({
     },
   });
 
-  const groupedQuestions = Object.groupBy(data, ({ council }) => council);
+  const groupedQuestions = groupBy(data, ({ council }) => council);
 
   if (!council) {
     // Add all keys to the object if they are not present

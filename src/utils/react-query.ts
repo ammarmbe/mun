@@ -1,5 +1,6 @@
 import type {
   getAllInterviews,
+  getAllPaginatedInterviews,
   getTodaysInterviews,
   getTomorrowsInterviews,
 } from "@/data/interviews";
@@ -36,6 +37,24 @@ export const queryKeys = {
       "completed",
       pageIndex,
       pageSize,
+      search,
+      sortingId,
+      sortingDirection,
+      council,
+    ],
+    allPaginated: ({
+      council,
+      search,
+      sortingId,
+      sortingDirection,
+    }: {
+      council?: string;
+      search: string | null;
+      sortingId: string;
+      sortingDirection: "asc" | "desc";
+    }) => [
+      "interviews",
+      "completed",
       search,
       sortingId,
       sortingDirection,
@@ -115,6 +134,33 @@ export const queryFunctions = {
 
         return (await res.json()) as Awaited<
           ReturnType<typeof getAllInterviews>
+        >;
+      },
+    allPaginated:
+      ({
+        council,
+        search,
+        sortingId,
+        sortingDirection,
+      }: {
+        council?: string;
+        search: string | null;
+        sortingId: string;
+        sortingDirection: "asc" | "desc";
+      }) =>
+      async ({ pageParam }: { pageParam: Date | null }) => {
+        const res = await fetch(
+          `/api/interviews/all-paginated?&search=${search ?? ""}&sorting_id=${sortingId}&sorting_direction=${sortingDirection}&council=${council}&last_date=${pageParam?.toISOString() ?? ""}`,
+        );
+
+        if (res.status === 401) return null;
+
+        if (!res.ok) {
+          throw new Error();
+        }
+
+        return (await res.json()) as Awaited<
+          ReturnType<typeof getAllPaginatedInterviews>
         >;
       },
   },

@@ -19,7 +19,7 @@ export default function User({ user }: { user: User | null | undefined }) {
             alt="Profile picture"
             width={40}
             height={40}
-            src={`/uploads/${user?.id}.jpg`}
+            src={user ? `/uploads/${user.id}.jpg` : undefined}
           />
           <Avatar.Fallback>
             <div className="size-10 rounded-full bg-utility-gray-300" />

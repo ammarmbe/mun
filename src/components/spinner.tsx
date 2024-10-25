@@ -1,9 +1,13 @@
+import { twMerge } from "tailwind-merge";
+
 export default function Spinner({
   size = 20,
+  containerClassName,
   className,
 }: {
   size?: number;
   className?: string;
+  containerClassName?: string;
 }) {
   return (
     <div
@@ -11,14 +15,14 @@ export default function Spinner({
         width: size + "px",
         height: size + "px",
       }}
-      className={className}
+      className={containerClassName}
     >
       <div
         style={{
           width: size + "px",
           height: size + "px",
         }}
-        className="relative left-1/2 top-1/2"
+        className={twMerge("relative left-1/2 top-1/2", className)}
       >
         {Array.from({ length: 10 }).map((_, i) => (
           <div

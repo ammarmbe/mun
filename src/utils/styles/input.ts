@@ -1,9 +1,9 @@
 import { twMerge } from "tailwind-merge";
 
 const sizes = {
-  xs: "py-2 px-3 text-sm",
-  sm: "py-2 px-3 text-md",
-  md: "py-2.5 px-3.5 text-md",
+  xs: "py-2 px-3 text-sm !h-[2.375rem]",
+  sm: "py-2 px-3 text-md !h-[2.625rem]",
+  md: "py-2.5 px-3.5 text-md !h-[2.875rem]",
 };
 
 const variants = {

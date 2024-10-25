@@ -276,3 +276,125 @@ export async function getAllInterviews({
     }),
   };
 }
+
+export async function getAllPaginatedInterviews({
+  council,
+  search,
+  lastDate,
+  orderBy,
+}: {
+  council?: $Enums.Council;
+  search?: string;
+  lastDate?: Date;
+  orderBy:
+    | { delegate: { [p: string]: "asc" | "desc" } }
+    | { answers: { _count: "asc" | "desc" } }
+    | { [p: string]: "asc" | "desc" };
+}) {
+  const councils = Object.keys($Enums.Council);
+
+  const councilSearch = search
+    ? councils.filter((council) =>
+        council.toLowerCase().includes(search.toLowerCase()),
+      )
+    : null;
+
+  const constraints: {
+    delegate: {
+      council?: $Enums.Council;
+      name?: {
+        contains: string;
+        mode: "insensitive";
+      };
+    };
+  }[] = [];
+
+  if (council) {
+    constraints.push({
+      delegate: {
+        council,
+      },
+    });
+  } else if (councilSearch?.length) {
+    councilSearch.forEach((council) => {
+      constraints.push({
+        delegate: {
+          council: council as $Enums.Council,
+        },
+      });
+    });
+  }
+
+  const interviews = await prisma.interview.findMany({
+    where: {
+      OR: constraints.length ? constraints : undefined,
+      delegate: search
+        ? {
+            name: {
+              contains: search,
+              mode: "insensitive",
+            },
+          }
+        : undefined,
+      date: lastDate
+        ? {
+            gte: lastDate,
+          }
+        : undefined,
+    },
+    select: {
+      id: true,
+      date: true,
+      grade: true,
+      _count: {
+        select: {
+          answers: true,
+        },
+      },
+      user: {
+        select: {
+          id: true,
+          firstName: true,
+          lastName: true,
+        },
+      },
+      delegate: {
+        select: {
+          id: true,
+          status: true,
+          council: true,
+          name: true,
+          phoneNumber: true,
+        },
+      },
+    },
+    orderBy,
+    take: 20,
+  });
+
+  const questions = await prisma.question.findMany({
+    where: {
+      OR: [
+        {
+          deletedAt: null,
+        },
+        {
+          answers: {
+            some: {},
+          },
+        },
+      ],
+    },
+    select: { council: true },
+  });
+
+  return interviews.map((interview) => ({
+    ...interview,
+    _count: {
+      ...interview._count,
+      questions: questions.filter(
+        (q) => q.council === interview.delegate.council,
+      ).length,
+    },
+  }));
+}

@@ -5,12 +5,12 @@ import { inputStyles } from "@/utils/styles/input";
 import InputWrapper from "@/components/input-wrapper";
 import React from "react";
 
-export default function Loading() {
+export default function TableLoading() {
   return (
     <div className="m-4 mt-0 flex flex-grow flex-col md:ml-3">
       <div className="relative flex-grow">
         <div className="absolute inset-0 flex overflow-auto">
-          <div className="flex h-fit min-h-full min-w-[850px] flex-grow flex-col overflow-hidden rounded-2xl border bg-tertiary dark:bg-secondary-subtle">
+          <div className="flex h-fit min-h-full min-w-[850px] flex-grow flex-col overflow-hidden rounded-t-2xl border bg-tertiary dark:bg-secondary-subtle">
             <table className="w-full table-fixed">
               <thead>
                 <tr>
@@ -83,7 +83,7 @@ export default function Loading() {
                 </tr>
               </thead>
             </table>
-            <div className="-m-px mt-0 flex-grow overflow-hidden rounded-2xl border bg-primary">
+            <div className="-m-px mt-0 flex-grow overflow-hidden rounded-t-2xl border bg-primary">
               <table className="w-full table-fixed">
                 <tbody>
                   {Array.from({ length: 10 }).map((_, i) => (
@@ -176,7 +176,7 @@ export default function Loading() {
           </div>
         </div>
       </div>
-      <div className="mt-4 grid grid-cols-[auto,1fr,auto] rounded-2xl border bg-primary p-3 shadow-xs md:p-4">
+      <div className="grid grid-cols-[auto,1fr,auto] rounded-b-2xl border border-t-0 bg-primary p-3 shadow-xs md:p-4">
         <button
           className={buttonStyles(
             {
@@ -187,7 +187,7 @@ export default function Loading() {
           )}
           disabled
         >
-          <ArrowLeft size={20} className="self-center" />
+          <ArrowLeft size={16} className="self-center" />
           <span className="hidden md:inline">Previous</span>
         </button>
         <p className="self-center text-center text-sm leading-none text-secondary md:self-baseline">
@@ -204,7 +204,7 @@ export default function Loading() {
           disabled
         >
           <span className="hidden md:inline">Next</span>
-          <ArrowRight size={20} />
+          <ArrowRight size={16} />
         </button>
       </div>
     </div>
