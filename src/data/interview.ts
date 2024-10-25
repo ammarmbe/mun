@@ -140,8 +140,6 @@ export async function getInterviewQuestions({
     },
   });
 
-  console.log(questions);
-
   if (!interview) return null;
 
   return {

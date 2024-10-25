@@ -25,7 +25,7 @@ export default function Error({
 
   return (
     <div className="flex flex-col gap-5">
-      <h2 className="text-xl font-semibold">Up next</h2>
+      <h2 className="text-xl font-semibold">Today</h2>
       <div className="flex min-h-72 flex-grow flex-col items-center justify-center">
         <h1 className="text-center text-xl font-semibold">An error occurred</h1>
         <p className="mt-1 text-center text-sm font-medium text-secondary">

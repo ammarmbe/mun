@@ -6,7 +6,7 @@ import { Pencil } from "lucide-react";
 
 export default function Loading() {
   return (
-    <main className="m-4 flex flex-col gap-4 rounded-2xl border p-4 shadow-xs md:m-1 md:max-h-[calc(100dvh-0.5rem)] md:w-72 md:gap-5 md:overflow-auto md:p-5">
+    <main className="m-4 flex flex-col gap-4 rounded-2xl border bg-primary p-4 shadow-xs md:m-1 md:max-h-[calc(100dvh-0.5rem)] md:w-72 md:gap-5 md:overflow-auto md:p-5">
       <h2 className="flex-none truncate text-display-xs font-semibold">
         <Skeleton className="!w-44" />
       </h2>

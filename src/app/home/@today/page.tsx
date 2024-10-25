@@ -34,9 +34,9 @@ export default function Today() {
 
   if (data === null) {
     return (
-      <div className="flex flex-col gap-px overflow-hidden rounded-2xl border bg-secondary-subtle shadow-xs">
-        <h2 className="flex-none px-6 pb-2 pt-3 text-sm font-semibold text-secondary">
-          Up next
+      <div className="flex flex-col gap-px overflow-hidden rounded-2xl border bg-tertiary shadow-xs dark:bg-secondary-subtle">
+        <h2 className="flex-none px-5 pb-2 pt-3 text-sm font-semibold text-secondary">
+          Today
         </h2>
         <div className="-m-px flex flex-grow flex-col divide-y overflow-auto rounded-2xl border bg-primary md:max-h-[calc(100dvh-4rem-2.625rem-2.5rem-1px)]">
           <div className="flex flex-grow flex-col items-center justify-center">
@@ -51,9 +51,9 @@ export default function Today() {
   }
 
   return (
-    <div className="flex flex-col gap-px overflow-hidden rounded-2xl border bg-secondary-subtle shadow-xs">
-      <h2 className="flex-none px-6 pb-2 pt-3 text-sm font-semibold text-secondary">
-        Up next
+    <div className="flex flex-col gap-px overflow-hidden rounded-2xl border bg-tertiary shadow-xs dark:bg-secondary-subtle">
+      <h2 className="flex-none px-5 pb-2 pt-3 text-sm font-semibold text-secondary">
+        Today
       </h2>
       <div className="-m-px flex flex-grow flex-col divide-y overflow-auto rounded-2xl border bg-primary md:max-h-[calc(100dvh-4rem-2.625rem-2.5rem-1px)]">
         {data?.map((interview, index) => (

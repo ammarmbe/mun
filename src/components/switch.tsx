@@ -25,7 +25,7 @@ export default function Switch({
         className,
       )}
     >
-      <SwitchPrimitive.Thumb className="absolute right-[1.375rem] top-0.5 inline-block size-5 rounded-full bg-white shadow-sm transition-all group-disabled:bg-secondary data-[state=checked]:right-0.5" />
+      <SwitchPrimitive.Thumb className="absolute right-[1.375rem] top-0.5 inline-block size-5 rounded-full bg-white shadow-sm transition-all group-disabled:bg-secondary data-[state=checked]:right-0.5 group-disabled:dark:bg-white" />
     </SwitchPrimitive.Root>
   );
 }

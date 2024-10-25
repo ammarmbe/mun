@@ -2,20 +2,17 @@
 
 import { labelStyles } from "@/utils/styles/input";
 import React, { useEffect, useState } from "react";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import Toast from "@/components/toast";
 import { queryFunctions, queryKeys } from "@/utils/react-query";
 import Loading from "@/app/settings/questions/loading";
 import type { getNotificationSettings } from "@/data/settings";
 import { User } from "@prisma/client";
-import Switch from "@/components/switch";
 import { subscribe } from "@/utils";
 
 export default function Notifications({ user }: { user: User }) {
-  const [lastClicked, setLastClicked] = useState<"NEW" | "UPCOMING" | null>(
-    null,
-  );
+  const queryClient = useQueryClient();
 
   const [settings, setSettings] = useState<NonNullable<
     Awaited<ReturnType<typeof getNotificationSettings>>
@@ -53,6 +50,16 @@ export default function Notifications({ user }: { user: User }) {
         throw new Error();
       }
     },
+    onMutate: ({ value, type }) => {
+      setSettings((prev) =>
+        prev
+          ? {
+              ...prev,
+              [`${type.toLowerCase()}InterviewNotification`]: value,
+            }
+          : null,
+      );
+    },
     onError: () => {
       toast.custom((t) => (
         <Toast
@@ -62,8 +69,12 @@ export default function Notifications({ user }: { user: User }) {
           message="We couldn't save your settings. Please try again."
         />
       ));
+
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.user.notifications(),
+      });
     },
-    onSuccess: async (_, { value, type }) => {
+    onSuccess: async () => {
       toast.custom((t) => (
         <Toast
           variant="success"
@@ -72,15 +83,6 @@ export default function Notifications({ user }: { user: User }) {
           message="Your settings have been saved successfully."
         />
       ));
-
-      setSettings((prev) =>
-        prev
-          ? {
-              ...prev,
-              [`${type}InterviewNotification`]: value,
-            }
-          : null,
-      );
     },
   });
 
@@ -103,19 +105,19 @@ export default function Notifications({ user }: { user: User }) {
           htmlFor="new"
           className="flex gap-1.5 gap-x-6 border-b p-4 last:border-b-0"
         >
-          <Switch
+          <input
+            type="checkbox"
             id="new"
-            value={settings?.newInterviewNotification}
-            disabled={lastClicked === "NEW" && updateMutation.isPending}
-            onChange={(value) => {
-              setLastClicked("NEW");
-
+            checked={settings?.newInterviewNotification}
+            onChange={(e) => {
               updateMutation.mutate({
-                value,
+                value: e.target.checked,
                 type: "NEW",
               });
             }}
+            className="relative mt-0.5 size-5 flex-none appearance-none rounded-sm border border-primary transition-shadow after:absolute after:-right-px after:-top-px after:size-5 after:opacity-0 checked:border-transparent checked:bg-brand-solid checked:after:opacity-100 active:shadow-ring disabled:!border-disabled disabled:!bg-disabled"
           />
+
           <div className="flex flex-col gap-1">
             <p className={labelStyles({ required: true })}>
               New interview notification
@@ -130,18 +132,17 @@ export default function Notifications({ user }: { user: User }) {
             htmlFor="upcoming"
             className="flex gap-1.5 gap-x-6 border-b p-4 last:border-b-0"
           >
-            <Switch
+            <input
+              type="checkbox"
               id="upcoming"
-              value={settings?.upcomingInterviewNotification}
-              disabled={lastClicked === "UPCOMING" && updateMutation.isPending}
-              onChange={(value) => {
-                setLastClicked("UPCOMING");
-
+              checked={settings?.upcomingInterviewNotification}
+              onChange={(e) => {
                 updateMutation.mutate({
-                  value,
+                  value: e.target.checked,
                   type: "UPCOMING",
                 });
               }}
+              className="relative mt-0.5 size-5 flex-none appearance-none rounded-sm border border-primary transition-shadow after:absolute after:-right-px after:-top-px after:size-5 after:opacity-0 checked:border-transparent checked:bg-brand-solid checked:after:opacity-100 active:shadow-ring disabled:!border-disabled disabled:!bg-disabled"
             />
             <div className="flex flex-col gap-1">
               <p className={labelStyles({ required: true })}>

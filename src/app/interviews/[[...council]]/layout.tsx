@@ -23,7 +23,7 @@ export default async function Layout({
         <Search
           value="query"
           placeholder="Search by name or council..."
-          className="w-full md:w-auto"
+          className="w-full md:w-auto md:min-w-80"
         />
       </div>
       <Suspense fallback={<Loading />}>{children}</Suspense>

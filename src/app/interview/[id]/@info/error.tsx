@@ -24,7 +24,7 @@ export default function Error({
   }, [error]);
 
   return (
-    <main className="m-4 flex flex-col gap-4 rounded-2xl border p-4 shadow-xs md:m-1 md:max-h-[calc(100dvh-0.5rem)] md:w-72 md:gap-5 md:overflow-auto md:p-5">
+    <main className="m-4 flex flex-col gap-4 rounded-2xl border bg-primary p-4 shadow-xs md:m-1 md:max-h-[calc(100dvh-0.5rem)] md:w-72 md:gap-5 md:overflow-auto md:p-5">
       <div className="flex min-h-72 flex-grow flex-col items-center justify-center">
         <h1 className="text-center text-xl font-semibold">An error occurred</h1>
         <p className="mt-1 text-center text-sm font-medium text-secondary">

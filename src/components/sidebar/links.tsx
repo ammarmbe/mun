@@ -76,7 +76,7 @@ export default function Links({ user }: { user: User | null | undefined }) {
         <Link
           href="/settings"
           className={`hover active flex min-w-48 items-center gap-2.5 rounded-sm px-3 py-2 font-semibold transition-all active:shadow-ring ${
-            pathname === "/settings"
+            pathname.startsWith("/settings")
               ? "bg-active text-primary"
               : "bg-primary text-secondary"
           }`}

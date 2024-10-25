@@ -174,7 +174,7 @@ export default function Page({
     <div className="m-4 mt-0 flex flex-grow flex-col md:ml-3">
       <div className="relative flex-grow">
         <div className="absolute inset-0 flex overflow-auto">
-          <div className="flex h-fit min-h-full min-w-[850px] flex-grow flex-col overflow-hidden rounded-2xl border bg-secondary-subtle">
+          <div className="flex h-fit min-h-full min-w-[850px] flex-grow flex-col overflow-hidden rounded-2xl border bg-tertiary dark:bg-secondary-subtle">
             <table className="w-full table-fixed">
               <thead>
                 {table.getHeaderGroups().map((headerGroup) => (
@@ -300,7 +300,7 @@ export default function Page({
           </div>
         </div>
       </div>
-      <div className="mt-4 grid grid-cols-[1fr,auto,1fr] rounded-2xl border p-3 shadow-xs md:p-4">
+      <div className="mt-4 grid grid-cols-[1fr,auto,1fr] rounded-2xl border bg-primary p-3 shadow-xs md:p-4">
         <button
           className={buttonStyles(
             {

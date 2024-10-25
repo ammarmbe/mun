@@ -24,7 +24,7 @@ export default function Error({
   }, [error]);
 
   return (
-    <main className="flex flex-grow flex-col gap-8 px-4 py-8 md:px-8">
+    <main className="flex flex-grow flex-col gap-8 bg-primary px-4 py-8 md:px-8">
       <div className="flex min-h-72 flex-grow flex-col items-center justify-center">
         <h1 className="text-center text-xl font-semibold">An error occurred</h1>
         <p className="mt-1 text-center text-sm font-medium text-secondary">

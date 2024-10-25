@@ -66,8 +66,8 @@ export default function Page() {
   return (
     <form action={action} className="mt-6 flex w-full flex-col gap-5 md:w-auto">
       <div className="flex flex-col gap-1.5">
-        <label htmlFor="first-name" className={labelStyles({ required: true })}>
-          Name
+        <label htmlFor="name" className={labelStyles({ required: true })}>
+          Full name
         </label>
         <input
           name="name"
@@ -168,7 +168,7 @@ export default function Page() {
       <div className="grid gap-5 md:grid-cols-2">
         <div className="flex flex-col gap-1.5">
           <label htmlFor="day" className={labelStyles({ required: true })}>
-            Day
+            Interview day
           </label>
           <InputWrapper size="sm" Icon={ChevronsUpDown}>
             <select
@@ -201,7 +201,7 @@ export default function Page() {
         </div>
         <div className="flex flex-col gap-1.5">
           <label htmlFor="time" className={labelStyles({ required: true })}>
-            Time
+            Interview time
           </label>
           <InputWrapper size="sm" Icon={ChevronsUpDown}>
             <select

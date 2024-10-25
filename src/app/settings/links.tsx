@@ -32,10 +32,10 @@ export default function Links({ user }: { user: User }) {
         !(link.text === "Admin" && !user.admin) ? (
           <Link
             key={link.href}
-            className={`rounded-xl px-3 py-2 text-sm font-semibold transition-all ${
+            className={`rounded-xl border px-3 py-2 text-sm font-semibold transition-all ${
               pathname === link.href
-                ? "bg-primary-alt text-secondary shadow-sm active:shadow-ring-alt-shadow-sm dark:bg-tertiary"
-                : "text-quaternary hover:bg-primary-alt hover:text-secondary hover:shadow-sm active:bg-secondary-subtle active:text-quaternary active:shadow-ring-alt dark:hover:bg-tertiary"
+                ? "border-primary bg-primary-alt text-secondary shadow-sm active:shadow-ring-alt-shadow-sm dark:border-transparent dark:bg-tertiary"
+                : "border-transparent text-quaternary hover:border-secondary hover:bg-primary-alt hover:text-secondary hover:shadow-sm active:border-transparent active:bg-tertiary active:text-quaternary active:shadow-ring-alt dark:hover:border-transparent dark:hover:bg-tertiary dark:active:bg-secondary-subtle"
             }`}
             href={link.href}
           >
