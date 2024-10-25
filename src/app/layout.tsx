@@ -9,6 +9,7 @@ import ProgressBar from "@/components/progress-bar";
 import "react-loading-skeleton/dist/skeleton.css";
 import "./globals.css";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
+import SafeArea from "@/components/utility/safe-area";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -43,7 +44,7 @@ export default function RootLayout({
           <Sidebar />
           <NuqsAdapter>{children}</NuqsAdapter>
         </ReactQuery>
-        <div className="sticky bottom-0 h-[env(safe-area-inset-bottom,20px)] bg-secondary md:hidden" />
+        <SafeArea />
       </body>
     </html>
   );
