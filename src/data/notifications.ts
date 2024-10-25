@@ -40,6 +40,9 @@ export async function getNotifications({
       interviewId: true,
       readAt: true,
     },
+    orderBy: {
+      createdAt: "desc",
+    },
   });
 
   await prisma.notification.updateMany({
