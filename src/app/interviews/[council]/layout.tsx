@@ -1,22 +1,24 @@
 import { ReactNode, Suspense } from "react";
-import Loading from "@/app/interviews/[[...council]]/table-loading";
 import Search from "@/components/search";
+import Spinner from "@/components/spinner";
+import { $Enums } from "@prisma/client";
 
 export default async function Layout({
   children,
   params,
 }: {
   children: ReactNode;
-  params: Promise<{ council: string[] | undefined }>;
+  params: Promise<{ council: string }>;
 }) {
-  const council = (await params).council?.[0];
+  let council = (await params).council;
+  council = Object.keys($Enums.Council).includes(council) ? council : "all";
 
   return (
     <main className="flex flex-grow flex-col">
       <div className="flex min-h-[5.625rem] flex-none flex-wrap items-center justify-between gap-y-3 p-4 md:p-6">
         <h1 className="text-display-xs font-semibold md:text-display-sm">
-          <span className={council ? "uppercase" : undefined}>
-            {council ?? "All"}
+          <span className={council === "all" ? "capitalize" : "uppercase"}>
+            {council}
           </span>{" "}
           Interviews
         </h1>
@@ -26,7 +28,15 @@ export default async function Layout({
           className="w-full md:w-auto md:min-w-80"
         />
       </div>
-      <Suspense fallback={<Loading />}>{children}</Suspense>
+      <Suspense
+        fallback={
+          <div className="flex flex-grow items-center justify-center">
+            <Spinner size={24} />
+          </div>
+        }
+      >
+        {children}
+      </Suspense>
     </main>
   );
 }

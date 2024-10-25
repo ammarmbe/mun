@@ -9,7 +9,12 @@ export async function GET(req: Request) {
   const search = searchParams.get("search");
   let sortingId = searchParams.get("sorting_id");
   const sortingDirection = searchParams.get("sorting_direction");
-  const lastDate = searchParams.get("last_date");
+  const pageIndex = searchParams.has("page_index")
+    ? Number(searchParams.get("page_index"))
+    : undefined;
+  const pageSize = searchParams.has("page_size")
+    ? Number(searchParams.get("page_size"))
+    : undefined;
   let council = searchParams.get("council") as $Enums.Council | null;
 
   const { user } = await getUser();
@@ -66,7 +71,8 @@ export async function GET(req: Request) {
       canAccess?.value === "TRUE" || user.admin
         ? (council ?? undefined)
         : (user.council ?? undefined),
-    lastDate: lastDate ? new Date(lastDate) : undefined,
+    pageIndex: pageIndex ?? 0,
+    pageSize: pageSize ?? 10,
     search: search || undefined,
     orderBy: orderBy as any,
   });

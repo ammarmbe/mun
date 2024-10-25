@@ -1,6 +1,6 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { queryFunctions, queryKeys } from "@/utils/react-query";
-import TableLoading from "@/app/interviews/[[...council]]/table-loading";
+import TableLoading from "@/app/interviews/[council]/table-loading";
 import {
   ColumnDef,
   flexRender,
@@ -23,7 +23,7 @@ import Link from "next/link";
 import { councilColors, getGradeColor } from "@/utils";
 import Badge from "@/components/badge";
 import { $Enums } from "@prisma/client";
-import UpdateStatus from "@/app/interviews/[[...council]]/update-status";
+import UpdateStatus from "@/app/interviews/[council]/update-status";
 import { useQueryState } from "nuqs";
 import Spinner from "@/components/spinner";
 

@@ -5,20 +5,23 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import Table from "./table";
 import Spinner from "@/components/spinner";
 import Mobile from "./mobile";
+import { $Enums } from "@prisma/client";
 
 export default function Page({
   params,
 }: {
-  params: Promise<{ council: string[] | undefined }>;
+  params: Promise<{ council: string }>;
 }) {
-  const council = use(params).council?.[0];
+  let council: string | undefined = use(params).council;
+  council = Object.keys($Enums.Council).includes(council) ? council : undefined;
+
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
   return typeof "window" === undefined ? (
     <div className="flex flex-grow items-center justify-center">
       <Spinner size={24} />
     </div>
-  ) : isDesktop ? (
+  ) : isDesktop === true ? (
     <Table council={council} />
   ) : (
     <Mobile council={council} />

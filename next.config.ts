@@ -18,6 +18,11 @@ const nextConfig: NextConfig = {
         destination: "/interview/:id/info",
         permanent: true,
       },
+      {
+        source: "/interviews",
+        destination: "/interviews/all",
+        permanent: true,
+      },
     ];
   },
 };

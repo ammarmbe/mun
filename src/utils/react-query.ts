@@ -148,9 +148,9 @@ export const queryFunctions = {
         sortingId: string;
         sortingDirection: "asc" | "desc";
       }) =>
-      async ({ pageParam }: { pageParam: Date | null }) => {
+      async ({ pageParam }: { pageParam: number | null }) => {
         const res = await fetch(
-          `/api/interviews/all-paginated?&search=${search ?? ""}&sorting_id=${sortingId}&sorting_direction=${sortingDirection}&council=${council}&last_date=${pageParam?.toISOString() ?? ""}`,
+          `/api/interviews/all-paginated?page_index=${pageParam}&page_size=${20}&search=${search ?? ""}&sorting_id=${sortingId}&sorting_direction=${sortingDirection}&council=${council}`,
         );
 
         if (res.status === 401) return null;

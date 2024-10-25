@@ -280,12 +280,14 @@ export async function getAllInterviews({
 export async function getAllPaginatedInterviews({
   council,
   search,
-  lastDate,
+  pageIndex,
+  pageSize,
   orderBy,
 }: {
   council?: $Enums.Council;
   search?: string;
-  lastDate?: Date;
+  pageIndex: number;
+  pageSize: number;
   orderBy:
     | { delegate: { [p: string]: "asc" | "desc" } }
     | { answers: { _count: "asc" | "desc" } }
@@ -336,11 +338,6 @@ export async function getAllPaginatedInterviews({
             },
           }
         : undefined,
-      date: lastDate
-        ? {
-            gte: lastDate,
-          }
-        : undefined,
     },
     select: {
       id: true,
@@ -369,7 +366,8 @@ export async function getAllPaginatedInterviews({
       },
     },
     orderBy,
-    take: 20,
+    skip: pageIndex * pageSize,
+    take: pageSize,
   });
 
   const questions = await prisma.question.findMany({
