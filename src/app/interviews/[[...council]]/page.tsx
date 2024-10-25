@@ -233,9 +233,9 @@ export default function Page({
                 ))}
               </thead>
             </table>
-            <div className="-m-px mt-0 flex-grow overflow-hidden rounded-2xl border bg-primary">
+            <div className="-m-px mt-0 flex flex-grow overflow-hidden rounded-2xl border bg-primary">
               {data?.interviews?.length ? (
-                <table className="w-full table-fixed">
+                <table className="h-fit w-full table-fixed">
                   <tbody>
                     {table.getRowModel().rows.map((row) => {
                       return (
@@ -271,7 +271,7 @@ export default function Page({
                   </tbody>
                 </table>
               ) : (
-                <div className="flex h-full flex-grow flex-col items-center justify-center">
+                <div className="flex flex-grow flex-col items-center justify-center">
                   <h1 className="text-center text-xl font-semibold">
                     No interviews found
                   </h1>

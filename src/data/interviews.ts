@@ -198,20 +198,17 @@ export async function getAllInterviews({
     });
   }
 
-  if (search) {
-    constraints.push({
-      delegate: {
-        name: {
-          contains: search,
-          mode: "insensitive",
-        },
-      },
-    });
-  }
-
   const interviews = await prisma.interview.findMany({
     where: {
       OR: constraints.length ? constraints : undefined,
+      delegate: search
+        ? {
+            name: {
+              contains: search,
+              mode: "insensitive",
+            },
+          }
+        : undefined,
     },
     select: {
       id: true,
