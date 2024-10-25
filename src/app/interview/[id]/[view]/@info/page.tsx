@@ -5,7 +5,12 @@ import { queryFunctions, queryKeys } from "@/utils/react-query";
 import Loading from "@/app/interview/[id]/[view]/@info/loading";
 import React, { use, useEffect, useState } from "react";
 import dayjs from "dayjs";
-import { councilColors, faculties, getGradeColor } from "@/utils";
+import {
+  councilColors,
+  faculties,
+  getGradeColor,
+  useUploadThing,
+} from "@/utils";
 import { AspectRatio } from "@radix-ui/react-aspect-ratio";
 import { notFound } from "next/navigation";
 import FileUpload from "./file-upload";
@@ -16,6 +21,9 @@ import * as Avatar from "@radix-ui/react-avatar";
 import UpdateStatus from "@/app/interview/[id]/[view]/@info/update-status";
 import buttonStyles from "@/utils/styles/button";
 import Link from "next/link";
+import Skeleton from "react-loading-skeleton";
+import { Trash2 } from "lucide-react";
+import Spinner from "@/components/spinner";
 
 export default function Page(props: {
   params: Promise<{ id: string; view: string }>;
@@ -23,48 +31,8 @@ export default function Page(props: {
   const queryClient = useQueryClient();
   const params = use(props.params);
 
-  const [file, setFile] = useState<File>();
-
-  const { data: interview, isLoading } = useQuery({
-    queryKey: queryKeys.interview.id({ id: params.id }),
-    queryFn: queryFunctions.interview.id({ id: params.id }),
-  });
-
-  const imageMutation = useMutation({
-    mutationFn: async ({
-      file,
-      delegateId,
-    }: {
-      file: File | undefined;
-      delegateId: string;
-    }) => {
-      if (!file) return;
-
-      const formData = new FormData();
-
-      formData.append("file", file);
-      formData.append("id", delegateId);
-
-      const res = await fetch(`/api/interview/${params.id}/image/`, {
-        method: "PATCH",
-        body: formData,
-      });
-
-      if (!res.ok) {
-        throw new Error();
-      }
-    },
-    onError: () => {
-      toast.custom((t) => (
-        <Toast
-          variant="error"
-          title="An error occurred"
-          t={t}
-          message="We couldn't save the image. Please try again."
-        />
-      ));
-    },
-    onSuccess: async () => {
+  const { startUpload, isUploading } = useUploadThing("upload", {
+    onClientUploadComplete: async () => {
       await queryClient.invalidateQueries({
         queryKey: queryKeys.interview.id({ id: params.id }),
       });
@@ -78,11 +46,75 @@ export default function Page(props: {
         />
       ));
     },
+    onUploadError: () => {
+      toast.custom((t) => (
+        <Toast
+          variant="error"
+          title="An error occurred"
+          t={t}
+          message="We couldn't save the image. Please try again."
+        />
+      ));
+    },
+  });
+
+  const [file, setFile] = useState<File>();
+
+  const { data: interview, isLoading } = useQuery({
+    queryKey: queryKeys.interview.id({ id: params.id }),
+    queryFn: queryFunctions.interview.id({ id: params.id }),
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: async () => {
+      const res = await fetch(`/api/interview/${interview?.id}/image`, {
+        method: "DELETE",
+      });
+
+      if (!res.ok) {
+        throw new Error();
+      }
+    },
+    onError: () => {
+      toast.custom((t) => (
+        <Toast
+          variant="error"
+          title="An error occurred"
+          t={t}
+          message="We couldn't delete the image. Please try again."
+        />
+      ));
+    },
+    onSuccess: async (_) => {
+      toast.custom((t) => (
+        <Toast
+          variant="success"
+          title="Image deleted"
+          t={t}
+          message="The delegate's image has been deleted successfully."
+        />
+      ));
+
+      queryClient.setQueryData(
+        queryKeys.interview.id({ id: params.id }),
+        (oldData: typeof interview) => {
+          if (!oldData) return oldData;
+
+          return {
+            ...oldData,
+            delegate: {
+              ...oldData.delegate,
+              imageUrl: null,
+            },
+          };
+        },
+      );
+    },
   });
 
   useEffect(() => {
     if (file && interview?.delegate.id) {
-      imageMutation.mutate({ file, delegateId: interview.delegate.id });
+      startUpload([file], { delegateId: interview.delegate.id });
     }
   }, [file]);
 
@@ -121,15 +153,42 @@ export default function Page(props: {
         </Link>
       </div>
       <AspectRatio ratio={1} className="relative overflow-hidden rounded-md">
-        {interview.imageExists ? (
-          <img
-            src={`/uploads/${interview.delegate.id}.jpg`}
-            sizes="(min-width: 768px) 15.375rem, calc(100vw - 4rem - 2px)"
-            alt="Photo"
-            className="pointer-events-none absolute inset-0 z-10 h-full w-full object-cover"
-          />
-        ) : null}
-        <FileUpload setFile={setFile} isLoading={imageMutation.isPending} />
+        {interview.delegate.imageUrl ? (
+          <>
+            <Avatar.Root>
+              <Avatar.Image
+                src={`https://utfs.io/f/${interview.delegate.imageUrl}`}
+                sizes="(min-width: 768px) 15.375rem, calc(100vw - 4rem - 2px)"
+                alt="Photo"
+                className="h-full w-full object-cover"
+              />
+              <Avatar.Fallback>
+                <Skeleton className="!h-full !w-full !rounded-md" />
+                <span className="block h-full w-full rounded-md bg-utility-gray-300" />
+              </Avatar.Fallback>
+            </Avatar.Root>
+            <button
+              className={buttonStyles(
+                {
+                  size: "sm",
+                  variant: "secondary",
+                  symmetrical: true,
+                },
+                "absolute right-2 top-2 z-10 rounded-sm active:!shadow-xs-skeuomorphic",
+              )}
+              onClick={() => deleteMutation.mutate()}
+              disabled={deleteMutation.isPending}
+            >
+              {deleteMutation.isPending ? (
+                <Spinner size={16} />
+              ) : (
+                <Trash2 size={16} />
+              )}
+            </button>
+          </>
+        ) : (
+          <FileUpload setFile={setFile} isLoading={isUploading} />
+        )}
       </AspectRatio>
       <div className="flex flex-col gap-6">
         <div className="flex flex-col gap-1">

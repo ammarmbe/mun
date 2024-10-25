@@ -1,4 +1,6 @@
 import { $Enums } from "@prisma/client";
+import { generateReactHelpers } from "@uploadthing/react";
+import type { OurFileRouter } from "@/app/api/uploadthing/core";
 
 export const getGradeColor = (
   grade: string | undefined | null,
@@ -79,3 +81,6 @@ export const subscribe = async (
 export const registerServiceWorker = async () => {
   return navigator.serviceWorker.register("/service.js");
 };
+
+export const { useUploadThing, uploadFiles } =
+  generateReactHelpers<OurFileRouter>();

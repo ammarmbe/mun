@@ -1,5 +1,6 @@
 import React, { Dispatch, SetStateAction, useRef } from "react";
 import { UploadCloud } from "lucide-react";
+import imageCompression from "browser-image-compression";
 
 export default function FileUpload({
   setFile,
@@ -43,9 +44,15 @@ export default function FileUpload({
           ref.current?.classList.remove("border-brand");
           ref.current?.classList.remove("border-2");
         }}
-        onChange={(e) => {
+        onChange={async (e) => {
           if (e.target.files?.[0]) {
-            setFile(e.target.files[0]);
+            const file = e.target.files[0];
+
+            const compressedFile = await imageCompression(file, {
+              maxWidthOrHeight: 1000,
+            });
+
+            setFile(compressedFile);
 
             e.target.value = "";
           }

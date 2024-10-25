@@ -39,6 +39,7 @@ export async function getInterviewById({
           name: true,
           status: true,
           council: true,
+          imageUrl: true,
           universityId: true,
           phoneNumber: true,
           faculty: true,
@@ -48,14 +49,6 @@ export async function getInterviewById({
   });
 
   if (!interview) return null;
-
-  // search in public folder for an image with the id as name
-  const image = `./public/uploads/${interview.delegate.id}.jpg`;
-
-  const imageExists = await fs.promises
-    .access(image, fs.constants.F_OK)
-    .then(() => true)
-    .catch(() => false);
 
   const questionCount = await prisma.question.count({
     where: {
@@ -75,7 +68,6 @@ export async function getInterviewById({
 
   return {
     ...interview,
-    imageExists,
     _count: {
       ...interview._count,
       questions: questionCount,

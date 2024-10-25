@@ -22,6 +22,7 @@ model User {
   firstName                     String
   lastName                      String
   council                       Council?
+  imageUrl                      String?
   notificationSubscription      String?
   newInterviewNotification      Boolean        @default(false)
   upcomingInterviewNotification Boolean        @default(false)
@@ -64,6 +65,7 @@ model Delegate {
   council      Council
   phoneNumber  String
   universityId String?
+  imageUrl     String?
   status       DelegateStatus
   interview    Interview?     @relation
   interviewId  String?        @unique

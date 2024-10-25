@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import { UTApi } from "uploadthing/server";
 import webpush from "web-push";
 
 export const sendNotification = async (interview: {
@@ -40,3 +41,5 @@ export const sendNotification = async (interview: {
     payload,
   );
 };
+
+export const utapi = new UTApi();
