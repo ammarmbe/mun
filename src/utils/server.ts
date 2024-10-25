@@ -33,6 +33,8 @@ export const sendNotification = async (interview: {
     process.env.VAPID_PRIVATE_KEY as string,
   );
 
+  console.log("sending new interview notification to", interview.subscription);
+
   return await webpush.sendNotification(
     JSON.parse(interview.subscription),
     payload,

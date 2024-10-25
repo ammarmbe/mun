@@ -28,7 +28,7 @@ export default function Page() {
 
   return (
     <div className="-m-px mt-0 flex flex-grow flex-col overflow-hidden rounded-2xl border bg-primary">
-      <div className="flex flex-grow flex-col gap-4">
+      <div className="flex flex-grow flex-col">
         {data?.length
           ? data.map((notification) => {
               const content = (
