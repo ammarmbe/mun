@@ -243,7 +243,7 @@ export default function Page(props: {
               <>
                 <Avatar.Root className="size-6 leading-none">
                   <Avatar.Image
-                    className="rounded-full"
+                    className="rounded-full object-cover"
                     alt="Profile picture"
                     width={24}
                     height={24}

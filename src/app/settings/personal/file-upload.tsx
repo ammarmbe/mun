@@ -98,7 +98,7 @@ export default function FileUpload({ user }: { user?: User | null }) {
       {user?.imageUrl ? (
         <Avatar.Root className="size-16 h-fit leading-none">
           <Avatar.Image
-            className="!size-16 rounded-full"
+            className="!size-16 rounded-full object-cover"
             width={64}
             height={64}
             alt="Profile picture"

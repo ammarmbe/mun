@@ -10,6 +10,7 @@ import { Drawer } from "vaul";
 import Image from "next/image";
 import { queryKeys, queryFunctions } from "@/utils/react-query";
 import { useQuery } from "@tanstack/react-query";
+import Link from "next/link";
 
 export default function Sidebar() {
   const pathname = usePathname();
@@ -42,13 +43,15 @@ export default function Sidebar() {
       </div>
       <Drawer.Root direction="right" open={open} onOpenChange={setOpen}>
         <header className="sticky top-0 z-20 flex items-center justify-between border-b bg-primary p-4 md:hidden">
-          <Image
-            src="/logo.png"
-            height={32}
-            width={32}
-            alt="Logo"
-            className="h-fit"
-          />
+          <Link href="/">
+            <Image
+              src="/logo.png"
+              height={32}
+              width={32}
+              alt="Logo"
+              className="h-fit"
+            />
+          </Link>
           <Drawer.Trigger asChild>
             <button
               className={buttonStyles({

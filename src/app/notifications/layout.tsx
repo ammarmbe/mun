@@ -11,7 +11,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         </h1>
       </div>
       <div className="flex flex-grow grid-cols-3 gap-4 p-4 pt-0 md:grid md:grid-cols-2 md:pl-3 xl:grid-cols-3">
-        <div className="col-span-2 flex flex-grow flex-col rounded-2xl border bg-tertiary dark:bg-secondary-subtle">
+        <div className="col-span-2 flex flex-grow flex-col rounded-2xl border bg-tertiary dark:bg-primary">
           <Suspense>
             <Links />
           </Suspense>

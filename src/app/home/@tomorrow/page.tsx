@@ -15,7 +15,7 @@ export default function Tomorrow() {
 
   if (data === null) {
     return (
-      <div className="flex flex-col gap-px overflow-hidden rounded-2xl border bg-tertiary shadow-xs dark:bg-secondary-subtle">
+      <div className="flex flex-col gap-px overflow-hidden rounded-2xl border bg-tertiary shadow-xs dark:bg-primary">
         <h2 className="flex-none px-5 pb-2 pt-3 text-sm font-semibold text-secondary">
           Tomorrow
         </h2>
@@ -32,7 +32,7 @@ export default function Tomorrow() {
   }
 
   return (
-    <div className="flex flex-col gap-px overflow-hidden rounded-2xl border bg-tertiary shadow-xs dark:bg-secondary-subtle">
+    <div className="flex flex-col gap-px overflow-hidden rounded-2xl border bg-tertiary shadow-xs dark:bg-primary">
       <h2 className="flex-none px-5 pb-2 pt-3 text-sm font-semibold text-secondary">
         Tomorrow
       </h2>
