@@ -62,7 +62,7 @@ export default function Sidebar() {
           </Drawer.Trigger>
         </header>
         <Drawer.Portal>
-          <Drawer.Content className="fixed right-0 top-0 z-40 flex h-[100dvh] w-3/4 flex-col justify-between border-l bg-primary">
+          <Drawer.Content className="fixed right-0 top-0 z-40 flex h-[100dvh] w-3/4 flex-col justify-between border-l bg-primary pb-[env(safe-area-inset-bottom,20px)]">
             <Drawer.Title hidden>Main menu</Drawer.Title>
             <Drawer.Description hidden>Navigation links</Drawer.Description>
             <Links user={user} />

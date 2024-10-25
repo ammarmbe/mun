@@ -32,6 +32,8 @@ input[type="checkbox"]:after {
 }
 
 :root {
+  @apply bg-secondary;
+
   --gray-25: 252, 252, 252;
   --gray-50: 250, 250, 250;
   --gray-100: 245, 245, 245;
