@@ -68,7 +68,7 @@ export default function InterviewCard({
           </div>
           {upNext ? (
             <Link
-              href={`/interview/${interview.id}?editing=true`}
+              href={`/interview/${interview.id}/questions?editing=true`}
               onClick={(e) => e.stopPropagation()}
               className={buttonStyles(
                 {

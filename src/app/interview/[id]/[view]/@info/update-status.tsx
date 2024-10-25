@@ -63,52 +63,51 @@ export default function UpdateStatus({
   }, [interview.delegate.status]);
 
   return (
-    <div className="flex w-full items-center justify-between">
-      <InputWrapper
-        side="left"
-        size="xs"
-        IconPrimitive={
-          <div
-            className={`size-2 rounded-full ${status === "ACCEPTED" ? "bg-success-600" : status === "REJECTED" ? "bg-error-600" : "bg-gray-600"}`}
-          />
-        }
-      >
-        <InputWrapper side="right" size="xs" Icon={ChevronsUpDown}>
-          <select
-            name="status"
-            id={`status-${interview.id}`}
-            className={inputStyles(
-              {
-                variant: "primary",
-                size: "xs",
-              },
-              "min-w-40 !pl-[2rem] !pr-[2.5rem] text-sm",
-            )}
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.parentElement?.parentElement?.parentElement?.parentElement?.classList.remove(
-                "hover",
-              );
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.parentElement?.parentElement?.parentElement?.parentElement?.classList.add(
-                "hover",
-              );
-            }}
-            value={status}
-            onChange={(e) =>
-              statusMutation.mutate(e.target.value as $Enums.DelegateStatus)
-            }
-            disabled={statusMutation.isPending}
-          >
-            <option value="PENDING">Pending</option>
-            <option value="ACCEPTED">Accepted</option>
-            <option value="REJECTED">Rejected</option>
-          </select>
-        </InputWrapper>
+    <InputWrapper
+      side="left"
+      size="xs"
+      IconPrimitive={
+        <div
+          className={`size-2 rounded-full ${status === "ACCEPTED" ? "bg-success-600" : status === "REJECTED" ? "bg-error-600" : "bg-gray-600"}`}
+        />
+      }
+      className="w-fit"
+    >
+      <InputWrapper side="right" size="xs" Icon={ChevronsUpDown}>
+        <select
+          name="status"
+          id={`status-${interview.id}`}
+          className={inputStyles(
+            {
+              variant: "primary",
+              size: "xs",
+            },
+            "w-fit min-w-44 !pl-[2rem] !pr-[2.5rem] text-sm",
+          )}
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.parentElement?.parentElement?.parentElement?.parentElement?.classList.remove(
+              "hover",
+            );
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.parentElement?.parentElement?.parentElement?.parentElement?.classList.add(
+              "hover",
+            );
+          }}
+          value={status}
+          onChange={(e) =>
+            statusMutation.mutate(e.target.value as $Enums.DelegateStatus)
+          }
+          disabled={statusMutation.isPending}
+        >
+          <option value="PENDING">Pending</option>
+          <option value="ACCEPTED">Accepted</option>
+          <option value="REJECTED">Rejected</option>
+        </select>
       </InputWrapper>
-    </div>
+    </InputWrapper>
   );
 }

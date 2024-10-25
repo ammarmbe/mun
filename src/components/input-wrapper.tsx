@@ -1,5 +1,6 @@
 import { ForwardRefExoticComponent, ReactNode, RefAttributes } from "react";
 import { LucideProps } from "lucide-react";
+import { twMerge } from "tailwind-merge";
 
 export default function InputWrapper({
   size,
@@ -7,6 +8,7 @@ export default function InputWrapper({
   children,
   Icon,
   IconPrimitive,
+  className,
 }: {
   size: "sm" | "md" | "xs";
   side?: "left" | "right";
@@ -15,22 +17,26 @@ export default function InputWrapper({
     Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>
   >;
   IconPrimitive?: ReactNode;
+  className?: string;
 }) {
   return (
     <div
-      className={`relative [&_select]:w-full ${
-        size === "md"
-          ? side === "right"
-            ? "[&_select]:pr-[2.75rem]"
-            : "[&_select]:pl-[2.75rem]"
-          : size === "sm"
+      className={twMerge(
+        `relative [&_select]:w-full ${
+          size === "md"
             ? side === "right"
-              ? "[&_select]:pr-[2.5rem]"
-              : "[&_select]:pl-[2.5rem]"
-            : side === "right"
-              ? "[&_select]:pr-[2.25rem]"
-              : "[&_select]:pl-[2.25rem]"
-      }`}
+              ? "[&_select]:pr-[2.75rem]"
+              : "[&_select]:pl-[2.75rem]"
+            : size === "sm"
+              ? side === "right"
+                ? "[&_select]:pr-[2.5rem]"
+                : "[&_select]:pl-[2.5rem]"
+              : side === "right"
+                ? "[&_select]:pr-[2.25rem]"
+                : "[&_select]:pl-[2.25rem]"
+        }`,
+        className,
+      )}
     >
       {children}
       <div

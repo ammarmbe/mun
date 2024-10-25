@@ -2,7 +2,7 @@
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { queryFunctions, queryKeys } from "@/utils/react-query";
-import Loading from "@/app/interview/[id]/@questions/loading";
+import Loading from "@/app/interview/[id]/[view]/@questions/loading";
 import { notFound, useSearchParams } from "next/navigation";
 import React, { use, useEffect, useState } from "react";
 import buttonStyles from "@/utils/styles/button";
@@ -11,7 +11,8 @@ import { toast } from "sonner";
 import Toast from "@/components/toast";
 import { getGradeColor } from "@/utils";
 import Spinner from "@/components/spinner";
-import Textarea from "@/app/interview/[id]/@questions/textarea";
+import Textarea from "@/app/interview/[id]/[view]/@questions/textarea";
+import Link from "next/link";
 
 export default function Page(props: { params: Promise<{ id: string }> }) {
   const params = use(props.params);
@@ -112,7 +113,7 @@ export default function Page(props: { params: Promise<{ id: string }> }) {
   if (!questions?.questions.length) notFound();
 
   return (
-    <main className="m-4 mt-0 flex flex-grow flex-col overflow-hidden rounded-2xl border bg-primary md:m-1 md:mx-0 md:mt-1 md:h-[calc(100dvh-0.5rem)]">
+    <main className="flex flex-grow flex-col overflow-hidden bg-primary md:my-1 md:h-[calc(100dvh-0.5rem)] md:rounded-2xl md:border">
       <div className="flex items-center justify-between border-b bg-primary p-4 md:p-6">
         <h1 className="text-display-xs font-semibold md:text-display-sm">
           Answers
@@ -130,7 +131,20 @@ export default function Page(props: { params: Promise<{ id: string }> }) {
             >
               <span>Cancel</span>
             </button>
-          ) : null}
+          ) : (
+            <Link
+              href={`/interview/${params.id}/info`}
+              className={buttonStyles(
+                {
+                  size: "sm",
+                  variant: "secondary",
+                },
+                "md:hidden",
+              )}
+            >
+              <span>View info</span>
+            </Link>
+          )}
           <button
             className={buttonStyles(
               {
@@ -256,6 +270,50 @@ export default function Page(props: { params: Promise<{ id: string }> }) {
           )}
         </div>
       </div>
+      {editing ? (
+        <div className="grid grid-cols-2 gap-4 border-t bg-primary p-4 md:p-6">
+          <button
+            className={buttonStyles({
+              size: "sm",
+              variant: "secondary",
+            })}
+            onClick={() => {
+              setEditing(false);
+            }}
+          >
+            <span>Cancel</span>
+          </button>
+          <button
+            className={buttonStyles(
+              {
+                size: "sm",
+                variant: "primary",
+              },
+              "min-h-[2.375rem]",
+            )}
+            onClick={() => {
+              answerMutation.mutate({
+                answers: data.map((q) => ({
+                  id: q.id,
+                  answer: q.answer,
+                  value: q.value,
+                })),
+                grade,
+                universityId,
+                notes,
+              });
+            }}
+            disabled={answerMutation.isPending}
+          >
+            {answerMutation.isPending ? (
+              <Spinner size={16} />
+            ) : (
+              <Check size={16} />
+            )}
+            <span>Save</span>
+          </button>
+        </div>
+      ) : null}
     </main>
   );
 }

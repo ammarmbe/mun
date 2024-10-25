@@ -58,7 +58,13 @@ export default function Today() {
       <div className="-m-px flex flex-grow flex-col divide-y overflow-auto rounded-2xl border bg-primary md:max-h-[calc(100dvh-4rem-2.625rem-2.5rem-1px)]">
         {data?.map((interview, index) => (
           <Fragment key={interview.id}>
-            {dayjs().isAfter(interview.date) &&
+            <InterviewCard
+              interview={interview}
+              upNext={interview.date === data[0]?.date}
+            />
+            {interview.date &&
+            data[index + 1]?.date &&
+            dayjs().isAfter(interview.date) &&
             dayjs().isBefore(data[index + 1]?.date) ? (
               <div
                 ref={setRef}
@@ -69,10 +75,6 @@ export default function Today() {
                 <div className="self-center border-t" />
               </div>
             ) : null}
-            <InterviewCard
-              interview={interview}
-              upNext={interview.date === data[0]?.date}
-            />
           </Fragment>
         ))}
         <div className="flex flex-grow flex-col items-center justify-center">

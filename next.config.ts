@@ -13,6 +13,11 @@ const nextConfig: NextConfig = {
         destination: "/settings/personal",
         permanent: true,
       },
+      {
+        source: "/interview/:id",
+        destination: "/interview/:id/info",
+        permanent: true,
+      },
     ];
   },
 };

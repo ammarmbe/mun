@@ -1,15 +1,30 @@
 import React from "react";
 import Skeleton from "react-loading-skeleton";
 import { AspectRatio } from "@radix-ui/react-aspect-ratio";
+import { ChevronsUpDown } from "lucide-react";
+import InputWrapper from "@/components/input-wrapper";
+import { inputStyles } from "@/utils/styles/input";
 import buttonStyles from "@/utils/styles/button";
-import { Pencil } from "lucide-react";
 
 export default function Loading() {
   return (
-    <main className="m-4 flex flex-col gap-4 rounded-2xl border bg-primary p-4 shadow-xs md:m-1 md:max-h-[calc(100dvh-0.5rem)] md:w-72 md:gap-5 md:overflow-auto md:p-5">
-      <h2 className="flex-none truncate text-display-xs font-semibold">
-        <Skeleton className="!w-44" />
-      </h2>
+    <>
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <h2 className="flex-none truncate text-display-xs font-semibold">
+          <Skeleton className="!w-44" />
+        </h2>
+        <button
+          className={buttonStyles(
+            {
+              variant: "secondary",
+              size: "sm",
+            },
+            "md:hidden",
+          )}
+        >
+          <Skeleton className="!w-24" />
+        </button>
+      </div>
       <AspectRatio
         ratio={1}
         className="relative overflow-hidden rounded-md leading-none"
@@ -32,19 +47,24 @@ export default function Loading() {
         <div className="flex flex-col gap-1">
           <p className="text-sm font-medium text-primary">Status</p>
           <div className="text-secondary">
-            <div className="flex w-full items-center justify-between">
-              <Skeleton className="!w-40" />
-              <button
-                className={buttonStyles({
-                  size: "md",
-                  variant: "secondary",
-                  symmetrical: true,
-                })}
-                disabled={true}
-              >
-                <Pencil size={16} />
-              </button>
-            </div>
+            <InputWrapper
+              side="right"
+              size="xs"
+              Icon={ChevronsUpDown}
+              className="w-fit"
+            >
+              <select
+                name="status"
+                className={inputStyles(
+                  {
+                    variant: "primary",
+                    size: "xs",
+                  },
+                  "w-fit min-w-44 !pl-[2rem] !pr-[2.5rem] text-sm",
+                )}
+                disabled
+              />
+            </InputWrapper>
           </div>
         </div>
         <div className="flex flex-col gap-1">
@@ -87,6 +107,6 @@ export default function Loading() {
           </p>
         </div>
       </div>
-    </main>
+    </>
   );
 }

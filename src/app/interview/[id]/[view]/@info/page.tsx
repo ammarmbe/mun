@@ -2,7 +2,7 @@
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { queryFunctions, queryKeys } from "@/utils/react-query";
-import Loading from "@/app/interview/[id]/@info/loading";
+import Loading from "@/app/interview/[id]/[view]/@info/loading";
 import React, { use, useEffect, useState } from "react";
 import dayjs from "dayjs";
 import { councilColors, faculties, getGradeColor } from "@/utils";
@@ -13,9 +13,13 @@ import { toast } from "sonner";
 import Toast from "@/components/toast";
 import Badge from "@/components/badge";
 import * as Avatar from "@radix-ui/react-avatar";
-import UpdateStatus from "@/app/interview/[id]/@info/update-status";
+import UpdateStatus from "@/app/interview/[id]/[view]/@info/update-status";
+import buttonStyles from "@/utils/styles/button";
+import Link from "next/link";
 
-export default function Page(props: { params: Promise<{ id: string }> }) {
+export default function Page(props: {
+  params: Promise<{ id: string; view: string }>;
+}) {
   const queryClient = useQueryClient();
   const params = use(props.params);
 
@@ -86,24 +90,36 @@ export default function Page(props: { params: Promise<{ id: string }> }) {
 
   if (interview === undefined) {
     return (
-      <main className="m-4 flex flex-col gap-4 rounded-2xl border bg-primary p-4 shadow-xs md:m-1 md:max-h-[calc(100dvh-0.5rem)] md:w-72 md:gap-5 md:overflow-auto md:p-5">
-        <div className="flex min-h-72 flex-grow flex-col items-center justify-center">
-          <h1 className="text-xl font-semibold">You are not logged in</h1>
-          <p className="mt-1 text-sm font-medium text-secondary">
-            Please log in to view this interview
-          </p>
-        </div>
-      </main>
+      <div className="flex min-h-72 flex-grow flex-col items-center justify-center">
+        <h1 className="text-xl font-semibold">You are not logged in</h1>
+        <p className="mt-1 text-sm font-medium text-secondary">
+          Please log in to view this interview
+        </p>
+      </div>
     );
   }
 
   if (interview === null) return notFound();
 
   return (
-    <main className="m-4 flex flex-col gap-4 rounded-2xl border bg-primary p-4 shadow-xs md:m-1 md:max-h-[calc(100dvh-0.5rem)] md:w-72 md:gap-5 md:overflow-auto md:p-5">
-      <h2 className="flex-none truncate text-display-xs font-semibold">
-        {interview.delegate.name}
-      </h2>
+    <>
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <h2 className="flex-none truncate text-display-xs font-semibold">
+          {interview.delegate.name}
+        </h2>
+        <Link
+          href={`/interview/${params.id}/questions`}
+          className={buttonStyles(
+            {
+              variant: "secondary",
+              size: "sm",
+            },
+            "md:hidden",
+          )}
+        >
+          <span>{interview.user ? "View answers" : "Start interview"}</span>
+        </Link>
+      </div>
       <AspectRatio ratio={1} className="relative overflow-hidden rounded-md">
         {interview.imageExists ? (
           <img
@@ -175,7 +191,7 @@ export default function Page(props: { params: Promise<{ id: string }> }) {
                     src={`/uploads/${interview.user?.id}.jpg`}
                   />
                   <Avatar.Fallback>
-                    <div className="size-6 rounded-full bg-utility-gray-300" />
+                    <span className="block size-6 rounded-full bg-utility-gray-300" />
                   </Avatar.Fallback>
                 </Avatar.Root>
                 {interview.user?.firstName} {interview.user?.lastName}
@@ -194,6 +210,6 @@ export default function Page(props: { params: Promise<{ id: string }> }) {
           </p>
         </div>
       </div>
-    </main>
+    </>
   );
 }
