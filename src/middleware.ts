@@ -5,6 +5,13 @@ const publicRoutes = ["/login", "/form", "/success", "/_next/", "/api/"];
 
 export async function middleware(request: NextRequest): Promise<NextResponse> {
   if (request.method === "GET") {
+    if (
+      request.nextUrl.pathname.startsWith("/images") ||
+      request.nextUrl.pathname.startsWith("/logo.png")
+    ) {
+      return NextResponse.next();
+    }
+
     const response = NextResponse.next();
     const token = request.cookies.get("session")?.value ?? null;
 
@@ -67,6 +74,6 @@ export const config = {
      * - _next/image (image optimization files)
      * - favicon.ico, sitemap.xml, robots.txt (metadata files)
      */
-    "/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|manifest.webmanifest|images/).*)",
+    "/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|manifest.webmanifest).*)",
   ],
 };
