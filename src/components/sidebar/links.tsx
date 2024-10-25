@@ -35,7 +35,7 @@ export default function Links({ user }: { user: User | null | undefined }) {
       user?.admin
     ) {
       links.push({
-        href: "/interviews",
+        href: "/interviews/all",
         label: "All interviews",
         icon: BookOpenText,
       });
