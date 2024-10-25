@@ -3,7 +3,7 @@ import React from "react";
 
 export default function Success() {
   return (
-    <div className="flex flex-grow flex-col items-center justify-center px-8">
+    <div className="flex flex-grow flex-col items-center justify-center bg-primary px-8">
       <Image priority src="/logo.png" height={120} width={120} alt="Logo" />
       <h1 className="mt-10 text-center text-display-xs font-semibold">
         Your form has been submitted.
