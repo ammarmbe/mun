@@ -38,6 +38,7 @@ export default function RootLayout({
           toastOptions={{
             className: "w-full",
           }}
+          className="pb-[env(safe-area-inset-bottom,20px)]"
         />
         <ProgressBar />
         <ReactQuery>

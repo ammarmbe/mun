@@ -32,14 +32,16 @@ export async function PATCH(req: Request) {
   });
 
   if (file) {
-    const uploadDir = "./public/uploads/";
+    const uploadDir = "/public/uploads/";
 
-    if (!fs.existsSync(uploadDir)) {
-      fs.mkdirSync(uploadDir, { recursive: true });
+    if (!fs.existsSync(process.cwd() + uploadDir)) {
+      fs.mkdirSync(process.cwd() + uploadDir, { recursive: true });
     }
 
     const reader = file.stream().getReader();
-    const writer = fs.createWriteStream(`./public/uploads/${user.id}.jpg`);
+    const writer = fs.createWriteStream(
+      process.cwd() + `/public/uploads/${user.id}.jpg`,
+    );
 
     while (true) {
       const { done, value } = await reader.read();
