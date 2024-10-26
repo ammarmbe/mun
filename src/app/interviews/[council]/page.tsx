@@ -16,11 +16,7 @@ export default function Interviews({
 
   council = Object.keys($Enums.Council).includes(council) ? council : undefined;
 
-  const isDesktop = useMediaQuery("(min-width: 768px)", {
-    noSsr: true,
-  });
-
-  console.log("rerender");
+  const isDesktop = useMediaQuery("(min-width: 768px)");
 
   return typeof "window" === undefined ? (
     <div className="flex flex-grow items-center justify-center">

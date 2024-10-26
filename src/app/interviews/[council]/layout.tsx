@@ -1,6 +1,5 @@
-import { ReactNode, Suspense } from "react";
+import { ReactNode } from "react";
 import Search from "@/components/search";
-import Spinner from "@/components/spinner";
 import { $Enums } from "@prisma/client";
 
 export default async function Layout({
@@ -29,15 +28,15 @@ export default async function Layout({
           className="w-full md:w-auto md:min-w-80"
         />
       </div>
-      <Suspense
+      {/* <Suspense
         fallback={
           <div className="flex flex-grow items-center justify-center">
             <Spinner size={24} />
           </div>
         }
-      >
-        {children}
-      </Suspense>
+      > */}
+      {children}
+      {/* </Suspense> */}
     </main>
   );
 }
