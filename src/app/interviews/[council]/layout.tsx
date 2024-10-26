@@ -10,15 +10,16 @@ export default async function Layout({
   children: ReactNode;
   params: Promise<{ council: string }>;
 }) {
-  let council = (await params).council;
-  council = Object.keys($Enums.Council).includes(council) ? council : "all";
+  let council: string | undefined = (await params).council;
+
+  council = Object.keys($Enums.Council).includes(council) ? council : undefined;
 
   return (
     <main className="flex flex-grow flex-col">
       <div className="flex min-h-[5.625rem] flex-none flex-wrap items-center justify-between gap-y-3 p-4 md:p-6">
         <h1 className="text-display-xs font-semibold md:text-display-sm">
-          <span className={council === "all" ? "capitalize" : "uppercase"}>
-            {council}
+          <span className={!council ? "capitalize" : "uppercase"}>
+            {council ?? "All"}
           </span>{" "}
           Interviews
         </h1>

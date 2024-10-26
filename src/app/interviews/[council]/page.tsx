@@ -1,21 +1,26 @@
 "use client";
 
-import { use } from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Table from "./table";
 import Spinner from "@/components/spinner";
 import Mobile from "./mobile";
+import { use } from "react";
 import { $Enums } from "@prisma/client";
 
-export default function Page({
+export default function Interviews({
   params,
 }: {
   params: Promise<{ council: string }>;
 }) {
   let council: string | undefined = use(params).council;
+
   council = Object.keys($Enums.Council).includes(council) ? council : undefined;
 
-  const isDesktop = useMediaQuery("(min-width: 768px)");
+  const isDesktop = useMediaQuery("(min-width: 768px)", {
+    noSsr: true,
+  });
+
+  console.log("rerender");
 
   return typeof "window" === undefined ? (
     <div className="flex flex-grow items-center justify-center">
