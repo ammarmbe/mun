@@ -10,6 +10,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import "./globals.css";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import SafeArea from "@/components/utility/safe-area";
+import { Analytics } from "@vercel/analytics/next";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -33,6 +34,7 @@ export default function RootLayout({
       <body
         className={`${inter.className} flex min-h-[100dvh] flex-col bg-secondary text-primary antialiased md:flex-row`}
       >
+        <Analytics />
         <TailwindIndicator />
         <Toaster
           toastOptions={{
