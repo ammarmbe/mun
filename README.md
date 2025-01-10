@@ -2,7 +2,7 @@
 
 This is is an interview system designed specifically for Model United Nations (MUN). It allows secretariats to track their interviews, receive notifications, and manage the delegate interviewing process seamlessly. <br> Deployed at: [mun.ambe.dev](https://mun.ambe.dev/).
 
-![vibe](https://github.com/ammarmbe/vibe/assets/117791580/abeaff9b-621e-4c25-b82b-45dd996dfed2)
+![Group 9](https://github.com/user-attachments/assets/6b5f1938-7c19-4003-868c-7030f29cc588)
 
 ## Features
 
